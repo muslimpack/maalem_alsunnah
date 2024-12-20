@@ -11,42 +11,28 @@ sealed class HomeState extends Equatable {
 final class HomeLoadingState extends HomeState {}
 
 class HomeLoadedState extends HomeState {
-  final Hadith? authenticHadith;
-  final Hadith? weakHadith;
-  final Hadith? fabricatedHadith;
-  final Hadith? abandonedHadith;
+  final List<TitleModel> maqassedList;
+
   final bool search;
 
   const HomeLoadedState({
-    required this.authenticHadith,
-    required this.weakHadith,
-    required this.fabricatedHadith,
-    this.abandonedHadith,
+    required this.maqassedList,
     required this.search,
   });
 
   HomeLoadedState copyWith({
-    Hadith? authenticHadith,
-    Hadith? weakHadith,
-    Hadith? fabricatedHadith,
-    Hadith? abandonedHadith,
+    List<TitleModel>? maqassedList,
     bool? search,
   }) {
     return HomeLoadedState(
-      authenticHadith: authenticHadith ?? this.authenticHadith,
-      weakHadith: weakHadith ?? this.weakHadith,
-      fabricatedHadith: fabricatedHadith ?? this.fabricatedHadith,
-      abandonedHadith: abandonedHadith ?? this.abandonedHadith,
+      maqassedList: maqassedList ?? this.maqassedList,
       search: search ?? this.search,
     );
   }
 
   @override
   List<Object?> get props => [
-        authenticHadith,
-        weakHadith,
-        abandonedHadith,
-        fabricatedHadith,
+        maqassedList,
         search,
       ];
 }
