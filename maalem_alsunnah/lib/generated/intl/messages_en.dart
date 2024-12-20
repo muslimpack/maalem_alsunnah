@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "appHashtag": MessageLookupByLibrary.simpleMessage("#maalem_alsunnah"),
         "appTitle": MessageLookupByLibrary.simpleMessage("Maalem Al-Sunnah"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+        "bookmarks": MessageLookupByLibrary.simpleMessage("Bookamarks"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "clear": MessageLookupByLibrary.simpleMessage("Clear"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
@@ -45,17 +46,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeAdFreeAndOpenSourceApp": MessageLookupByLibrary.simpleMessage(
             "Free, ad-free and open source app"),
         "github": MessageLookupByLibrary.simpleMessage("Github source code"),
-        "hadithBookAuthor": MessageLookupByLibrary.simpleMessage(""),
-        "hadithBookAuthorDesc": MessageLookupByLibrary.simpleMessage(""),
+        "hadithBookAuthor":
+            MessageLookupByLibrary.simpleMessage("Sheikh Saleh Ahmed Al Shami"),
         "hadithBookSource":
             MessageLookupByLibrary.simpleMessage("Maalem Al-sunnah"),
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "The Prophetic Sunnah from the most authentic to the weakest"),
+        "index": MessageLookupByLibrary.simpleMessage("Index"),
         "misspelled": MessageLookupByLibrary.simpleMessage("Misspelled"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "That\'s it, there are no more results."),
         "noResultsFound":
             MessageLookupByLibrary.simpleMessage("No results found"),
+        "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
             "Pray for us and our parents."),
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("App language"),

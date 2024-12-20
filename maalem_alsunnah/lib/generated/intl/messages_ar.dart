@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
         "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
         "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+        "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
         "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
         "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
         "close": MessageLookupByLibrary.simpleMessage("أغلق"),
@@ -52,10 +53,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كتاب معالم السنة النبوية"),
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة"),
+        "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
         "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "هذا كل شيء لا مزيد من النتائج."),
         "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
+        "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "prayForUsAndParents":
             MessageLookupByLibrary.simpleMessage("نسألكم الدعاء لنا ولوالدينا"),
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("لغة التطبيق"),

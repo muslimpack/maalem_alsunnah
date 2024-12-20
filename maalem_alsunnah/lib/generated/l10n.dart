@@ -90,6 +90,16 @@ class S {
     );
   }
 
+  /// `Bookamarks`
+  String get bookmarks {
+    return Intl.message(
+      'Bookamarks',
+      name: 'bookmarks',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Chat`
   String get chat {
     return Intl.message(
@@ -210,21 +220,11 @@ class S {
     );
   }
 
-  /// ``
+  /// `Sheikh Saleh Ahmed Al Shami`
   String get hadithBookAuthor {
     return Intl.message(
-      '',
+      'Sheikh Saleh Ahmed Al Shami',
       name: 'hadithBookAuthor',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// ``
-  String get hadithBookAuthorDesc {
-    return Intl.message(
-      '',
-      name: 'hadithBookAuthorDesc',
       desc: '',
       args: [],
     );
@@ -245,6 +245,16 @@ class S {
     return Intl.message(
       'The Prophetic Sunnah from the most authentic to the weakest',
       name: 'hadithBookSourceDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Index`
+  String get index {
+    return Intl.message(
+      'Index',
+      name: 'index',
       desc: '',
       args: [],
     );
@@ -275,6 +285,16 @@ class S {
     return Intl.message(
       'No results found',
       name: 'noResultsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
       desc: '',
       args: [],
     );
