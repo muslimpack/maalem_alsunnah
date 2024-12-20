@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class FontSettingsIconButton extends StatelessWidget {
@@ -110,23 +110,27 @@ class FontSettingsBar extends StatelessWidget {
 class TextSample extends StatelessWidget {
   const TextSample({super.key});
   static String text =
-      "اللَّهُمَّ ‌صَلِّ ‌عَلَى ‌مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى آلِ إِبْرَاهِيمَ ‌فِي ‌الْعَالَمِينَ ‌إِنَّكَ ‌حَمِيدٌ ‌مَجِيدٌ";
+      "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلَّ امْرِئٍ مَا نَوَى";
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Center(
-              child: Text(
-                state.showDiacritics ? text : text.removeDiacritics,
-                textAlign: TextAlign.center,
-                softWrap: true,
-                textDirection: TextDirection.rtl,
-                style: TextStyle(
-                  fontSize: state.fontSize * 10,
+          child: Container(
+            constraints: BoxConstraints(minHeight: 200),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Center(
+                child: Text(
+                  state.showDiacritics ? text : text.removeDiacritics,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontFamily: 'kitab',
+                    fontSize: state.fontSize * 10,
+                  ),
                 ),
               ),
             ),
