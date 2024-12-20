@@ -2,17 +2,19 @@ import 'dart:async';
 
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/home/data/models/hadith_ruling_enum.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_header.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_result_info.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/sql_query.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class HadithDbHelper {
   /* ************* Variables ************* */
 
-  static const String dbName = "alkamel.db";
+  static const String dbName = "book.db";
   static const int dbVersion = 1;
 
   /* ************* Singleton Constructor ************* */
@@ -232,6 +234,76 @@ class HadithDbHelper {
     }
 
     return null;
+  }
+
+  ///*********************************** */
+  ///MARK: Titles and Maqassed
+
+  Future<List<TitleModel>> getAllMaqassed() async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery('''
+SELECT 
+    t1.id,
+    t1.name,
+    t1.searchText,
+    t1.parentId,
+    COUNT(t2.id) AS subTitlesCount
+FROM 
+    titles t1
+LEFT JOIN 
+    titles t2
+ON 
+    t1.id = t2.parentId
+WHERE 
+    t1.parentId IS NULL
+GROUP BY 
+    t1.id, t1.name, t1.searchText, t1.parentId;
+''');
+
+    return List.generate(maps.length, (i) {
+      return TitleModel.fromMap(maps[i]);
+    });
+  }
+
+  Future<List<TitleModel>> getTitleById(int id) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery('''
+SELECT 
+    t1.id,
+    t1.name,
+    t1.searchText,
+    t1.parentId,
+    COUNT(t2.id) AS subTitlesCount
+FROM 
+    titles t1
+LEFT JOIN 
+    titles t2
+ON 
+    t1.id = t2.parentId
+WHERE 
+    t1.parentId = ?
+GROUP BY 
+    t1.id, t1.name, t1.searchText, t1.parentId;
+''', [id]);
+
+    return List.generate(maps.length, (i) {
+      return TitleModel.fromMap(maps[i]);
+    });
+  }
+
+  ///*********************************** */
+  ///MARK: contents
+  Future<ContentModel> getContentByTitleId(int titleId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('''SELECT * from contents where titleId = ?''', [titleId]);
+
+    return List.generate(maps.length, (i) {
+      return ContentModel.fromMap(maps[i]);
+    }).first;
   }
 
   /// Close database
