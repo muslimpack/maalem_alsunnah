@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/bookmarks_screen.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
@@ -48,78 +50,86 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        controller: ScrollController(),
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              floating: true,
-              pinned: true,
-              snap: true,
-              leading: const FontSettingsIconButton(),
-              title: Text(S.of(context).appTitle),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  tooltip: S.of(context).settings,
-                  onPressed: () {
-                    context.push(const SettingsScreen());
-                  },
-                  icon: const Icon(Icons.settings),
-                ),
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        if (state is! HomeLoadedState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Scaffold(
+          body: NestedScrollView(
+            controller: ScrollController(),
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  snap: true,
+                  leading: const FontSettingsIconButton(),
+                  title: Text(S.of(context).appTitle),
+                  centerTitle: true,
+                  actions: [
+                    IconButton(
+                      tooltip: S.of(context).settings,
+                      onPressed: () {
+                        context.push(const SettingsScreen());
+                      },
+                      icon: const Icon(Icons.settings),
+                    ),
+                  ],
+                  bottom: TabBar(
+                    controller: tabController,
+                    tabs: [
+                      Tab(
+                        text: S.of(context).index,
+                        icon: Icon(Icons.list),
+                      ),
+                      Tab(
+                        text: S.of(context).search,
+                        icon: Icon(Icons.search),
+                      ),
+                      Tab(
+                        text: S.of(context).bookmarks,
+                        icon: Icon(Icons.bookmark_border_outlined),
+                      ),
+                      Tab(
+                        text: S.of(context).notes,
+                        icon: Icon(Icons.library_books_outlined),
+                      ),
+                    ],
+                  ),
+                )
+              ];
+            },
+            body: TabBarView(
+              physics: const BouncingScrollPhysics(),
+              controller: tabController,
+              children: [
+                IndexScreen(maqassedList: state.maqassedList),
+                SearchScreen(),
+                BookmarksScreen(),
+                NotesScreen(),
               ],
-              bottom: TabBar(
-                controller: tabController,
-                tabs: [
-                  Tab(
-                    text: S.of(context).index,
-                    icon: Icon(Icons.list),
-                  ),
-                  Tab(
-                    text: S.of(context).search,
-                    icon: Icon(Icons.search),
-                  ),
-                  Tab(
-                    text: S.of(context).bookmarks,
-                    icon: Icon(Icons.bookmark_border_outlined),
-                  ),
-                  Tab(
-                    text: S.of(context).notes,
-                    icon: Icon(Icons.library_books_outlined),
-                  ),
-                ],
-              ),
-            )
-          ];
-        },
-        body: TabBarView(
-          physics: const BouncingScrollPhysics(),
-          controller: tabController,
-          children: [
-            IndexScreen(),
-            SearchScreen(),
-            BookmarksScreen(),
-            NotesScreen(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LinearProgressIndicator(
-              value: 0.5,
             ),
-            ListTile(
-              leading: Icon(MdiIcons.bookOpenPageVariant),
-              subtitle: Text("lorem ipsum"),
-              title: Text(S.of(context).continueReading),
-            )
-          ],
-        ),
-      ),
+          ),
+          bottomNavigationBar: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LinearProgressIndicator(
+                  value: 0.5,
+                ),
+                ListTile(
+                  leading: Icon(MdiIcons.bookOpenPageVariant),
+                  subtitle: Text("lorem ipsum"),
+                  title: Text(S.of(context).continueReading),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
