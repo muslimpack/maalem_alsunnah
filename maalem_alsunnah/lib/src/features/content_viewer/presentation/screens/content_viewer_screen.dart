@@ -42,7 +42,6 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
       appBar: AppBar(
         title: Text(widget.title.name),
         centerTitle: true,
-        actions: [FontSettingsIconButton()],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -61,6 +60,23 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
                 ),
               ],
             ),
+      bottomNavigationBar: BottomAppBar(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FontSettingsIconButton(),
+          IconButton(
+            tooltip: "Bookmark",
+            onPressed: () {},
+            icon: Icon(Icons.bookmark_outline_rounded),
+          ),
+          IconButton(
+            tooltip: "Note",
+            onPressed: () {},
+            icon: Icon(Icons.library_books_outlined),
+          ),
+        ],
+      )),
     );
   }
 }
