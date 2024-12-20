@@ -1,15 +1,15 @@
 import 'package:maalem_alsunnah/src/features/search/domain/entities/content_entity.dart';
 
-class Content extends ContentEntity {
-  const Content({
+class ContentModel extends ContentEntity {
+  const ContentModel({
     required super.id,
     required super.titleId,
     required super.text,
     required super.searchText,
   });
 
-  factory Content.fromMap(Map<String, dynamic> map) {
-    return Content(
+  factory ContentModel.fromMap(Map<String, dynamic> map) {
+    return ContentModel(
       id: map['id'] as int,
       titleId: map['titleId'] as int,
       text: map['text'] as String,
