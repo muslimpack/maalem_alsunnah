@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:maalem_alsunnah/src/core/functions/open_url.dart';
-import 'package:flutter/material.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -45,7 +45,6 @@ ${S.of(context).hadithBookSourceDesc}
             isThreeLine: true,
             subtitle: Text("""
 ${S.of(context).hadithBookAuthor}
-${S.of(context).hadithBookAuthorDesc}
 """),
           ),
           const Divider(),
@@ -53,7 +52,7 @@ ${S.of(context).hadithBookAuthorDesc}
             leading: const Icon(Icons.open_in_browser),
             title: Text(S.of(context).github),
             onTap: () {
-              openURL("https://github.com/muslimpack/maalem_alsunnah");
+              openURL(kOrgGithub);
             },
           ),
         ],
