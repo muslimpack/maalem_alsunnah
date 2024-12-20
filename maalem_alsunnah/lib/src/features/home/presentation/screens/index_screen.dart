@@ -1,28 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 
 class IndexScreen extends StatelessWidget {
-  const IndexScreen({super.key});
+  final List<TitleModel> maqassedList;
+
+  const IndexScreen({
+    super.key,
+    required this.maqassedList,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(10),
-      itemCount: 30,
+      itemCount: maqassedList.length,
       itemBuilder: (context, index) {
-        return Card(
-          clipBehavior: Clip.hardEdge,
-          child: ListTile(
-            onTap: () {},
-            leading: Icon(
-              MdiIcons.bookOpenPageVariant,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            subtitle: Text("Hadith $index"),
-            title: Text("Hadith $index"),
-            trailing: Icon(Icons.chevron_right_outlined),
-          ),
-        );
+        final title = maqassedList[index];
+        return TitleCard(title: title);
       },
     );
   }
