@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Continue reading`
+  String get continueReading {
+    return Intl.message(
+      'Continue reading',
+      name: 'continueReading',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Copied to clipboard`
   String get copiedToClipboard {
     return Intl.message(

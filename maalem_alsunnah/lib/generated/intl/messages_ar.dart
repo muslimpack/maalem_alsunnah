@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
         "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
         "close": MessageLookupByLibrary.simpleMessage("أغلق"),
+        "continueReading":
+            MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
         "copiedToClipboard":
             MessageLookupByLibrary.simpleMessage("تم النسخ إلى الحافظة"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
