@@ -6,6 +6,7 @@ class BookmarksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.all(10),
       itemCount: 30,
       itemBuilder: (context, index) {
         return Card(
