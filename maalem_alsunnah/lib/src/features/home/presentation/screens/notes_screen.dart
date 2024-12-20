@@ -13,7 +13,10 @@ class NotesScreen extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: ListTile(
             onTap: () {},
-            leading: Icon(Icons.library_books_outlined),
+            leading: Icon(
+              Icons.library_books_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             subtitle: Text("Hadith $index"),
             title: Text("Hadith $index"),
             trailing: Icon(Icons.chevron_right_outlined),

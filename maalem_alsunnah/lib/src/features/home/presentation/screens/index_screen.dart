@@ -14,7 +14,10 @@ class IndexScreen extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: ListTile(
             onTap: () {},
-            leading: Icon(MdiIcons.bookOpenPageVariant),
+            leading: Icon(
+              MdiIcons.bookOpenPageVariant,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             subtitle: Text("Hadith $index"),
             title: Text("Hadith $index"),
             trailing: Icon(Icons.chevron_right_outlined),

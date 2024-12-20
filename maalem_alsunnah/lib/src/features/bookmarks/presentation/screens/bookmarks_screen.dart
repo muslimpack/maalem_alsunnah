@@ -13,7 +13,10 @@ class BookmarksScreen extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: ListTile(
             onTap: () {},
-            leading: Icon(Icons.bookmark_rounded),
+            leading: Icon(
+              Icons.bookmark_rounded,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             subtitle: Text("Hadith $index"),
             title: Text("Hadith $index"),
             trailing: Icon(Icons.chevron_right_outlined),
