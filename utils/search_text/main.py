@@ -18,5 +18,9 @@ cursor.execute("""
     UPDATE titles
     SET search_text = REMOVE_DIACRITICS(name)
 """)
+cursor.execute("""
+    UPDATE contents
+    SET search_text = REMOVE_DIACRITICS(text)
+""")
 conn.commit()
 conn.close()
