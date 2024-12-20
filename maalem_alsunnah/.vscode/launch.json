@@ -1,0 +1,45 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "maalem_alsunnah",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "maalem_alsunnah (profile mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "maalem_alsunnah (release mode)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "capture_widget",
+      "cwd": "packages\\capture_widget",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "capture_widget (profile mode)",
+      "cwd": "packages\\capture_widget",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "capture_widget (release mode)",
+      "cwd": "packages\\capture_widget",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}
