@@ -26,7 +26,7 @@ class _SubTitlesViewerScreenState extends State<SubTitlesViewerScreen> {
   }
 
   Future init() async {
-    titles = await sl<HadithDbHelper>().getTitleById(widget.title.id);
+    titles = await sl<HadithDbHelper>().getSubTitlesByTitleId(widget.title.id);
     setState(() {
       isLoading = false;
     });

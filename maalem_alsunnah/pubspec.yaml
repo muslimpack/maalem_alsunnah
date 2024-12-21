@@ -1,6 +1,6 @@
 name: maalem_alsunnah
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_breadcrumb: ^1.0.1
   flutter_localizations:
     sdk: flutter
   fluttertoast: ^8.2.8
@@ -43,18 +44,14 @@ dev_dependencies:
     sdk: flutter
   lint: ^2.3.0
 
-
-
-
-
 flutter:
 
   uses-material-design: true
 
   assets:
-  - assets/images/
-  - assets/db/
-  - assets/fonts/
+    - assets/images/
+    - assets/db/
+    - assets/fonts/
 
   fonts:
     - family: djadli_sarkha
@@ -69,5 +66,3 @@ flutter:
 
 flutter_intl:
   enabled: true
- 
-

@@ -200,7 +200,7 @@ GROUP BY
     });
   }
 
-  Future<List<TitleModel>> getTitleById(int id) async {
+  Future<List<TitleModel>> getSubTitlesByTitleId(int titleId) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
@@ -220,11 +220,52 @@ WHERE
     t1.parentId = ?
 GROUP BY 
     t1.id, t1.name, t1.searchText, t1.parentId;
-''', [id]);
+''', [titleId]);
 
     return List.generate(maps.length, (i) {
       return TitleModel.fromMap(maps[i]);
     });
+  }
+
+  Future<TitleModel> getTitleById(int titleId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      '''
+SELECT 
+    t1.id,
+    t1.name,
+    t1.searchText,
+    t1.parentId,
+    COUNT(t2.id) AS subTitlesCount
+FROM 
+    titles t1
+LEFT JOIN 
+    titles t2
+ON 
+    t1.id = t2.parentId
+WHERE 
+    t1.id = ?
+GROUP BY 
+    t1.id, t1.name, t1.searchText, t1.parentId;
+''',
+      [titleId],
+    );
+
+    return List.generate(maps.length, (i) {
+      return TitleModel.fromMap(maps[i]);
+    }).first;
+  }
+
+  Future<List<TitleModel>> getTitleChain(int titleId) async {
+    final List<TitleModel> titles = [];
+
+    titles.add(await getTitleById(titleId));
+
+    while (titles.last.parentId != -1) {
+      titles.add(await getTitleById(titles.last.parentId));
+    }
+    return titles.reversed.toList();
   }
 
   SqlQuery _searchTitlesSearchType(
