@@ -9,6 +9,15 @@ import 'package:maalem_alsunnah/src/features/home/presentation/screens/notes_scr
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = "/";
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: RouteSettings(name: routeName),
+      builder: (_) => HomeScreen(),
+    );
+  }
+
   const HomeScreen({
     super.key,
   });
