@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/search_for_type.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/search_for.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -31,7 +31,7 @@ class SearchCubit extends Cubit<SearchState> {
     final state = SearchLoadedState(
       searchText: "",
       searchType: searchRepo.searchType,
-      searchForType: searchRepo.searchFor,
+      searchFor: searchRepo.searchFor,
     );
     emit(state);
   }
@@ -70,13 +70,13 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   ///MARK: Search For
-  Future changeSearchFor(SearchForType searchFor) async {
+  Future changeSearchFor(SearchFor searchFor) async {
     final state = this.state;
     if (state is! SearchLoadedState) return;
 
     await searchRepo.setSearchFor(searchFor);
 
-    emit(state.copyWith(searchForType: searchFor));
+    emit(state.copyWith(searchFor: searchFor));
     await _startNewSearch();
   }
 

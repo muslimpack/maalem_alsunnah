@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 
-enum SearchForType {
+enum SearchFor {
   title,
   content,
   hadith;
 
-  static SearchForType fromString(String map) {
-    return SearchForType.values.where((e) => e.toString() == map).firstOrNull ??
-        SearchForType.title;
+  static SearchFor fromString(String map) {
+    return SearchFor.values.where((e) => e.toString() == map).firstOrNull ??
+        SearchFor.title;
   }
 }
 
-extension SearchTypeExtension on SearchForType {
+extension SearchForExtension on SearchFor {
   String localeName(BuildContext context) {
     switch (this) {
-      case SearchForType.title:
+      case SearchFor.title:
         return S.of(context).searchForTitle;
-      case SearchForType.content:
+      case SearchFor.content:
         return S.of(context).searchForContent;
-      case SearchForType.hadith:
+      case SearchFor.hadith:
         return S.of(context).searchForHadith;
     }
   }

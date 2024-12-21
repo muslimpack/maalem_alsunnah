@@ -15,28 +15,28 @@ final class SearchLoadingState extends SearchState {
 class SearchLoadedState extends SearchState {
   final String searchText;
   final SearchType searchType;
-  final SearchForType searchForType;
+  final SearchFor searchFor;
 
   int get pageSize => 10;
 
   const SearchLoadedState({
     required this.searchText,
     required this.searchType,
-    required this.searchForType,
+    required this.searchFor,
   });
 
   @override
-  List<Object> get props => [searchText, searchType, searchForType];
+  List<Object> get props => [searchText, searchType, searchFor];
 
   SearchLoadedState copyWith({
     String? searchText,
     SearchType? searchType,
-    SearchForType? searchForType,
+    SearchFor? searchFor,
   }) {
     return SearchLoadedState(
       searchText: searchText ?? this.searchText,
       searchType: searchType ?? this.searchType,
-      searchForType: searchForType ?? this.searchForType,
+      searchFor: searchFor ?? this.searchFor,
     );
   }
 }
