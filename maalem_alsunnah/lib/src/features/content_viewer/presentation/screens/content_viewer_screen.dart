@@ -11,6 +11,16 @@ import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cu
 
 class ContentViewerScreen extends StatefulWidget {
   final TitleModel title;
+
+  static const String routeName = "/viewer";
+
+  static Route route(TitleModel title) {
+    return MaterialPageRoute(
+      settings: RouteSettings(name: routeName, arguments: title),
+      builder: (_) => ContentViewerScreen(title: title),
+    );
+  }
+
   const ContentViewerScreen({
     super.key,
     required this.title,
