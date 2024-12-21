@@ -91,10 +91,6 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
               index: index,
               titlesChains: titlesChains,
               onPressed: (index, title) {
-                if (index == 0) {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  return;
-                }
                 bool titleFoundInStack = false;
                 for (var route in routeStack) {
                   final TitleModel? routeTitle =
