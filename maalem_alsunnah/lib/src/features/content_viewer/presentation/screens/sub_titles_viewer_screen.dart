@@ -7,6 +7,15 @@ import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_he
 
 class SubTitlesViewerScreen extends StatefulWidget {
   final TitleModel title;
+  static const String routeName = "/sub";
+
+  static Route route(TitleModel title) {
+    return MaterialPageRoute(
+      settings: RouteSettings(name: routeName, arguments: title),
+      builder: (_) => SubTitlesViewerScreen(title: title),
+    );
+  }
+
   const SubTitlesViewerScreen({
     super.key,
     required this.title,
