@@ -74,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ],
             ),
           ),
-          bottomNavigationBar: ContinueReadingCard(),
+          bottomNavigationBar:
+              tabController.index > 0 ? null : ContinueReadingCard(),
         );
       },
     );
