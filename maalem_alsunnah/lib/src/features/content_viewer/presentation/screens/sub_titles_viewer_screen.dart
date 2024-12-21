@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -50,8 +51,15 @@ class _SubTitlesViewerScreenState extends State<SubTitlesViewerScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : IndexScreen(
-              maqassedList: titles,
+          : Column(
+              children: [
+                TitlesChainBreadCrumb(titleId: widget.title.id),
+                Expanded(
+                  child: IndexScreen(
+                    maqassedList: titles,
+                  ),
+                ),
+              ],
             ),
     );
   }
