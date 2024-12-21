@@ -56,18 +56,25 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: EdgeInsets.all(15),
+          : Column(
               children: [
                 TitlesChainBreadCrumb(titleId: widget.title.id),
-                SelectableText(
-                  context.watch<SettingsCubit>().state.showDiacritics
-                      ? content.text
-                      : content.searchText,
-                  style: TextStyle(
-                    fontSize:
-                        context.watch<SettingsCubit>().state.fontSize * 10,
-                    fontFamily: 'kitab',
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.all(15),
+                    children: [
+                      SelectableText(
+                        context.watch<SettingsCubit>().state.showDiacritics
+                            ? content.text
+                            : content.searchText,
+                        style: TextStyle(
+                          fontSize:
+                              context.watch<SettingsCubit>().state.fontSize *
+                                  10,
+                          fontFamily: 'kitab',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
