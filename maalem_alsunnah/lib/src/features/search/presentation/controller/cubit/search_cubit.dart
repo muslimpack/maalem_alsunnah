@@ -31,7 +31,7 @@ class SearchCubit extends Cubit<SearchState> {
     final state = SearchLoadedState(
       searchText: "",
       searchType: searchRepo.searchType,
-      searchForType: SearchForType.title,
+      searchForType: searchRepo.searchFor,
     );
     emit(state);
   }
@@ -66,6 +66,17 @@ class SearchCubit extends Cubit<SearchState> {
     await searchRepo.setSearchType(searchType);
 
     emit(state.copyWith(searchType: searchType));
+    await _startNewSearch();
+  }
+
+  ///MARK: Search For
+  Future changeSearchFor(SearchForType searchFor) async {
+    final state = this.state;
+    if (state is! SearchLoadedState) return;
+
+    await searchRepo.setSearchFor(searchFor);
+
+    emit(state.copyWith(searchForType: searchFor));
     await _startNewSearch();
   }
 
