@@ -1,5 +1,4 @@
 import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
-import 'package:maalem_alsunnah/src/features/home/data/models/hadith_ruling_enum.dart';
 import 'package:maalem_alsunnah/src/features/search/domain/entities/hadith_entity.dart';
 
 class Hadith extends HadithEntity {
@@ -9,7 +8,6 @@ class Hadith extends HadithEntity {
     required super.narrator,
     required super.narratorReference,
     required super.rank,
-    required super.rulingEnum,
     required super.hadith,
   });
 
@@ -23,7 +21,6 @@ class Hadith extends HadithEntity {
       narrator: narrator,
       narratorReference: narratorReference,
       rank: (map['rank'] as String).removeBrackets(),
-      rulingEnum: HadithRulingEnum.fromString(map['ruling'] as String),
       hadith: map['hadith'] as String,
     );
   }

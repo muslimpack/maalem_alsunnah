@@ -14,38 +14,29 @@ final class SearchLoadingState extends SearchState {
 
 class SearchLoadedState extends SearchState {
   final String searchText;
-  final SearchResultInfo searchinfo;
-  final List<HadithRulingEnum> activeRuling;
   final SearchType searchType;
+  final SearchForType searchForType;
 
   int get pageSize => 10;
 
   const SearchLoadedState({
     required this.searchText,
-    required this.searchinfo,
-    required this.activeRuling,
     required this.searchType,
+    required this.searchForType,
   });
 
   @override
-  List<Object> get props => [
-        searchText,
-        activeRuling,
-        searchinfo,
-        searchType,
-      ];
+  List<Object> get props => [searchText, searchType, searchForType];
 
   SearchLoadedState copyWith({
     String? searchText,
-    SearchResultInfo? searchinfo,
-    List<HadithRulingEnum>? activeRuling,
     SearchType? searchType,
+    SearchForType? searchForType,
   }) {
     return SearchLoadedState(
       searchText: searchText ?? this.searchText,
-      searchinfo: searchinfo ?? this.searchinfo,
-      activeRuling: activeRuling ?? this.activeRuling,
       searchType: searchType ?? this.searchType,
+      searchForType: searchForType ?? this.searchForType,
     );
   }
 }

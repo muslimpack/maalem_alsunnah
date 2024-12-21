@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/hadith_card_popup_menu.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/responsive_text.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HadithCard extends StatelessWidget {
   final Hadith hadith;
@@ -27,7 +27,7 @@ class HadithCard extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             right: BorderSide(
-              color: hadith.rulingEnum.color.withValues(alpha: .3),
+              color: Colors.brown.withValues(alpha: .3),
               width: 7,
             ),
           ),
@@ -68,14 +68,6 @@ class HadithCard extends StatelessWidget {
                 ),
               ),
               const Divider(),
-              Text(
-                "المرتبة: ${hadith.rank}  |  الحكم: [${hadith.rulingEnum.title}]",
-                style: TextStyle(
-                  fontSize: context.watch<SettingsCubit>().state.fontSize * 6,
-                  color: hadith.rulingEnum.color,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ],
           ),
         ),

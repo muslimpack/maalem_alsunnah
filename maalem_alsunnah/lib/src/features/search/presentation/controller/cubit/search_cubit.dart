@@ -3,9 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:maalem_alsunnah/src/features/home/data/models/hadith_ruling_enum.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/search_result_info.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/search_for_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/domain/repository/search_repo.dart';
@@ -31,9 +30,8 @@ class SearchCubit extends Cubit<SearchState> {
   Future start() async {
     final state = SearchLoadedState(
       searchText: "",
-      activeRuling: searchRepo.searchRulingFilters,
       searchType: searchRepo.searchType,
-      searchinfo: SearchResultInfo.empty(),
+      searchForType: SearchForType.title,
     );
     emit(state);
   }
@@ -44,14 +42,6 @@ class SearchCubit extends Cubit<SearchState> {
     if (state is! SearchLoadedState) return;
 
     pagingController.refresh();
-
-    final searchinfo = await hadithDbHelper.searchByHadithTextWithFiltersInfo(
-      state.searchText,
-      ruling: state.activeRuling,
-      searchType: state.searchType,
-    );
-
-    emit(state.copyWith(searchinfo: searchinfo));
   }
 
   ///MARK: Search text
@@ -79,32 +69,6 @@ class SearchCubit extends Cubit<SearchState> {
     await _startNewSearch();
   }
 
-  ///MARK: Ruling
-  Future changeActiveRuling(List<HadithRulingEnum> activeRuling) async {
-    final state = this.state;
-    if (state is! SearchLoadedState) return;
-
-    await searchRepo.setSearchRulingFilters(activeRuling);
-
-    emit(state.copyWith(activeRuling: activeRuling));
-    await _startNewSearch();
-  }
-
-  Future toggleRulingStatus(HadithRulingEnum ruling, bool activate) async {
-    final state = this.state;
-    if (state is! SearchLoadedState) return;
-
-    final activeRuling = List.of(state.activeRuling);
-
-    if (activate) {
-      activeRuling.add(ruling);
-    } else {
-      activeRuling.remove(ruling);
-    }
-
-    await changeActiveRuling(activeRuling);
-  }
-
   ///MARK: clear
   Future clear() async {
     searchController.clear();
@@ -123,7 +87,6 @@ class SearchCubit extends Cubit<SearchState> {
     try {
       final newItems = await hadithDbHelper.searchByHadithTextWithFilters(
         searchText,
-        ruling: state.activeRuling,
         searchType: state.searchType,
         limit: pageSize,
         offset: pageKey,

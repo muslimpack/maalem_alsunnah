@@ -34,7 +34,7 @@ class ShareDialog extends StatelessWidget {
     sb.write("\n\n-------\n\n");
     sb.write(hadith.hadith);
     sb.write("\n\n-------\n\n");
-    sb.write("المرتبة: ${hadith.rank}  |  الحكم: [${hadith.rulingEnum.title}]");
+    sb.write("المرتبة: ${hadith.rank}");
     sb.write("\n\n${S.of(context).appHashtag}");
 
     final shareText = sb.toString();

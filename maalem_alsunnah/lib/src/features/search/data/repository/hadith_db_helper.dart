@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
-import 'package:maalem_alsunnah/src/features/home/data/models/hadith_ruling_enum.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/search_header.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/search_result_info.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/sql_query.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -82,52 +79,20 @@ class HadithDbHelper {
     });
   }
 
-  Future<SearchResultInfo> searchByHadithTextWithFiltersInfo(
-    String searchText, {
-    required List<HadithRulingEnum> ruling,
-    required SearchType searchType,
-  }) async {
-    if (searchText.isEmpty || ruling.isEmpty) return SearchResultInfo.empty();
-
-    final total = await _searchByHadithTextWithFiltersInfo(
-      searchText,
-      ruling: ruling,
-      searchType: searchType,
-      useFilters: false,
-    );
-    final filtered = await _searchByHadithTextWithFiltersInfo(
-      searchText,
-      ruling: ruling,
-      searchType: searchType,
-      useFilters: true,
-    );
-
-    return SearchResultInfo(total: total, filtered: filtered);
-  }
-
   SqlQuery _searchByHadithTextWithFiltersSqlQuery(
     String searchText, {
     required SearchType searchType,
-    required List<HadithRulingEnum> ruling,
     required bool useFilters,
-    required bool onlyHeader,
   }) {
     final SqlQuery sqlQuery = SqlQuery();
 
-    final rulingString = ruling
-        .map((e) => e.title)
-        .map((word) => "ruling LIKE '%$word%'")
-        .join(' OR ');
-    final rulingQuery = !useFilters ? "" : ' AND ($rulingString) ';
-
     final List<String> splittedSearchWords = searchText.trim().split(' ');
 
-    final dataForm = onlyHeader ? SearchHeader.query : "*";
+    final dataForm = "*";
 
     switch (searchType) {
       case SearchType.typical:
-        sqlQuery.query =
-            'SELECT $dataForm FROM hadith WHERE hadith LIKE ? $rulingQuery';
+        sqlQuery.query = 'SELECT $dataForm FROM hadith';
         sqlQuery.args.addAll(['%$searchText%']);
 
       case SearchType.allWords:
@@ -135,8 +100,7 @@ class HadithDbHelper {
             splittedSearchWords.map((word) => 'hadith LIKE ?').join(' AND ');
         final List<String> params =
             splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query =
-            'SELECT $dataForm FROM hadith WHERE ($allWordsQuery) $rulingQuery';
+        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
         sqlQuery.args.addAll([...params]);
 
       case SearchType.anyWords:
@@ -144,57 +108,27 @@ class HadithDbHelper {
             splittedSearchWords.map((word) => 'hadith LIKE ?').join(' OR ');
         final List<String> params =
             splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query =
-            'SELECT $dataForm FROM hadith WHERE ($allWordsQuery) $rulingQuery';
+        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
         sqlQuery.args.addAll([...params]);
     }
 
     return sqlQuery;
   }
 
-  Future<SearchHeader> _searchByHadithTextWithFiltersInfo(
-    String searchText, {
-    required SearchType searchType,
-    required List<HadithRulingEnum> ruling,
-    required bool useFilters,
-  }) async {
-    if (searchText.isEmpty || (useFilters && ruling.isEmpty)) {
-      return SearchHeader.empty();
-    }
-
-    final Database db = await database;
-
-    final SqlQuery sqlQuery = _searchByHadithTextWithFiltersSqlQuery(
-      searchText,
-      searchType: searchType,
-      ruling: ruling,
-      useFilters: useFilters,
-      onlyHeader: true,
-    );
-
-    final List<Map<String, dynamic>> maps =
-        await db.rawQuery(sqlQuery.query, sqlQuery.args);
-
-    return SearchHeader.fromMap(maps.first);
-  }
-
   Future<List<Hadith>> searchByHadithTextWithFilters(
     String searchText, {
-    required List<HadithRulingEnum> ruling,
     required SearchType searchType,
     required int limit, // Number of items per page
     required int offset, // Offset to start fetching items from
   }) async {
-    if (searchText.isEmpty || ruling.isEmpty) return [];
+    if (searchText.isEmpty) return [];
 
     final Database db = await database;
 
     final SqlQuery sqlQuery = _searchByHadithTextWithFiltersSqlQuery(
       searchText,
       searchType: searchType,
-      ruling: ruling,
       useFilters: true,
-      onlyHeader: false,
     );
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
@@ -221,12 +155,12 @@ class HadithDbHelper {
     });
   }
 
-  Future<Hadith?> randomHadith(HadithRulingEnum ruling) async {
+  Future<Hadith?> randomHadith() async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
       'SELECT * FROM hadith WHERE ruling like ? ORDER BY RANDOM() LIMIT 1',
-      ['%${ruling.title}%'],
+      ['%%'],
     );
 
     if (maps.isNotEmpty) {

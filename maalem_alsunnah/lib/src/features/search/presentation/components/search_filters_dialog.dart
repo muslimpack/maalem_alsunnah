@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:maalem_alsunnah/generated/l10n.dart';
-import 'package:maalem_alsunnah/src/features/search/presentation/components/search_ruling_filters_bar.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_type_bar.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +49,6 @@ class SearchFiltersDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SearchTypeBar(),
-            Divider(),
-            SearchRullingFiltersBar(),
           ],
         ),
       ),

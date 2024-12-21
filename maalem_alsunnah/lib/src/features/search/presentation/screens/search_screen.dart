@@ -1,9 +1,9 @@
-import 'package:maalem_alsunnah/generated/l10n.dart';
-import 'package:maalem_alsunnah/src/features/search/presentation/components/search_result_viewer.dart';
-import 'package:maalem_alsunnah/src/features/search/presentation/components/search_ruling_filters_bar.dart';
-import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/features/search/presentation/components/search_result_viewer.dart';
+import 'package:maalem_alsunnah/src/features/search/presentation/components/search_type_bar.dart';
+import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -20,13 +20,11 @@ class SearchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 15),
-            const SearchRullingFiltersBar(),
+            const SearchTypeBar(),
             Padding(
               padding: const EdgeInsets.all(15),
               child: Text(
-                state.searchText.isEmpty
-                    ? ""
-                    : "${S.of(context).searchResultCount}: ${state.searchinfo.filtered.searchResultLength}",
+                state.searchText.isEmpty ? "" : S.of(context).searchResultCount,
                 textAlign: TextAlign.center,
               ),
             ),

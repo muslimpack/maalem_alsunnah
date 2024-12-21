@@ -124,7 +124,7 @@ class HadithAsImageCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Text(
-                    "المرتبة: ${hadith.rank}\nالحكم: [${hadith.rulingEnum.title}]",
+                    "المرتبة: ${hadith.rank}",
                     style: secondaryTextStyle,
                   ),
                 ),

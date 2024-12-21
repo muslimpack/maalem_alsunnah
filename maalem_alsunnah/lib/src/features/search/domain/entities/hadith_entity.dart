@@ -1,4 +1,3 @@
-import 'package:maalem_alsunnah/src/features/home/data/models/hadith_ruling_enum.dart';
 import 'package:equatable/equatable.dart';
 
 class HadithEntity extends Equatable {
@@ -7,7 +6,6 @@ class HadithEntity extends Equatable {
   final String narrator;
   final String narratorReference;
   final String rank;
-  final HadithRulingEnum rulingEnum;
   final String hadith;
 
   const HadithEntity({
@@ -16,7 +14,6 @@ class HadithEntity extends Equatable {
     required this.narrator,
     required this.narratorReference,
     required this.rank,
-    required this.rulingEnum,
     required this.hadith,
   });
 
@@ -28,7 +25,6 @@ class HadithEntity extends Equatable {
       narrator,
       narratorReference,
       rank,
-      rulingEnum,
       hadith,
     ];
   }

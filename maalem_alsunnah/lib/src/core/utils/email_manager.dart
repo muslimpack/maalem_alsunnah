@@ -30,7 +30,6 @@ ${hadith.hadith}
 
 -------
 المرتبة: ${hadith.rank}
-الحكم: [${hadith.rulingEnum.title}]
 
 ======= =======
 
