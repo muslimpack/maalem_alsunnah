@@ -303,18 +303,18 @@ GROUP BY
     return sqlQuery;
   }
 
-  Future<List<TitleModel>> getTitleByName({
-    required String name,
+  Future<List<TitleModel>> searchTitleByName({
+    required String searchText,
     required SearchType searchType,
     required int limit,
     required int offset,
   }) async {
-    if (name.isEmpty) return [];
+    if (searchText.isEmpty) return [];
 
     final Database db = await database;
 
     final whereFilters = _searchTitlesSearchType(
-      name,
+      searchText,
       "t1.searchText",
       searchType: searchType,
       useFilters: true,

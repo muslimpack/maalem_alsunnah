@@ -96,8 +96,8 @@ class SearchCubit extends Cubit<SearchState> {
     final searchText = state.searchText;
 
     try {
-      final newItems = await hadithDbHelper.getTitleByName(
-        name: searchText,
+      final newItems = await hadithDbHelper.searchTitleByName(
+        searchText: searchText,
         searchType: state.searchType,
         limit: pageSize,
         offset: pageKey,
