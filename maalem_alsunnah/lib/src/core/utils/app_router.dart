@@ -13,9 +13,9 @@ class AppRouter {
     } else if (settings.name == ContentViewerScreen.routeName) {
       return ContentViewerScreen.route(settings.arguments as TitleModel);
     } else if (settings.name == SettingsScreen.routeName) {
-      return ContentViewerScreen.route(settings.arguments as TitleModel);
+      return SettingsScreen.route();
     } else if (settings.name == AboutScreen.routeName) {
-      return ContentViewerScreen.route(settings.arguments as TitleModel);
+      return AboutScreen.route();
     }
     return HomeScreen.route();
   }
