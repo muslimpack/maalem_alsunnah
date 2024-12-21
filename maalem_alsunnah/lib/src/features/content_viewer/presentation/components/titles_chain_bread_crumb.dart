@@ -127,6 +127,7 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
+        overflow: WrapOverflow(spacing: 10),
       ),
     );
   }
