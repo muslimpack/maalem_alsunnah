@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/sub_titles_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
@@ -86,6 +89,34 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
             content: BreadCrumbItemBuilder(
               index: index,
               titlesChains: titlesChains,
+              onPressed: (index, title) {
+                if (index == 0) {
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  return;
+                }
+                bool titleFoundInStack = false;
+                for (var route in routeStack) {
+                  final TitleModel? routeTitle =
+                      route.settings.arguments as TitleModel?;
+                  if (routeTitle != null && title.id == routeTitle.id) {
+                    titleFoundInStack = true;
+                    break;
+                  }
+                  appPrint(title);
+                }
+                if (titleFoundInStack) {
+                  Navigator.popUntil(
+                      context,
+                      (r) =>
+                          (r.settings.arguments as TitleModel?)?.id ==
+                          title.id);
+                } else {
+                  Navigator.of(context).pushReplacementNamed(
+                    SubTitlesViewerScreen.routeName,
+                    arguments: title,
+                  );
+                }
+              },
             ),
           );
         },
@@ -104,10 +135,12 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
 class BreadCrumbItemBuilder extends StatelessWidget {
   final int index;
   final List<TitleModel> titlesChains;
+  final Function(int index, TitleModel title)? onPressed;
   const BreadCrumbItemBuilder({
     super.key,
     required this.index,
     required this.titlesChains,
+    this.onPressed,
   });
 
   @override
@@ -124,21 +157,27 @@ class BreadCrumbItemBuilder extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: () {},
+        onPressed: () {
+          onPressed?.call(index, title);
+        },
       );
     } else if (index == titlesChains.length - 1) {
       return FilledButton(
         child: Text(
           title.name,
         ),
-        onPressed: () {},
+        onPressed: () {
+          onPressed?.call(index, title);
+        },
       );
     }
     return TextButton(
       child: Text(
         title.name,
       ),
-      onPressed: () {},
+      onPressed: () {
+        onPressed?.call(index, title);
+      },
     );
   }
 }
