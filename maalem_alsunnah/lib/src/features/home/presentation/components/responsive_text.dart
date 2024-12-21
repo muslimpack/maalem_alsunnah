@@ -2,9 +2,9 @@
 
 import 'dart:math';
 
-import 'package:maalem_alsunnah/src/core/shared/text_highlighter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/shared/text_highlighter.dart';
 
 class ResponsiveText extends StatefulWidget {
   final String text;
@@ -70,7 +70,8 @@ class _ResponsiveTextState extends State<ResponsiveText> {
     final moreTextSpan = TextSpan(
       text:
           " ...المزيد (${widget.text.split(" ").length - bodyText.split(" ").length})",
-      style: const TextStyle(color: Colors.blue),
+      style:
+          TextStyle(color: Colors.brown.shade300, fontWeight: FontWeight.bold),
       recognizer: TapGestureRecognizer()
         ..onTap = () {
           setState(() {
