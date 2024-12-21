@@ -7,7 +7,7 @@ enum SearchFor {
   hadith;
 
   static SearchFor fromString(String map) {
-    return SearchFor.values.where((e) => e.toString() == map).firstOrNull ??
+    return SearchFor.values.where((e) => e.name == map).firstOrNull ??
         SearchFor.title;
   }
 }
