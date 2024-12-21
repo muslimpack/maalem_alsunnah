@@ -6,7 +6,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
-class TitlesChainBreadCrumb extends StatelessWidget {
+class TitlesChainBreadCrumb extends StatefulWidget {
   const TitlesChainBreadCrumb({
     super.key,
     required this.titleId,
@@ -15,9 +15,39 @@ class TitlesChainBreadCrumb extends StatelessWidget {
   final int titleId;
 
   @override
+  State<TitlesChainBreadCrumb> createState() => _TitlesChainBreadCrumbState();
+}
+
+class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
+  late Future<List<TitleModel>> titlesChains;
+  @override
+  void initState() {
+    super.initState();
+    titlesChains = _updateAndGetList();
+  }
+
+  void refreshList() {
+    setState(() {
+      titlesChains = _updateAndGetList();
+    });
+  }
+
+  Future<List<TitleModel>> _updateAndGetList() async {
+    return sl<HadithDbHelper>().getTitleChain(widget.titleId);
+  }
+
+  @override
+  void didUpdateWidget(covariant TitlesChainBreadCrumb oldWidget) {
+    if (oldWidget.titleId != widget.titleId) {
+      refreshList();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: sl<HadithDbHelper>().getTitleChain(titleId),
+      future: titlesChains,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
