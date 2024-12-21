@@ -20,26 +20,6 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "release"
-    },
-    {
-      "name": "capture_widget",
-      "cwd": "packages\\capture_widget",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "capture_widget (profile mode)",
-      "cwd": "packages\\capture_widget",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "capture_widget (release mode)",
-      "cwd": "packages\\capture_widget",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
     }
   ]
 }
