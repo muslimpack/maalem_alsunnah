@@ -49,7 +49,7 @@ class HomeAppBar extends StatelessWidget {
         IconButton(
           tooltip: S.of(context).settings,
           onPressed: () {
-            context.push(const SettingsScreen());
+            context.pushNamed(SettingsScreen.routeName);
           },
           icon: const Icon(Icons.settings),
         ),

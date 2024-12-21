@@ -80,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
                 leading: const Icon(Icons.info_outline),
                 title: Text(S.of(context).aboutApp),
                 onTap: () {
-                  context.push(const AboutScreen());
+                  context.pushNamed(AboutScreen.routeName);
                 },
               ),
             ],
