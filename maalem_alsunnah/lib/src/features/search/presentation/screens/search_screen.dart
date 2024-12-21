@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/search_for.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
+import 'package:maalem_alsunnah/src/features/search/presentation/components/content_search_card.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_filters_dialog.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_for_bar.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_result_viewer.dart';
@@ -28,8 +34,27 @@ class SearchScreen extends StatelessWidget {
                 SearchFiltersButton(),
               ],
             ),
-            const Expanded(
-              child: SearchResultViewer(),
+            Expanded(
+              child: switch (state.searchFor) {
+                SearchFor.title => SearchResultViewer<TitleModel>(
+                    pagingController: sl<SearchCubit>().titlePagingController,
+                    itemBuilder: (context, item, index) {
+                      return TitleCard(title: item);
+                    },
+                  ),
+                SearchFor.content => SearchResultViewer<ContentModel>(
+                    pagingController: sl<SearchCubit>().contentPagingController,
+                    itemBuilder: (context, item, index) {
+                      return ContentSearchCard(content: item);
+                    },
+                  ),
+                SearchFor.hadith => SearchResultViewer(
+                    pagingController: sl<SearchCubit>().titlePagingController,
+                    itemBuilder: (context, item, index) {
+                      return TitleCard(title: item);
+                    },
+                  ),
+              },
             ),
           ],
         );

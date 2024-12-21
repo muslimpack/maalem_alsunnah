@@ -362,6 +362,36 @@ LIMIT ? OFFSET ?
     }).first;
   }
 
+  Future<List<ContentModel>> searchContent({
+    required String searchText,
+    required SearchType searchType,
+    required int limit,
+    required int offset,
+  }) async {
+    if (searchText.isEmpty) return [];
+
+    final Database db = await database;
+
+    final whereFilters = _searchTitlesSearchType(
+      searchText,
+      "searchText",
+      searchType: searchType,
+      useFilters: true,
+    );
+
+    final String qurey =
+        '''SELECT * FROM contents ${whereFilters.query} LIMIT ? OFFSET ?''';
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      qurey,
+      [...whereFilters.args, limit, offset],
+    );
+
+    return List.generate(maps.length, (i) {
+      return ContentModel.fromMap(maps[i]);
+    });
+  }
+
   /// Close database
   Future close() async {
     final db = await database;

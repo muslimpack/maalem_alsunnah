@@ -2,15 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/new_page_progress_indicator_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/no_items_found_indicator_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/no_more_items_indicator_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
 
-class SearchResultViewer extends StatelessWidget {
-  const SearchResultViewer({super.key});
+class SearchResultViewer<T> extends StatelessWidget {
+  final PagingController<int, T> pagingController;
+  final Widget Function(BuildContext, T, int) itemBuilder;
+  const SearchResultViewer({
+    super.key,
+    required this.pagingController,
+    required this.itemBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +22,16 @@ class SearchResultViewer extends StatelessWidget {
       builder: (context, state) {
         if (state is! SearchLoadedState) return const SizedBox.shrink();
 
-        return PagedListView<int, TitleModel>(
+        return PagedListView<int, T>(
           padding: const EdgeInsets.all(15),
-          pagingController: context.read<SearchCubit>().titlePagingController,
-          builderDelegate: PagedChildBuilderDelegate<TitleModel>(
+          pagingController: pagingController,
+          builderDelegate: PagedChildBuilderDelegate<T>(
             animateTransitions: true,
             transitionDuration: const Duration(milliseconds: 500),
-            itemBuilder: (context, hadith, index) => TitleCard(
-              title: hadith,
+            itemBuilder: (context, item, index) => itemBuilder(
+              context,
+              item,
+              index,
             ),
             newPageProgressIndicatorBuilder: (context) =>
                 NewPageProgressIndicatorBuilder(),
