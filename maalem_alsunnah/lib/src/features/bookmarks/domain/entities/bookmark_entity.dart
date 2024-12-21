@@ -6,6 +6,7 @@ class BookmarkEntity extends Equatable {
   final int? titleId;
   final int? hadithId;
   final bool isBookmarked;
+  final bool isRead;
   final String? note;
   final DateTime addedDate;
   final DateTime updateDate;
@@ -15,6 +16,7 @@ class BookmarkEntity extends Equatable {
     this.titleId,
     this.hadithId,
     required this.isBookmarked,
+    required this.isRead,
     required this.note,
     required this.addedDate,
     required this.updateDate,
@@ -27,6 +29,7 @@ class BookmarkEntity extends Equatable {
       titleId,
       hadithId,
       isBookmarked,
+      isRead,
       note,
       addedDate,
       updateDate,
