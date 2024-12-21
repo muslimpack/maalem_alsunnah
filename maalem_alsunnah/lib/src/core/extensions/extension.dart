@@ -10,4 +10,12 @@ extension BuildContextExt on BuildContext {
       ),
     );
   }
+
+  Future<T?> pushNamed<T extends Object?>(String routeName,
+      {Object? arguments}) async {
+    return Navigator.of(this).pushNamed(
+      routeName,
+      arguments: arguments,
+    );
+  }
 }
