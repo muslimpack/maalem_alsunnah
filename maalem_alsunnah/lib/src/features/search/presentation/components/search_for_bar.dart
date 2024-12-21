@@ -25,7 +25,7 @@ class SearchForBar extends StatelessWidget {
               showCheckmark: false,
               selected: state.searchFor == e,
               onSelected: (value) async {
-                context.read<SearchCubit>().changeSearchFor(e);
+                await context.read<SearchCubit>().changeSearchFor(e);
               },
             );
           }).toList(),
