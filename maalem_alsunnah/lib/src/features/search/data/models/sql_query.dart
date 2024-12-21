@@ -4,4 +4,9 @@ class SqlQuery {
 
   SqlQuery({this.query = "", List<Object?>? args})
       : args = args ?? List.empty(growable: true);
+
+  @override
+  String toString() {
+    return 'SqlQuery{query: $query, args: $args}';
+  }
 }

@@ -227,6 +227,87 @@ GROUP BY
     });
   }
 
+  SqlQuery _searchTitlesSearchType(
+    String searchText,
+    String property, {
+    required SearchType searchType,
+    required bool useFilters,
+  }) {
+    final SqlQuery sqlQuery = SqlQuery();
+
+    final List<String> splittedSearchWords = searchText.trim().split(' ');
+
+    switch (searchType) {
+      case SearchType.typical:
+        sqlQuery.query = 'WHERE $property LIKE ?';
+        sqlQuery.args.addAll(['%$searchText%']);
+
+      case SearchType.allWords:
+        final String allWordsQuery =
+            splittedSearchWords.map((word) => '$property LIKE ?').join(' AND ');
+        final List<String> params =
+            splittedSearchWords.map((word) => '%$word%').toList();
+        sqlQuery.query = 'WHERE ($allWordsQuery)';
+        sqlQuery.args.addAll([...params]);
+
+      case SearchType.anyWords:
+        final String allWordsQuery =
+            splittedSearchWords.map((word) => '$property LIKE ?').join(' OR ');
+        final List<String> params =
+            splittedSearchWords.map((word) => '%$word%').toList();
+        sqlQuery.query = 'WHERE ($allWordsQuery)';
+        sqlQuery.args.addAll([...params]);
+    }
+
+    return sqlQuery;
+  }
+
+  Future<List<TitleModel>> getTitleByName({
+    required String name,
+    required SearchType searchType,
+    required int limit,
+    required int offset,
+  }) async {
+    if (name.isEmpty) return [];
+
+    final Database db = await database;
+
+    final whereFilters = _searchTitlesSearchType(
+      name,
+      "t1.searchText",
+      searchType: searchType,
+      useFilters: true,
+    );
+
+    final String qurey = '''
+SELECT 
+    t1.id,
+    t1.name,
+    t1.searchText,
+    t1.parentId,
+    COUNT(t2.id) AS subTitlesCount
+FROM 
+    titles t1
+LEFT JOIN 
+    titles t2
+ON 
+    t1.id = t2.parentId
+${whereFilters.query}
+GROUP BY 
+    t1.id, t1.name, t1.searchText, t1.parentId
+LIMIT ? OFFSET ?
+''';
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      qurey,
+      [...whereFilters.args, limit, offset],
+    );
+
+    return List.generate(maps.length, (i) {
+      return TitleModel.fromMap(maps[i]);
+    });
+  }
+
   ///*********************************** */
   ///MARK: contents
   Future<ContentModel> getContentByTitleId(int titleId) async {
