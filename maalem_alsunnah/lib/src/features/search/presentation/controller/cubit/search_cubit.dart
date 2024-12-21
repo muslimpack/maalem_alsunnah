@@ -13,8 +13,9 @@ part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   final TextEditingController searchController = TextEditingController();
-  final PagingController<int, TitleModel> pagingController =
+  final PagingController<int, TitleModel> titlePagingController =
       PagingController(firstPageKey: 0);
+
   final HadithDbHelper hadithDbHelper;
   final SearchRepo searchRepo;
 
@@ -22,7 +23,7 @@ class SearchCubit extends Cubit<SearchState> {
     this.hadithDbHelper,
     this.searchRepo,
   ) : super(const SearchLoadingState()) {
-    pagingController.addPageRequestListener((pageKey) {
+    titlePagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
   }
@@ -41,7 +42,7 @@ class SearchCubit extends Cubit<SearchState> {
     final state = this.state;
     if (state is! SearchLoadedState) return;
 
-    pagingController.refresh();
+    titlePagingController.refresh();
   }
 
   ///MARK: Search text
@@ -105,20 +106,20 @@ class SearchCubit extends Cubit<SearchState> {
 
       final isLastPage = newItems.length < pageSize;
       if (isLastPage) {
-        pagingController.appendLastPage(newItems);
+        titlePagingController.appendLastPage(newItems);
       } else {
         final nextPageKey = pageKey + newItems.length;
-        pagingController.appendPage(newItems, nextPageKey);
+        titlePagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
-      pagingController.error = error;
+      titlePagingController.error = error;
     }
   }
 
   ///MARK: close
   @override
   Future<void> close() {
-    pagingController.dispose();
+    titlePagingController.dispose();
     searchController.dispose();
     return super.close();
   }

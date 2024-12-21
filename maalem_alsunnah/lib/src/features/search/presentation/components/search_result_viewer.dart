@@ -20,7 +20,7 @@ class SearchResultViewer extends StatelessWidget {
 
         return PagedListView<int, TitleModel>(
           padding: const EdgeInsets.all(15),
-          pagingController: context.read<SearchCubit>().pagingController,
+          pagingController: context.read<SearchCubit>().titlePagingController,
           builderDelegate: PagedChildBuilderDelegate<TitleModel>(
             animateTransitions: true,
             transitionDuration: const Duration(milliseconds: 500),
