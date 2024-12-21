@@ -18,10 +18,8 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       HomeLoadedState(
         maqassedList: maqassedList,
-        searchList: [],
-        listToView: maqassedList,
-        tabIndex: 0,
         search: false,
+        tabIndex: 0,
       ),
     );
   }

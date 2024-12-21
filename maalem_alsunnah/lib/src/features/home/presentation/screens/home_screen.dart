@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               physics: const BouncingScrollPhysics(),
               controller: tabController,
               children: [
-                IndexScreen(maqassedList: state.listToView),
+                IndexScreen(maqassedList: state.maqassedList),
                 SearchScreen(),
                 BookmarksScreen(),
                 NotesScreen(),
