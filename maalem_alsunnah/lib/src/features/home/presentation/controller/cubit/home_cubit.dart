@@ -18,6 +18,9 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       HomeLoadedState(
         maqassedList: maqassedList,
+        searchList: [],
+        listToView: maqassedList,
+        tabIndex: 0,
         search: false,
       ),
     );
@@ -28,6 +31,13 @@ class HomeCubit extends Cubit<HomeState> {
     if (state is! HomeLoadedState) return;
 
     emit(state.copyWith(search: search));
+  }
+
+  Future tabIndexChanged(int tabIndex) async {
+    final state = this.state;
+    if (state is! HomeLoadedState) return;
+
+    emit(state.copyWith(tabIndex: tabIndex));
   }
 
   @override
