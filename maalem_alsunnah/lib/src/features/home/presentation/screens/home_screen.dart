@@ -3,13 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/bookmarks_screen.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/continue_reading_card.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
-import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/settings_screen.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -66,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   floating: true,
                   pinned: true,
                   snap: true,
-                  leading: const FontSettingsIconButton(),
+                  leading: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Image.asset('assets/images/app_icon2.png'),
+                  ),
                   title: Text(S.of(context).appTitle),
                   centerTitle: true,
                   actions: [
@@ -113,21 +115,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ],
             ),
           ),
-          bottomNavigationBar: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                LinearProgressIndicator(
-                  value: 0.5,
-                ),
-                ListTile(
-                  leading: Icon(MdiIcons.bookOpenPageVariant),
-                  subtitle: Text("lorem ipsum"),
-                  title: Text(S.of(context).continueReading),
-                )
-              ],
-            ),
-          ),
+          bottomNavigationBar: ContinueReadingCard(),
         );
       },
     );
