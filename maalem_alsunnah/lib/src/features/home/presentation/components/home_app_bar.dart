@@ -34,6 +34,7 @@ class HomeAppBar extends StatelessWidget {
             tooltip: S.of(context).settings,
             onPressed: () {
               sl<HomeCubit>().toggleSearch(!state.search);
+              tabController.animateTo(1);
             },
             icon: const Icon(Icons.search),
           )
