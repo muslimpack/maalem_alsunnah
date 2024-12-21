@@ -380,6 +380,36 @@ class S {
     );
   }
 
+  /// `Content`
+  String get searchForContent {
+    return Intl.message(
+      'Content',
+      name: 'searchForContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hadith`
+  String get searchForHadith {
+    return Intl.message(
+      'Hadith',
+      name: 'searchForHadith',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get searchForTitle {
+    return Intl.message(
+      'Title',
+      name: 'searchForTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Search result count`
   String get searchResultCount {
     return Intl.message(

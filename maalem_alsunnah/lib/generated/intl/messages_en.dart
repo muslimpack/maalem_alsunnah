@@ -70,6 +70,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Report misspelled"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchFilters": MessageLookupByLibrary.simpleMessage("Search filters"),
+        "searchForContent": MessageLookupByLibrary.simpleMessage("Content"),
+        "searchForHadith": MessageLookupByLibrary.simpleMessage("Hadith"),
+        "searchForTitle": MessageLookupByLibrary.simpleMessage("Title"),
         "searchResultCount":
             MessageLookupByLibrary.simpleMessage("Search result count"),
         "searchTypeAllWords": MessageLookupByLibrary.simpleMessage("All words"),
