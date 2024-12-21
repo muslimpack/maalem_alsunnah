@@ -27,7 +27,7 @@ class HadithCard extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             right: BorderSide(
-              color: hadith.rulingEnum.color.withOpacity(.3),
+              color: hadith.rulingEnum.color.withValues(alpha: .3),
               width: 7,
             ),
           ),

@@ -86,7 +86,7 @@ class HadithAsImageCard extends StatelessWidget {
             margin: const EdgeInsets.all(40).copyWith(top: 60, bottom: 60),
             padding: const EdgeInsets.all(25),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.11),
+              color: Colors.white.withValues(alpha: .11),
               border: Border.all(
                 color: secondaryElementsColor,
                 width: 5,
