@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -23,7 +23,6 @@ class ContentViewerScreen extends StatefulWidget {
 class _ContentViewerScreenState extends State<ContentViewerScreen> {
   bool isLoading = true;
   late final ContentModel content;
-  late final List<TitleModel> titlesChains;
 
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
 
   Future init() async {
     content = await sl<HadithDbHelper>().getContentByTitleId(widget.title.id);
-    titlesChains = await sl<HadithDbHelper>().getTitleChain(widget.title.id);
     setState(() {
       isLoading = false;
     });
@@ -51,31 +49,7 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
           : ListView(
               padding: EdgeInsets.all(15),
               children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: BreadCrumb.builder(
-                      itemCount: titlesChains.length,
-                      builder: (index) {
-                        return BreadCrumbItem(
-                          content: TextButton(
-                            child: Text(
-                              titlesChains[index].name,
-                            ),
-                            onPressed: () {},
-                          ),
-                        );
-                      },
-                      divider: Text(
-                        '/',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                TitlesChainBreadCrumb(titleId: widget.title.id),
                 SelectableText(
                   context.watch<SettingsCubit>().state.showDiacritics
                       ? content.text
