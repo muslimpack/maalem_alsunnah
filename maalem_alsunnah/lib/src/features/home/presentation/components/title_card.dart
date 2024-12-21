@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/sub_titles_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -22,9 +21,11 @@ class TitleCard extends StatelessWidget {
       child: ListTile(
         onTap: () {
           if (title.subTitlesCount == 0) {
-            context.push(ContentViewerScreen(title: title));
+            Navigator.of(context)
+                .pushNamed(ContentViewerScreen.routeName, arguments: title);
           } else {
-            context.push(SubTitlesViewerScreen(title: title));
+            Navigator.of(context)
+                .pushNamed(SubTitlesViewerScreen.routeName, arguments: title);
           }
         },
         leading: Icon(
