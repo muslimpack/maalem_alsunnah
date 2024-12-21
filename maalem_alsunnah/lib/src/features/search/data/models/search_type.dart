@@ -1,5 +1,5 @@
-import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
 
 enum SearchType {
   typical,
@@ -7,7 +7,7 @@ enum SearchType {
   anyWords;
 
   static SearchType fromString(String map) {
-    return SearchType.values.where((e) => e.toString() == map).firstOrNull ??
+    return SearchType.values.where((e) => e.name == map).firstOrNull ??
         SearchType.typical;
   }
 }
