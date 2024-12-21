@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maalem_alsunnah/generated/l10n.dart';
-import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/bookmarks_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/continue_reading_card.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/home_app_bar.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
-import 'package:maalem_alsunnah/src/features/settings/presentation/screens/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -42,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void tabControllerChanged() {
-    // context
-    //     .read<HomeBloc>()
-    //     .add(TabIndexChangedHomeEvent(index: tabController.index));
+    context.read<HomeCubit>().tabIndexChanged(tabController.index);
   }
 
   @override
@@ -61,46 +57,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                SliverAppBar(
-                  floating: true,
-                  pinned: true,
-                  snap: true,
-                  leading: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset('assets/images/app_icon2.png'),
-                  ),
-                  title: Text(S.of(context).appTitle),
-                  centerTitle: true,
-                  actions: [
-                    IconButton(
-                      tooltip: S.of(context).settings,
-                      onPressed: () {
-                        context.push(const SettingsScreen());
-                      },
-                      icon: const Icon(Icons.settings),
-                    ),
-                  ],
-                  bottom: TabBar(
-                    controller: tabController,
-                    tabs: [
-                      Tab(
-                        text: S.of(context).index,
-                        icon: Icon(Icons.list),
-                      ),
-                      Tab(
-                        text: S.of(context).search,
-                        icon: Icon(Icons.search),
-                      ),
-                      Tab(
-                        text: S.of(context).bookmarks,
-                        icon: Icon(Icons.bookmark_border_outlined),
-                      ),
-                      Tab(
-                        text: S.of(context).notes,
-                        icon: Icon(Icons.library_books_outlined),
-                      ),
-                    ],
-                  ),
+                HomeAppBar(
+                  tabController: tabController,
+                  state: state,
                 )
               ];
             },
@@ -108,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               physics: const BouncingScrollPhysics(),
               controller: tabController,
               children: [
-                IndexScreen(maqassedList: state.maqassedList),
+                IndexScreen(maqassedList: state.listToView),
                 SearchScreen(),
                 BookmarksScreen(),
                 NotesScreen(),
