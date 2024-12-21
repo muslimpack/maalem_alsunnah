@@ -28,6 +28,6 @@ class SearchRepo {
   }
 
   Future setSearchFor(SearchFor searchFor) async {
-    return box.put(searchForKey, searchType.name);
+    return box.put(searchForKey, searchFor.name);
   }
 }
