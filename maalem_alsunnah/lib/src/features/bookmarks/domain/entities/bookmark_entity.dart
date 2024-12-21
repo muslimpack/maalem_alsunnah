@@ -7,6 +7,8 @@ class BookmarkEntity extends Equatable {
   final int? hadithId;
   final bool isBookmarked;
   final String? note;
+  final DateTime addedDate;
+  final DateTime updateDate;
 
   const BookmarkEntity({
     required this.id,
@@ -14,8 +16,20 @@ class BookmarkEntity extends Equatable {
     this.hadithId,
     required this.isBookmarked,
     required this.note,
+    required this.addedDate,
+    required this.updateDate,
   });
 
   @override
-  List<Object?> get props => [id, titleId, hadithId, isBookmarked, note];
+  List<Object?> get props {
+    return [
+      id,
+      titleId,
+      hadithId,
+      isBookmarked,
+      note,
+      addedDate,
+      updateDate,
+    ];
+  }
 }
