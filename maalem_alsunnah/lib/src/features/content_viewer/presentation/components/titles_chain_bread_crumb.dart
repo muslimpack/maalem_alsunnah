@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/sub_titles_viewer_screen.dart';
@@ -111,10 +112,17 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
                           (r.settings.arguments as TitleModel?)?.id ==
                           title.id);
                 } else {
-                  Navigator.of(context).pushReplacementNamed(
-                    SubTitlesViewerScreen.routeName,
-                    arguments: title,
-                  );
+                  if (routeStack.length <= 1) {
+                    context.pushNamed(
+                      SubTitlesViewerScreen.routeName,
+                      arguments: title,
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacementNamed(
+                      SubTitlesViewerScreen.routeName,
+                      arguments: title,
+                    );
+                  }
                 }
               },
             ),
