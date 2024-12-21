@@ -69,6 +69,7 @@ class BookmarkRepository {
       titleId INTEGER ,
       hadithId INTEGER ,
       isBookmarked INTEGER NOT NULL,
+      isRead INTEGER NOT NULL,
       addedDate INTEGER DEFAULT (strftime('%s', 'now')) NOT NULL
       updateDate INTEGER DEFAULT (strftime('%s', 'now')) NOT NULL
     );
