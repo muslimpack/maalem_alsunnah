@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
+import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
@@ -43,6 +44,7 @@ class App extends StatelessWidget {
             ],
             navigatorObservers: [
               BotToastNavigatorObserver(),
+              AppNavigatorObserver(),
             ],
             builder: (context, child) {
               if (PlatformExtension.isDesktop) {
