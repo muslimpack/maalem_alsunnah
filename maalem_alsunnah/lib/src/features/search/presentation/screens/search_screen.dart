@@ -45,7 +45,10 @@ class SearchScreen extends StatelessWidget {
                 SearchFor.content => SearchResultViewer<ContentModel>(
                     pagingController: sl<SearchCubit>().contentPagingController,
                     itemBuilder: (context, item, index) {
-                      return ContentSearchCard(content: item);
+                      return ContentSearchCard(
+                        content: item,
+                        searchedText: state.searchText,
+                      );
                     },
                   ),
                 SearchFor.hadith => SearchResultViewer(
