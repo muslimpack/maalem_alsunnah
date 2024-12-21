@@ -1,13 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/themes/presentation/controller/cubit/theme_cubit.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
+
+  static const String routeName = "/settings";
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: RouteSettings(name: routeName),
+      builder: (_) => SettingsScreen(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,15 @@ import 'package:maalem_alsunnah/src/core/functions/open_url.dart';
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
+  static const String routeName = "/about";
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: RouteSettings(name: routeName),
+      builder: (_) => AboutScreen(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
