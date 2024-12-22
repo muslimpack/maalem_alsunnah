@@ -6,7 +6,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/sub_titles_viewer_screen.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
@@ -93,30 +93,26 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
               onPressed: (index, title) {
                 bool titleFoundInStack = false;
                 for (var route in routeStack) {
-                  final TitleModel? routeTitle =
-                      route.settings.arguments as TitleModel?;
-                  if (routeTitle != null && title.id == routeTitle.id) {
+                  final int? routeTitleId = route.settings.arguments as int?;
+                  if (routeTitleId != null && title.id == routeTitleId) {
                     titleFoundInStack = true;
                     break;
                   }
                   appPrint(title);
                 }
                 if (titleFoundInStack) {
-                  Navigator.popUntil(
-                      context,
-                      (r) =>
-                          (r.settings.arguments as TitleModel?)?.id ==
-                          title.id);
+                  Navigator.popUntil(context,
+                      (r) => (r.settings.arguments as int) == title.id);
                 } else {
                   if (routeStack.length <= 1) {
                     context.pushNamed(
-                      SubTitlesViewerScreen.routeName,
-                      arguments: title,
+                      ContentViewerScreen.routeName,
+                      arguments: title.id,
                     );
                   } else {
                     Navigator.of(context).pushReplacementNamed(
-                      SubTitlesViewerScreen.routeName,
-                      arguments: title,
+                      ContentViewerScreen.routeName,
+                      arguments: title.id,
                     );
                   }
                 }

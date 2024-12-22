@@ -27,19 +27,29 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
 
   Future<void> start(int titleId) async {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
 
-    final title = await hadithDbHelper.getTitleById(titleId);
-    final content = await hadithDbHelper.getContentByTitleId(titleId);
-    final contentCount = await hadithDbHelper.getContentCount();
+    final title = (await hadithDbHelper.getTitleById(titleId))!;
+    if (title.subTitlesCount == 0) {
+      _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
+      final content = await hadithDbHelper.getContentByTitleId(titleId);
+      final contentCount = await hadithDbHelper.getContentCount();
 
-    emit(
-      ContentViewerLoadedState(
-        title: title!,
-        content: content,
-        contentCount: contentCount,
-      ),
-    );
+      emit(
+        ContentViewerLoadedState(
+          title: title,
+          content: content,
+          contentCount: contentCount,
+        ),
+      );
+    } else {
+      final titles = await hadithDbHelper.getSubTitlesByTitleId(titleId);
+      emit(
+        ContentSubListViewerLoadedState(
+          title: title,
+          titles: titles,
+        ),
+      );
+    }
   }
 
   Future<void> nextContent() async {

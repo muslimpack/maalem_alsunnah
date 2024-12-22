@@ -43,3 +43,26 @@ class ContentViewerLoadedState extends ContentViewerState {
     );
   }
 }
+
+class ContentSubListViewerLoadedState extends ContentViewerState {
+  final TitleModel title;
+  final List<TitleModel> titles;
+
+  const ContentSubListViewerLoadedState({
+    required this.title,
+    required this.titles,
+  });
+
+  @override
+  List<Object> get props => [title, titles];
+
+  ContentSubListViewerLoadedState copyWith({
+    TitleModel? title,
+    List<TitleModel>? titles,
+  }) {
+    return ContentSubListViewerLoadedState(
+      title: title ?? this.title,
+      titles: titles ?? this.titles,
+    );
+  }
+}
