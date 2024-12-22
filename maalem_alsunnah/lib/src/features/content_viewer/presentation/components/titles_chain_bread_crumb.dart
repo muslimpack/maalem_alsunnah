@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -98,135 +97,6 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
             onPressed: (index, title) => onPressed(context, index, title),
           );
         }
-      },
-    );
-  }
-}
-
-class TitlesChainRichTextBuilder extends StatelessWidget {
-  final List<TitleModel> titlesChains;
-  final Function(int index, TitleModel title) onPressed;
-
-  const TitlesChainRichTextBuilder({
-    super.key,
-    required this.titlesChains,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final List<InlineSpan> spans = titlesChains.map((title) {
-      return TextSpan(
-        text: title.name,
-        style: TextStyle(
-          fontSize: 15,
-          color: Theme.of(context).colorScheme.secondary,
-          fontWeight: FontWeight.bold,
-        ),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => onPressed(titlesChains.indexOf(title), title),
-      );
-    }).toList();
-
-    // The item to insert between the spans
-    final InlineSpan separator = WidgetSpan(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Text("/"),
-    ));
-
-// Interleave the separator between the spans
-    final List<InlineSpan> interleavedSpans = spans.expand((span) sync* {
-      yield span;
-      if (span != spans.last) {
-        yield separator;
-      }
-    }).toList();
-
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Text.rich(TextSpan(children: interleavedSpans)),
-    );
-  }
-}
-
-class TitlesChainBreadCrumbBuilder extends StatelessWidget {
-  final List<TitleModel> titlesChains;
-  final Function(int index, TitleModel title) onPressed;
-
-  const TitlesChainBreadCrumbBuilder({
-    super.key,
-    required this.titlesChains,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: BreadCrumb.builder(
-        itemCount: titlesChains.length,
-        builder: (index) {
-          return BreadCrumbItem(
-            content: BreadCrumbItemBuilder(
-              index: index,
-              titlesChains: titlesChains,
-              onPressed: onPressed,
-            ),
-          );
-        },
-        divider: Text(
-          '/',
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.grey,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class BreadCrumbItemBuilder extends StatelessWidget {
-  final int index;
-  final List<TitleModel> titlesChains;
-  final Function(int index, TitleModel title)? onPressed;
-  const BreadCrumbItemBuilder({
-    super.key,
-    required this.index,
-    required this.titlesChains,
-    this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final title = titlesChains[index];
-
-    if (index == 0) {
-      return TextButton(
-        child: Text(
-          title.name,
-        ),
-        onPressed: () {
-          onPressed?.call(index, title);
-        },
-      );
-    } else if (index == titlesChains.length - 1) {
-      return TextButton(
-        child: Text(
-          title.name,
-        ),
-        onPressed: () {
-          onPressed?.call(index, title);
-        },
-      );
-    }
-    return TextButton(
-      child: Text(
-        title.name,
-      ),
-      onPressed: () {
-        onPressed?.call(index, title);
       },
     );
   }
