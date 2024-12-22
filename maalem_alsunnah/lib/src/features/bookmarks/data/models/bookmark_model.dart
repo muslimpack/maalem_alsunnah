@@ -38,4 +38,26 @@ class BookmarkModel extends BookmarkEntity {
       'updateDate': updateDate.toIso8601String(),
     };
   }
+
+  BookmarkModel copyWith({
+    int? id,
+    int? itemId,
+    BookmarkType? type,
+    bool? isBookmarked,
+    bool? isRead,
+    String? note,
+    DateTime? addedDate,
+    DateTime? updateDate,
+  }) {
+    return BookmarkModel(
+      id: id ?? this.id,
+      itemId: itemId ?? this.itemId,
+      type: type ?? this.type,
+      isBookmarked: isBookmarked ?? this.isBookmarked,
+      isRead: isRead ?? this.isRead,
+      note: note ?? this.note,
+      addedDate: addedDate ?? this.addedDate,
+      updateDate: updateDate ?? this.updateDate,
+    );
+  }
 }

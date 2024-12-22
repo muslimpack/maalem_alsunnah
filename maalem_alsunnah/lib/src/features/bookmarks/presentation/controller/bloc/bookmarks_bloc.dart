@@ -54,8 +54,9 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     );
 
     try {
-      final result =
-          await bookmarkRepository.addOrUpdateBookmark(bookmark: bookmark);
+      final result = await bookmarkRepository.addOrUpdateBookmark(
+        bookmark: bookmark.copyWith(isBookmarked: event.isBookmarked),
+      );
       appPrint(result);
     } catch (e) {
       appPrint(e);
