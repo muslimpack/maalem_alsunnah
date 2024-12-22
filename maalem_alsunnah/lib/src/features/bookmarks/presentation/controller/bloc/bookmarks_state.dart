@@ -15,7 +15,7 @@ final class BookmarksLoadedState extends BookmarksState {
   List<BookmarkModel> get favorites =>
       bookmarks.where((element) => element.isBookmarked).toList();
   List<BookmarkModel> get notes =>
-      bookmarks.where((element) => element.note?.isNotEmpty ?? false).toList();
+      bookmarks.where((element) => element.note.isNotEmpty).toList();
   const BookmarksLoadedState({required this.bookmarks});
 
   @override
