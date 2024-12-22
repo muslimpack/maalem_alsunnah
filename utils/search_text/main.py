@@ -16,11 +16,11 @@ conn.create_function("REMOVE_DIACRITICS", 1, remove_diacritics)
 cursor = conn.cursor()
 cursor.execute("""
     UPDATE titles
-    SET search_text = REMOVE_DIACRITICS(name)
+    SET searchText = REMOVE_DIACRITICS(name)
 """)
 cursor.execute("""
     UPDATE contents
-    SET search_text = REMOVE_DIACRITICS(text)
+    SET searchText = REMOVE_DIACRITICS(text)
 """)
 conn.commit()
 conn.close()
