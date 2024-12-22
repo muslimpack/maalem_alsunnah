@@ -5,6 +5,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/add_note_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -90,6 +91,10 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
               children: [
                 FontSettingsIconButton(),
                 BookmarkButton(
+                  itemId: content.titleId,
+                  type: BookmarkType.title,
+                ),
+                MarkAsReadButton(
                   itemId: content.titleId,
                   type: BookmarkType.title,
                 ),
