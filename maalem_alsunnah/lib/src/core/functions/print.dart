@@ -12,7 +12,7 @@ void appPrint(Object? object) {
   );
 }
 
-void printColor(Object? object, {int color = 0, String name = "HISN"}) {
+void printColor(Object? object, {int color = 0, String name = "Maalem"}) {
   final orangeText = '\u001b[${color}m$object\u001b[0m';
   if (kDebugMode) {
     log(orangeText, name: name);
