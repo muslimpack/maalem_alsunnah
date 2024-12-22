@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -11,16 +12,23 @@ part 'content_viewer_state.dart';
 
 class ContentViewerCubit extends Cubit<ContentViewerState> {
   final HadithDbHelper hadithDbHelper;
-  late final Timer? _timer;
+  final HomeCubit homeCubit;
+  Timer? _timer;
   ContentViewerCubit(
     this.hadithDbHelper,
-  ) : super(ContentViewerLoadingState()) {
-    _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
+    this.homeCubit,
+  ) : super(ContentViewerLoadingState());
+
+  void _timePassed(Timer timer) {
+    final state = this.state;
+    if (state is! ContentViewerLoadedState) return;
+    homeCubit.updateLastReadTitle(state.content.titleId);
   }
 
-  void _timePassed(Timer timer) {}
-
   Future<void> start(int titleId) async {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
+
     final title = await hadithDbHelper.getTitleById(titleId);
     final content = await hadithDbHelper.getContentByTitleId(titleId);
     final contentCount = await hadithDbHelper.getContentCount();
