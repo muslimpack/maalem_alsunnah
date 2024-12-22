@@ -34,7 +34,9 @@ class TitleCard extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         title: Text(title.name),
-        subtitle: Text("عدد الفصول: ${title.subTitlesCount}"),
+        subtitle: title.subTitlesCount < 1
+            ? null
+            : Text("عدد الفصول: ${title.subTitlesCount}"),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
