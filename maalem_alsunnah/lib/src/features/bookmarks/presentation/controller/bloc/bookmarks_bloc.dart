@@ -30,111 +30,88 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     emit(BookmarksLoadedState(bookmarks: bookmarks));
   }
 
-  FutureOr<void> _bookmarkItem(
-    BookmarksBookmarkItemEvent event,
-    Emitter<BookmarksState> emit,
-  ) async {
+  FutureOr<void> _handleBookmarkEvent({
+    required int itemId,
+    required BookmarkType type,
+    required Emitter<BookmarksState> emit,
+    bool? isBookmarked,
+    bool? isRead,
+    String? note,
+  }) async {
     final state = this.state;
     if (state is! BookmarksLoadedState) return;
 
-    BookmarkModel? bookmark = state.bookmarks.where(
-      (element) {
-        return element.itemId == event.itemId && element.type == event.type;
-      },
-    ).firstOrNull;
+    // Find existing bookmark or create a new one
+    BookmarkModel? bookmark = state.bookmarks
+        .where(
+          (element) => element.itemId == itemId && element.type == type,
+        )
+        .firstOrNull;
+
     final timeStamp = DateTime.now();
     bookmark ??= BookmarkModel(
-      itemId: event.itemId,
-      type: event.type,
-      isBookmarked: event.isBookmarked,
-      isRead: false,
-      note: "",
+      itemId: itemId,
+      type: type,
+      isBookmarked: isBookmarked ?? false,
+      isRead: isRead ?? false,
+      note: note ?? "",
       addedDate: timeStamp,
       updateDate: timeStamp,
     );
 
+    // Update fields based on provided parameters
+    final updatedBookmark = bookmark.copyWith(
+      isBookmarked: isBookmarked ?? bookmark.isBookmarked,
+      isRead: isRead ?? bookmark.isRead,
+      note: note ?? bookmark.note,
+    );
+
     try {
-      final result = await bookmarkRepository.addOrUpdateBookmark(
-        bookmark: bookmark.copyWith(isBookmarked: event.isBookmarked),
+      await bookmarkRepository.addOrUpdateBookmark(
+        bookmark: updatedBookmark,
       );
-      appPrint(result);
     } catch (e) {
       appPrint(e);
     }
 
+    // Emit updated state
     final bookmarks = await bookmarkRepository.getBookmarks();
     emit(BookmarksLoadedState(bookmarks: bookmarks));
+  }
+
+  FutureOr<void> _bookmarkItem(
+    BookmarksBookmarkItemEvent event,
+    Emitter<BookmarksState> emit,
+  ) async {
+    await _handleBookmarkEvent(
+      itemId: event.itemId,
+      type: event.type,
+      emit: emit,
+      isBookmarked: event.isBookmarked,
+    );
   }
 
   FutureOr<void> _markItemAsRead(
     BookmarksMarkItemAsReadEvent event,
     Emitter<BookmarksState> emit,
   ) async {
-    final state = this.state;
-    if (state is! BookmarksLoadedState) return;
-
-    BookmarkModel? bookmark = state.bookmarks.where(
-      (element) {
-        return element.itemId == event.itemId && element.type == event.type;
-      },
-    ).firstOrNull;
-    final timeStamp = DateTime.now();
-    bookmark ??= BookmarkModel(
+    await _handleBookmarkEvent(
       itemId: event.itemId,
       type: event.type,
-      isBookmarked: false,
+      emit: emit,
       isRead: event.isRead,
-      note: "",
-      addedDate: timeStamp,
-      updateDate: timeStamp,
     );
-
-    try {
-      final result = await bookmarkRepository.addOrUpdateBookmark(
-        bookmark: bookmark.copyWith(isRead: event.isRead),
-      );
-      appPrint(result);
-    } catch (e) {
-      appPrint(e);
-    }
-
-    final bookmarks = await bookmarkRepository.getBookmarks();
-    emit(BookmarksLoadedState(bookmarks: bookmarks));
   }
 
   FutureOr<void> _note(
     BookmarksNoteEvent event,
     Emitter<BookmarksState> emit,
   ) async {
-    final state = this.state;
-    if (state is! BookmarksLoadedState) return;
-
-    BookmarkModel? bookmark = state.bookmarks.where(
-      (element) {
-        return element.itemId == event.itemId && element.type == event.type;
-      },
-    ).firstOrNull;
-    final timeStamp = DateTime.now();
-    bookmark ??= BookmarkModel(
+    await _handleBookmarkEvent(
       itemId: event.itemId,
       type: event.type,
-      isBookmarked: false,
-      isRead: false,
+      emit: emit,
       note: event.note,
-      addedDate: timeStamp,
-      updateDate: timeStamp,
     );
-
-    try {
-      final result = await bookmarkRepository.addOrUpdateBookmark(
-        bookmark: bookmark.copyWith(note: event.note),
-      );
-      appPrint(result);
-    } catch (e) {
-      appPrint(e);
-    }
-
-    final bookmarks = await bookmarkRepository.getBookmarks();
-    emit(BookmarksLoadedState(bookmarks: bookmarks));
   }
 }
