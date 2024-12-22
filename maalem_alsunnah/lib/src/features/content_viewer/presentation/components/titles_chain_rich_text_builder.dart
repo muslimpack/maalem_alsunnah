@@ -8,12 +8,14 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
   final List<TitleModel> titlesChains;
   final Function(int index, TitleModel title)? onPressed;
   final TextStyle? textStyle;
+  final TextAlign? textAlign;
 
   const TitlesChainRichTextBuilder({
     super.key,
     required this.titlesChains,
     this.onPressed,
     this.textStyle,
+    this.textAlign,
   });
 
   @override
@@ -36,11 +38,10 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
     }).toList();
 
     // The item to insert between the spans
-    final InlineSpan separator = WidgetSpan(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Text("/", style: textStyle ?? defaultTextStyle),
-    ));
+    final InlineSpan separator = TextSpan(
+      text: " » ",
+      style: textStyle ?? defaultTextStyle,
+    );
 
 // Interleave the separator between the spans
     final List<InlineSpan> interleavedSpans = spans.expand((span) sync* {
@@ -55,6 +56,7 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
       child: Text.rich(
         TextSpan(children: interleavedSpans),
         style: const TextStyle(fontSize: 15, height: 2),
+        textAlign: textAlign,
       ),
     );
   }
