@@ -24,8 +24,13 @@ class HomeCubit extends Cubit<HomeState> {
 
     TitleModel? lastReadTitle;
     final lastReadTitleId = homeRepo.lastReadTitleId;
+
+    double readProgress = 0;
     if (lastReadTitleId != null) {
       lastReadTitle = await hadithDbHelper.getTitleById(lastReadTitleId);
+      final content = await hadithDbHelper.getContentByTitleId(lastReadTitleId);
+      final contentCount = await hadithDbHelper.getContentCount();
+      readProgress = content.id / contentCount;
     }
     appPrint(lastReadTitle);
     emit(
@@ -34,6 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
         search: false,
         tabIndex: 0,
         lastReadTitle: lastReadTitle,
+        readProgress: readProgress,
       ),
     );
   }
@@ -60,9 +66,14 @@ class HomeCubit extends Cubit<HomeState> {
     lastReadTitle = await hadithDbHelper.getTitleById(titleId);
     await homeRepo.setLastReadTitleId(titleId);
 
-    appPrint(lastReadTitle);
+    final content = await hadithDbHelper.getContentByTitleId(titleId);
+    final contentCount = await hadithDbHelper.getContentCount();
+    double readProgress = content.id / contentCount;
 
-    emit(state.copyWith(lastReadTitle: Wrapped.value(lastReadTitle)));
+    emit(state.copyWith(
+      lastReadTitle: Wrapped.value(lastReadTitle),
+      readProgress: readProgress,
+    ));
   }
 
   @override

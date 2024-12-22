@@ -355,6 +355,22 @@ LIMIT ? OFFSET ?
 
   ///*********************************** */
   ///MARK: contents
+  Future<int> getContentCount() async {
+    final Database db = await database;
+
+    // Execute the raw SQL query to count the rows
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT COUNT(*) as count FROM contents');
+
+    // Extract the count from the result
+    if (result.isNotEmpty) {
+      return result.first['count'] as int;
+    }
+
+    // Return 0 if no rows exist
+    return 0;
+  }
+
   Future<ContentModel> getContentByTitleId(int titleId) async {
     final Database db = await database;
 
