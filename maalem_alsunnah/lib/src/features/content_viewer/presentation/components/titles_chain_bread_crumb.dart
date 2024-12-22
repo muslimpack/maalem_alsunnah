@@ -49,37 +49,6 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
     super.didUpdateWidget(oldWidget);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: titlesChains,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: LinearProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              snapshot.error.toString(),
-            ),
-          );
-        } else {
-          return TitlesChainRichTextBuilder(titlesChains: snapshot.data!);
-        }
-      },
-    );
-  }
-}
-
-class TitlesChainRichTextBuilder extends StatelessWidget {
-  const TitlesChainRichTextBuilder({
-    super.key,
-    required this.titlesChains,
-  });
-
-  final List<TitleModel> titlesChains;
-
   void onPressed(BuildContext context, int index, TitleModel title) {
     bool titleFoundInStack = false;
     for (var route in routeStack) {
@@ -110,6 +79,42 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: titlesChains,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: LinearProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text(
+              snapshot.error.toString(),
+            ),
+          );
+        } else {
+          return TitlesChainRichTextBuilder(
+            titlesChains: snapshot.data!,
+            onPressed: (index, title) => onPressed(context, index, title),
+          );
+        }
+      },
+    );
+  }
+}
+
+class TitlesChainRichTextBuilder extends StatelessWidget {
+  final List<TitleModel> titlesChains;
+  final Function(int index, TitleModel title) onPressed;
+
+  const TitlesChainRichTextBuilder({
+    super.key,
+    required this.titlesChains,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final List<InlineSpan> spans = titlesChains.map((title) {
       return TextSpan(
         text: title.name,
@@ -119,8 +124,7 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         recognizer: TapGestureRecognizer()
-          ..onTap =
-              () => onPressed(context, titlesChains.indexOf(title), title),
+          ..onTap = () => onPressed(titlesChains.indexOf(title), title),
       );
     }).toList();
 
@@ -147,12 +151,14 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
 }
 
 class TitlesChainBreadCrumbBuilder extends StatelessWidget {
+  final List<TitleModel> titlesChains;
+  final Function(int index, TitleModel title) onPressed;
+
   const TitlesChainBreadCrumbBuilder({
     super.key,
     required this.titlesChains,
+    required this.onPressed,
   });
-
-  final List<TitleModel> titlesChains;
 
   @override
   Widget build(BuildContext context) {
@@ -165,33 +171,7 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
             content: BreadCrumbItemBuilder(
               index: index,
               titlesChains: titlesChains,
-              onPressed: (index, title) {
-                bool titleFoundInStack = false;
-                for (var route in routeStack) {
-                  final int? routeTitleId = route.settings.arguments as int?;
-                  if (routeTitleId != null && title.id == routeTitleId) {
-                    titleFoundInStack = true;
-                    break;
-                  }
-                  appPrint(title);
-                }
-                if (titleFoundInStack) {
-                  Navigator.popUntil(context,
-                      (r) => (r.settings.arguments as int) == title.id);
-                } else {
-                  if (routeStack.length <= 1) {
-                    context.pushNamed(
-                      ContentViewerScreen.routeName,
-                      arguments: title.id,
-                    );
-                  } else {
-                    Navigator.of(context).pushReplacementNamed(
-                      ContentViewerScreen.routeName,
-                      arguments: title.id,
-                    );
-                  }
-                }
-              },
+              onPressed: onPressed,
             ),
           );
         },
