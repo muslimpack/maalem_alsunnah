@@ -17,43 +17,43 @@ class BookmarksStartEvent extends BookmarksEvent {
 }
 
 class BookmarksBookmarkItemEvent extends BookmarksEvent {
-  final int? titleId;
-  final int? hadithId;
+  final int itemId;
+  final BookmarkType type;
   final bool isBookmarked;
   const BookmarksBookmarkItemEvent({
-    this.titleId,
-    this.hadithId,
+    required this.itemId,
+    required this.type,
     required this.isBookmarked,
   });
 
   @override
-  List<Object?> get props => [titleId, hadithId, isBookmarked];
+  List<Object?> get props => [itemId, type, isBookmarked];
 }
 
 class BookmarksMarkItemAsReadEvent extends BookmarksEvent {
-  final int? titleId;
-  final int? hadithId;
+  final int itemId;
+  final BookmarkType type;
   final bool isRead;
   const BookmarksMarkItemAsReadEvent({
-    this.titleId,
-    this.hadithId,
+    required this.itemId,
+    required this.type,
     required this.isRead,
   });
 
   @override
-  List<Object?> get props => [titleId, hadithId, isRead];
+  List<Object?> get props => [itemId, type, isRead];
 }
 
 class BookmarksNoteEvent extends BookmarksEvent {
-  final int? titleId;
-  final int? hadithId;
+  final int itemId;
+  final BookmarkType type;
   final String note;
   const BookmarksNoteEvent({
-    this.titleId,
-    this.hadithId,
+    required this.itemId,
+    required this.type,
     required this.note,
   });
 
   @override
-  List<Object?> get props => [titleId, hadithId, note];
+  List<Object?> get props => [itemId, type, note];
 }
