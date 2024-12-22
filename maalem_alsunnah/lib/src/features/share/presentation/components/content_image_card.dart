@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/hadith_image_card_settings.dart';
@@ -9,6 +10,7 @@ import 'package:maalem_alsunnah/src/features/share/presentation/components/dot_b
 class ContentImageCard extends StatelessWidget {
   final ContentModel content;
   final TitleModel title;
+  final List<TitleModel> titleChain;
   final HadithImageCardSettings settings;
   final TextRange? matnRange;
   final int splittedLength;
@@ -17,6 +19,7 @@ class ContentImageCard extends StatelessWidget {
     super.key,
     required this.content,
     required this.title,
+    required this.titleChain,
     required this.settings,
     this.matnRange,
     this.splittedLength = 0,
@@ -108,10 +111,10 @@ class ContentImageCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  title.name,
+                TitlesChainRichTextBuilder(
+                  titlesChains: titleChain.sublist(0, titleChain.length - 1),
+                  textStyle: secondaryTextStyle,
                   textAlign: TextAlign.center,
-                  style: secondaryTextStyle,
                 ),
                 const SizedBox(height: 30),
                 Expanded(

@@ -46,8 +46,10 @@ class ShareImageCubit extends Cubit<ShareImageState> {
       case ShareType.content:
         final content = await hadithDbHelper.getContentById(itemId);
         final title = await hadithDbHelper.getTitleById(content.titleId);
+        final titleChain = await hadithDbHelper.getTitleChain(content.titleId);
         imageCardArgs.add(content);
         imageCardArgs.add(title);
+        imageCardArgs.add(titleChain);
         text = content.text;
         wordsCountPerSize = 300;
         imageSize = Size(1500, 1920);

@@ -78,6 +78,8 @@ class ShareAsImageScreen extends StatelessWidget {
                           ShareType.content => ContentImageCard(
                               content: state.imageCardArgs[0] as ContentModel,
                               title: state.imageCardArgs[1] as TitleModel,
+                              titleChain:
+                                  state.imageCardArgs[2] as List<TitleModel>,
                               settings: state.settings,
                               matnRange: state.splittedMatn[index],
                               splittedLength: state.splittedMatn.length,
