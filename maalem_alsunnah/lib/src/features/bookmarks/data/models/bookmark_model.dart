@@ -29,7 +29,6 @@ class BookmarkModel extends BookmarkEntity {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'itemId': itemId,
       'type': type.name,
       'isBookmarked': isBookmarked,
