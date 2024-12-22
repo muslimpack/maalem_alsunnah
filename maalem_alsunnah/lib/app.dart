@@ -7,6 +7,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_router.dart';
+import 'package:maalem_alsunnah/src/core/utils/scroll_behavior.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_screen.dart';
@@ -41,6 +42,7 @@ class App extends StatelessWidget {
             // supportedLocales: S.delegate.supportedLocales,
             supportedLocales: const [Locale('ar')],
             debugShowCheckedModeBanner: false,
+            scrollBehavior: AppScrollBehavior(),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
