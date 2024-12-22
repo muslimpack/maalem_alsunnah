@@ -24,7 +24,11 @@ class ContinueReadingCard extends StatelessWidget {
           value: progress,
         ),
         ListTile(
-          leading: Icon(MdiIcons.bookOpenPageVariant),
+          leading: Icon(
+            title.subTitlesCount > 0
+                ? MdiIcons.bookOpenPageVariant
+                : MdiIcons.bookOpenPageVariantOutline,
+          ),
           subtitle: Text(title.name),
           title: Text(S.of(context).continueReading),
           onTap: () {
