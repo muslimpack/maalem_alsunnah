@@ -26,6 +26,7 @@ class ContentScreen extends StatelessWidget {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TitlesChainBreadCrumb(titleId: state.content.titleId),
           Expanded(

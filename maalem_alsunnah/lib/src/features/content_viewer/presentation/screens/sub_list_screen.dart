@@ -20,6 +20,7 @@ class SubListScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TitlesChainBreadCrumb(titleId: state.title.id),
           Expanded(
