@@ -382,6 +382,17 @@ LIMIT ? OFFSET ?
     }).first;
   }
 
+  Future<ContentModel> getContentById(int contentId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('''SELECT * from contents where id = ?''', [contentId]);
+
+    return List.generate(maps.length, (i) {
+      return ContentModel.fromMap(maps[i]);
+    }).first;
+  }
+
   Future<List<ContentModel>> searchContent({
     required String searchText,
     required SearchType searchType,
