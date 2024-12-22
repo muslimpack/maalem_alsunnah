@@ -28,7 +28,7 @@ class BookmarkModel extends BookmarkEntity {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    final map = <String, dynamic>{
       'itemId': itemId,
       'type': type.name,
       'isBookmarked': isBookmarked ? 1 : 0,
@@ -37,6 +37,10 @@ class BookmarkModel extends BookmarkEntity {
       'addedDate': addedDate.toIso8601String(),
       'updateDate': updateDate.toIso8601String(),
     };
+    if (id != -1) {
+      map['id'] = id;
+    }
+    return map;
   }
 
   BookmarkModel copyWith({
