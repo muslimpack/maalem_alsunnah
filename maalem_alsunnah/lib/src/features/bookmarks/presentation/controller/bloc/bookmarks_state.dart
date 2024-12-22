@@ -12,20 +12,41 @@ final class BookmarksLoadingState extends BookmarksState {}
 
 final class BookmarksLoadedState extends BookmarksState {
   final List<BookmarkModel> bookmarks;
-  List<BookmarkModel> get favorites =>
-      bookmarks.where((element) => element.isBookmarked).toList();
-  List<BookmarkModel> get notes =>
-      bookmarks.where((element) => element.note.isNotEmpty).toList();
-  const BookmarksLoadedState({required this.bookmarks});
+  final List<TitleModel> bookmarkedTitle;
+  List<TitleModel> get favorites {
+    final favorites =
+        bookmarks.where((element) => element.isBookmarked).toList();
+
+    return favorites
+        .map((e) =>
+            bookmarkedTitle.firstWhere((element) => element.id == e.itemId))
+        .toList();
+  }
+
+  List<TitleModel> get notes {
+    final notes =
+        bookmarks.where((element) => element.note.isNotEmpty).toList();
+    return notes
+        .map((e) =>
+            bookmarkedTitle.firstWhere((element) => element.id == e.itemId))
+        .toList();
+  }
+
+  const BookmarksLoadedState({
+    required this.bookmarks,
+    required this.bookmarkedTitle,
+  });
 
   @override
   List<Object> get props => [bookmarks];
 
   BookmarksLoadedState copyWith({
     List<BookmarkModel>? bookmarks,
+    List<TitleModel>? bookmarkedTitle,
   }) {
     return BookmarksLoadedState(
       bookmarks: bookmarks ?? this.bookmarks,
+      bookmarkedTitle: bookmarkedTitle ?? this.bookmarkedTitle,
     );
   }
 }

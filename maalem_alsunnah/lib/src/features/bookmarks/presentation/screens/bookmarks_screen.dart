@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 
 class BookmarksScreen extends StatelessWidget {
@@ -23,19 +24,8 @@ class BookmarksScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           itemCount: state.favorites.length,
           itemBuilder: (context, index) {
-            return Card(
-              clipBehavior: Clip.hardEdge,
-              child: ListTile(
-                onTap: () {},
-                leading: Icon(
-                  Icons.bookmark_rounded,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                subtitle: Text("Hadith $index"),
-                title: Text("Hadith $index"),
-                trailing: Icon(Icons.chevron_right_outlined),
-              ),
-            );
+            final title = state.favorites[index];
+            return TitleCard(title: title);
           },
         );
       },

@@ -7,16 +7,21 @@ import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark_repository.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_model.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
 part 'bookmarks_event.dart';
 part 'bookmarks_state.dart';
 
 class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   final BookmarkRepository bookmarkRepository;
+  final HadithDbHelper hadithDbHelper;
   BookmarksBloc(
     this.bookmarkRepository,
+    this.hadithDbHelper,
   ) : super(BookmarksLoadingState()) {
     on<BookmarksStartEvent>(_start);
+    on<BookmarksLoadDataEvent>(_loadData);
     on<BookmarksBookmarkItemEvent>(_bookmarkItem);
     on<BookmarksMarkItemAsReadEvent>(_markItemAsRead);
     on<BookmarksNoteEvent>(_note);
@@ -26,8 +31,34 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     BookmarksStartEvent event,
     Emitter<BookmarksState> emit,
   ) async {
+    add(BookmarksLoadDataEvent());
+  }
+
+  FutureOr<void> _loadData(
+    BookmarksLoadDataEvent event,
+    Emitter<BookmarksState> emit,
+  ) async {
     final bookmarks = await bookmarkRepository.getBookmarks();
-    emit(BookmarksLoadedState(bookmarks: bookmarks));
+    final List<TitleModel> titles = [];
+    for (var item in bookmarks) {
+      switch (item.type) {
+        case BookmarkType.hadith:
+
+          ///TODO
+          break;
+
+        case BookmarkType.title:
+          final title = await hadithDbHelper.getTitleById(item.itemId);
+          if (title != null) {
+            titles.add(title);
+          }
+          break;
+      }
+    }
+    emit(BookmarksLoadedState(
+      bookmarks: bookmarks,
+      bookmarkedTitle: titles,
+    ));
   }
 
   FutureOr<void> _handleBookmarkEvent({
@@ -75,8 +106,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     }
 
     // Emit updated state
-    final bookmarks = await bookmarkRepository.getBookmarks();
-    emit(BookmarksLoadedState(bookmarks: bookmarks));
+    add(BookmarksLoadDataEvent());
   }
 
   FutureOr<void> _bookmarkItem(
