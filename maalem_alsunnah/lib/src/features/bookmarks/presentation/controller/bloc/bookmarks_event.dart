@@ -16,6 +16,13 @@ class BookmarksStartEvent extends BookmarksEvent {
   List<Object?> get props => [];
 }
 
+class BookmarksLoadDataEvent extends BookmarksEvent {
+  const BookmarksLoadDataEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class BookmarksBookmarkItemEvent extends BookmarksEvent {
   final int itemId;
   final BookmarkType type;
