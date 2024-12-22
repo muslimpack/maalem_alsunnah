@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_model.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -65,14 +66,15 @@ class BookmarkRepository {
   Future<void> _onCreateDatabase(Database db, int version) async {
     /// Create bookmark table
     await db.execute('''
-    CREATE TABLE IF NOT EXISTS bookmarks(
+    CREATE TABLE IF NOT EXISTS bookmarks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      titleId INTEGER ,
-      hadithId INTEGER ,
+      itemId INTEGER NOT NULL,
+      type TEXT NOT NULL,
       isBookmarked INTEGER NOT NULL,
       isRead INTEGER NOT NULL,
-      addedDate INTEGER DEFAULT (strftime('%s', 'now')) NOT NULL
-      updateDate INTEGER DEFAULT (strftime('%s', 'now')) NOT NULL
+      note TEXT NOT NULL,
+      addedDate INTEGER NOT NULL,
+      updateDate INTEGER NOT NULL
     );
     ''');
   }
@@ -97,62 +99,27 @@ class BookmarkRepository {
   ///MARK: Functions
 
   // Add or update bookmark
-  Future<void> bookmarkItem({
-    int? titleId,
-    int? hadithId,
-    required bool isBookmarked,
+  Future<int> addOrUpdateBookmark({
+    required BookmarkModel bookmark,
   }) async {
     final Database db = await database;
-
-    await db.insert(
+    // Update existing bookmark
+    return db.insert(
       'bookmarks',
-      {
-        'titleId': titleId,
-        'hadithId': hadithId,
-        'isBookmarked': isBookmarked ? 1 : 0,
-        'updateDate': DateTime.now().toIso8601String(),
-      },
+      bookmark.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  // Mark item as read
-  Future<void> markAsRead({
-    int? titleId,
-    int? hadithId,
-    required bool isRead,
-  }) async {
+  // Delete bookmark
+  Future<void> deleteBookmark(
+      {required int itemId, required String type}) async {
     final Database db = await database;
 
-    await db.update(
+    await db.delete(
       'bookmarks',
-      {
-        'isRead': isRead ? 1 : 0,
-        'updateDate': DateTime.now().toIso8601String(),
-      },
-      where:
-          '(titleId = ? OR hadithId = ?) AND (titleId IS NOT NULL OR hadithId IS NOT NULL)',
-      whereArgs: [titleId, hadithId],
-    );
-  }
-
-  // Add or update a note
-  Future<void> addNote({
-    int? titleId,
-    int? hadithId,
-    required String note,
-  }) async {
-    final Database db = await database;
-
-    await db.update(
-      'bookmarks',
-      {
-        'note': note,
-        'updateDate': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-      },
-      where:
-          '(titleId = ? OR hadithId = ?) AND (titleId IS NOT NULL OR hadithId IS NOT NULL)',
-      whereArgs: [titleId, hadithId],
+      where: 'itemId = ? AND type = ?',
+      whereArgs: [itemId, type],
     );
   }
 
@@ -164,37 +131,20 @@ class BookmarkRepository {
   }
 
   // Check if item is bookmarked
-  Future<bool> isBookmarked({int? titleId, int? hadithId}) async {
+  Future<BookmarkModel?> isExist({
+    required int itemId,
+    required BookmarkType type,
+  }) async {
     final Database db = await database;
-    final List<Map<String, dynamic>> result = await db.query(
-      'bookmarks',
-      where: '(titleId = ? OR hadithId = ?) AND isBookmarked = 1',
-      whereArgs: [titleId, hadithId],
-    );
-    return result.isNotEmpty;
-  }
 
-  // Check if item is read
-  Future<bool> isRead({int? titleId, int? hadithId}) async {
-    final Database db = await database;
-    final List<Map<String, dynamic>> result = await db.query(
+    final List<Map<String, dynamic>> maps = await db.query(
       'bookmarks',
-      where: '(titleId = ? OR hadithId = ?) AND isRead = 1',
-      whereArgs: [titleId, hadithId],
+      where: 'itemId = ? AND type = ?',
+      whereArgs: [itemId, type],
     );
-    return result.isNotEmpty;
-  }
 
-  // Get note for item
-  Future<String?> getNote({int? titleId, int? hadithId}) async {
-    final Database db = await database;
-    final List<Map<String, dynamic>> result = await db.query(
-      'bookmarks',
-      columns: ['note'],
-      where: '(titleId = ? OR hadithId = ?)',
-      whereArgs: [titleId, hadithId],
-    );
-    return result.isNotEmpty ? result.first['note'] as String : null;
+    return List.generate(maps.length, (i) => BookmarkModel.fromMap(maps[i]))
+        .firstOrNull;
   }
 
   /// Close database
