@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
 part 'content_viewer_state.dart';
@@ -20,11 +21,16 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   void _timePassed(Timer timer) {}
 
   Future<void> start(int titleId) async {
+    final title = await hadithDbHelper.getTitleById(titleId);
     final content = await hadithDbHelper.getContentByTitleId(titleId);
     final contentCount = await hadithDbHelper.getContentCount();
 
     emit(
-      ContentViewerLoadedState(content: content, contentCount: contentCount),
+      ContentViewerLoadedState(
+        title: title!,
+        content: content,
+        contentCount: contentCount,
+      ),
     );
   }
 

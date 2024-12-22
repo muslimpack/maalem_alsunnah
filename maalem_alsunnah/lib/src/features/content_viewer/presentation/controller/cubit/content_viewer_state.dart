@@ -14,6 +14,7 @@ final class ContentViewerLoadingState extends ContentViewerState {
 }
 
 class ContentViewerLoadedState extends ContentViewerState {
+  final TitleModel title;
   final ContentModel content;
   final int contentCount;
 
@@ -22,18 +23,21 @@ class ContentViewerLoadedState extends ContentViewerState {
   bool get hasNext => content.id < contentCount - 1;
 
   const ContentViewerLoadedState({
+    required this.title,
     required this.content,
     required this.contentCount,
   });
 
   @override
-  List<Object> get props => [content];
+  List<Object> get props => [content, title, contentCount];
 
   ContentViewerLoadedState copyWith({
+    TitleModel? title,
     ContentModel? content,
     int? contentCount,
   }) {
     return ContentViewerLoadedState(
+      title: title ?? this.title,
       content: content ?? this.content,
       contentCount: contentCount ?? this.contentCount,
     );

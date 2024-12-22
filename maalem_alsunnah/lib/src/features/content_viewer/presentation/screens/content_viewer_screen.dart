@@ -40,7 +40,7 @@ class ContentViewerScreen extends StatelessWidget {
           }
           return Scaffold(
             appBar: AppBar(
-              title: Text(title.name),
+              title: Text(state.title.name),
               centerTitle: true,
             ),
             body: Column(
