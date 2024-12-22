@@ -9,6 +9,6 @@ Future<void> openURL(String url) async {
       await launchUrl(parsed, mode: LaunchMode.externalApplication);
     }
   } catch (e) {
-    appPrint("عقم ثققخق: $e");
+    appPrint(e);
   }
 }

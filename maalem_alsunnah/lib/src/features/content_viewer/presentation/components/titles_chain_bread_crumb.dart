@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
@@ -56,7 +55,6 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
         titleFoundInStack = true;
         break;
       }
-      appPrint(title);
     }
     if (titleFoundInStack) {
       Navigator.popUntil(

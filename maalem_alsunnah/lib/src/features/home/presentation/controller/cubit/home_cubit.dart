@@ -2,7 +2,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/models/wrapped.dart';
 import 'package:maalem_alsunnah/src/features/home/domain/repository/home_repo.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -32,7 +31,7 @@ class HomeCubit extends Cubit<HomeState> {
       final contentCount = await hadithDbHelper.getContentCount();
       readProgress = content.id / contentCount;
     }
-    appPrint(lastReadTitle);
+
     emit(
       HomeLoadedState(
         maqassedList: maqassedList,

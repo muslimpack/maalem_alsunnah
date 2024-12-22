@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -69,7 +68,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     if (contentId > 1 && contentId < state.contentCount) {
       final ContentModel nextContent =
           await hadithDbHelper.getContentById(contentId + by);
-      appPrint(nextContent.titleId);
+
       start(nextContent.titleId, isContent: true);
     }
   }
