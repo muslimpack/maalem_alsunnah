@@ -19,41 +19,47 @@ class ContentViewerBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        IconButton(
-          tooltip: S.of(context).previous,
-          onPressed: !state.hasPrevious
-              ? null
-              : () {
-                  context.read<ContentViewerCubit>().previousContent();
-                },
-          icon: Icon(Icons.arrow_back_ios),
-        ),
-        BookmarkButton(
-          itemId: state.content.titleId,
-          type: BookmarkType.title,
-        ),
-        MarkAsReadButton(
-          itemId: state.content.titleId,
-          type: BookmarkType.title,
-        ),
-        AddNoteButton(
-          itemId: state.content.titleId,
-          type: BookmarkType.title,
-        ),
-        IconButton(
-          tooltip: S.of(context).next,
-          onPressed: !state.hasNext
-              ? null
-              : () {
-                  context.read<ContentViewerCubit>().nextContent();
-                },
-          icon: Icon(Icons.arrow_forward_ios),
-        ),
+        LinearProgressIndicator(value: state.progress),
+        BottomAppBar(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              tooltip: S.of(context).previous,
+              onPressed: !state.hasPrevious
+                  ? null
+                  : () {
+                      context.read<ContentViewerCubit>().previousContent();
+                    },
+              icon: Icon(Icons.arrow_back_ios),
+            ),
+            BookmarkButton(
+              itemId: state.content.titleId,
+              type: BookmarkType.title,
+            ),
+            MarkAsReadButton(
+              itemId: state.content.titleId,
+              type: BookmarkType.title,
+            ),
+            AddNoteButton(
+              itemId: state.content.titleId,
+              type: BookmarkType.title,
+            ),
+            IconButton(
+              tooltip: S.of(context).next,
+              onPressed: !state.hasNext
+                  ? null
+                  : () {
+                      context.read<ContentViewerCubit>().nextContent();
+                    },
+              icon: Icon(Icons.arrow_forward_ios),
+            ),
+          ],
+        )),
       ],
-    ));
+    );
   }
 }
