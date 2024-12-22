@@ -8,7 +8,6 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/a
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
-import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 
 class ContentViewerBottomBar extends StatelessWidget {
   const ContentViewerBottomBar({
@@ -22,7 +21,7 @@ class ContentViewerBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
           tooltip: S.of(context).previous,
@@ -33,7 +32,6 @@ class ContentViewerBottomBar extends StatelessWidget {
                 },
           icon: Icon(Icons.arrow_back_ios),
         ),
-        FontSettingsIconButton(),
         BookmarkButton(
           itemId: state.content.titleId,
           type: BookmarkType.title,

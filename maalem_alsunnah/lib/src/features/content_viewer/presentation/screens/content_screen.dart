@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_bottom_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
+import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
 class ContentScreen extends StatelessWidget {
@@ -20,6 +21,9 @@ class ContentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(state.title.name),
         centerTitle: true,
+        actions: [
+          FontSettingsIconButton(),
+        ],
       ),
       body: Column(
         children: [
