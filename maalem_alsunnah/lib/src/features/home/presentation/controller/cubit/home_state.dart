@@ -17,21 +17,27 @@ class HomeLoadedState extends HomeState {
 
   final bool search;
 
+  final TitleModel? lastReadTitle;
+
   const HomeLoadedState({
     required this.maqassedList,
     required this.tabIndex,
     required this.search,
+    required this.lastReadTitle,
   });
 
   HomeLoadedState copyWith({
     List<TitleModel>? maqassedList,
     int? tabIndex,
     bool? search,
+    Wrapped<TitleModel?>? lastReadTitle,
   }) {
     return HomeLoadedState(
       maqassedList: maqassedList ?? this.maqassedList,
       tabIndex: tabIndex ?? this.tabIndex,
       search: search ?? this.search,
+      lastReadTitle:
+          lastReadTitle != null ? lastReadTitle.value : this.lastReadTitle,
     );
   }
 
@@ -40,5 +46,6 @@ class HomeLoadedState extends HomeState {
         maqassedList,
         tabIndex,
         search,
+        lastReadTitle,
       ];
 }
