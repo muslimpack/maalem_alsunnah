@@ -1,20 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 
 class BookmarkEntity extends Equatable {
   final int id;
-  final int? titleId;
-  final int? hadithId;
+  final int itemId;
+  final BookmarkType type;
   final bool isBookmarked;
   final bool isRead;
-  final String? note;
+  final String note;
   final DateTime addedDate;
   final DateTime updateDate;
 
   const BookmarkEntity({
     required this.id,
-    this.titleId,
-    this.hadithId,
+    required this.itemId,
+    required this.type,
     required this.isBookmarked,
     required this.isRead,
     required this.note,
@@ -23,11 +24,11 @@ class BookmarkEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props {
+  List<Object> get props {
     return [
       id,
-      titleId,
-      hadithId,
+      itemId,
+      type,
       isBookmarked,
       isRead,
       note,
