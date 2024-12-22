@@ -13,7 +13,7 @@ class BookmarksStartEvent extends BookmarksEvent {
   const BookmarksStartEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class BookmarksBookmarkItemEvent extends BookmarksEvent {
