@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/sub_titles_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -39,7 +41,13 @@ class TitleCard extends StatelessWidget {
         ),
         title: Text(title.name),
         subtitle: Text("عدد الفصول: ${title.subTitlesCount}"),
-        trailing: Icon(Icons.chevron_right_outlined),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BookmarkButton(itemId: title.id, type: BookmarkType.title),
+            Icon(Icons.chevron_right_outlined),
+          ],
+        ),
       ),
     );
   }
