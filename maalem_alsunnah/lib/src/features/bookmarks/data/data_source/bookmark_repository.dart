@@ -113,13 +113,13 @@ class BookmarkRepository {
 
   // Delete bookmark
   Future<void> deleteBookmark(
-      {required int itemId, required String type}) async {
+      {required int itemId, required BookmarkType type}) async {
     final Database db = await database;
 
     await db.delete(
       'bookmarks',
       where: 'itemId = ? AND type = ?',
-      whereArgs: [itemId, type],
+      whereArgs: [itemId, type.name],
     );
   }
 
@@ -140,7 +140,7 @@ class BookmarkRepository {
     final List<Map<String, dynamic>> maps = await db.query(
       'bookmarks',
       where: 'itemId = ? AND type = ?',
-      whereArgs: [itemId, type],
+      whereArgs: [itemId, type.name],
     );
 
     return List.generate(maps.length, (i) => BookmarkModel.fromMap(maps[i]))
