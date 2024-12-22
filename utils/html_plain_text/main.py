@@ -9,13 +9,16 @@ cursor = conn.cursor()
 html_converter = html2text.HTML2Text()
 html_converter.ignore_links = True  # Ignore links in the HTML
 html_converter.ignore_images = True  # Ignore images in the HTML
-html_converter.ignote_ = True  # Ignore images in the HTML
 html_converter.body_width = 0  # Prevent word wrapping for cleaner output
 html_converter.ignore_emphasis = True  # Ignore formatting like bold, italic, etc.
 
-# Function to render HTML as text
+# Function to render HTML as plain text and remove unwanted lines
 def render_html_as_text(html_content):
-    return html_converter.handle(html_content).strip()
+    # Convert HTML to text
+    text = html_converter.handle(html_content).strip()
+    # Remove the specific unwanted line
+    unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
+    return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
 
 # Fetch all rows with HTML content
 cursor.execute("SELECT id, html FROM contents")
