@@ -82,7 +82,7 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: BreadCrumb.builder(
         itemCount: titlesChains.length,
         builder: (index) {
@@ -127,7 +127,6 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        overflow: WrapOverflow(spacing: 10),
       ),
     );
   }
@@ -147,23 +146,18 @@ class BreadCrumbItemBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = titlesChains[index];
+
     if (index == 0) {
       return TextButton(
-        child: Row(
-          children: [
-            Icon(Icons.home_rounded),
-            SizedBox(width: 5),
-            Text(
-              title.name,
-            ),
-          ],
+        child: Text(
+          title.name,
         ),
         onPressed: () {
           onPressed?.call(index, title);
         },
       );
     } else if (index == titlesChains.length - 1) {
-      return FilledButton(
+      return TextButton(
         child: Text(
           title.name,
         ),
