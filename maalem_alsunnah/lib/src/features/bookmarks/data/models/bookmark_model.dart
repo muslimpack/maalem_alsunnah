@@ -4,7 +4,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/domain/entities/bookmark_
 
 class BookmarkModel extends BookmarkEntity {
   const BookmarkModel({
-    required super.id,
+    super.id = -1,
     required super.itemId,
     required super.type,
     required super.isBookmarked,
@@ -31,8 +31,8 @@ class BookmarkModel extends BookmarkEntity {
     return <String, dynamic>{
       'itemId': itemId,
       'type': type.name,
-      'isBookmarked': isBookmarked,
-      'isRead': isRead,
+      'isBookmarked': isBookmarked ? 1 : 0,
+      'isRead': isRead ? 1 : 0,
       'note': note,
       'addedDate': addedDate.toIso8601String(),
       'updateDate': updateDate.toIso8601String(),
