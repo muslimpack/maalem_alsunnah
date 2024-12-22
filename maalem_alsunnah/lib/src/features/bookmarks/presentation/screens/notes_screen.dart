@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 
-class BookmarksScreen extends StatelessWidget {
-  const BookmarksScreen({super.key});
+class NotesScreen extends StatelessWidget {
+  const NotesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,6 @@ class BookmarksScreen extends StatelessWidget {
         if (state is! BookmarksLoadedState) {
           return const Center(child: CircularProgressIndicator());
         }
-
         final homeState = context.read<HomeCubit>().state;
         if (homeState is! HomeLoadedState) {
           return const Center(child: CircularProgressIndicator());
@@ -21,14 +20,14 @@ class BookmarksScreen extends StatelessWidget {
 
         return ListView.builder(
           padding: const EdgeInsets.all(10),
-          itemCount: state.favorites.length,
+          itemCount: state.notes.length,
           itemBuilder: (context, index) {
             return Card(
               clipBehavior: Clip.hardEdge,
               child: ListTile(
                 onTap: () {},
                 leading: Icon(
-                  Icons.bookmark_rounded,
+                  Icons.library_books_outlined,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 subtitle: Text("Hadith $index"),

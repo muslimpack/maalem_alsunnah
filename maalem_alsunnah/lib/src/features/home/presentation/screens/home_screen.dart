@@ -5,7 +5,7 @@ import 'package:maalem_alsunnah/src/features/home/presentation/components/contin
 import 'package:maalem_alsunnah/src/features/home/presentation/components/home_app_bar.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/screens/notes_screen.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
