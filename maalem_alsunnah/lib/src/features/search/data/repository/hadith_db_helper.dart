@@ -227,7 +227,7 @@ GROUP BY
     });
   }
 
-  Future<TitleModel> getTitleById(int titleId) async {
+  Future<TitleModel?> getTitleById(int titleId) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
@@ -254,16 +254,20 @@ GROUP BY
 
     return List.generate(maps.length, (i) {
       return TitleModel.fromMap(maps[i]);
-    }).first;
+    }).firstOrNull;
   }
 
   Future<List<TitleModel>> getTitleChain(int titleId) async {
     final List<TitleModel> titles = [];
 
-    titles.add(await getTitleById(titleId));
+    final title = await getTitleById(titleId);
+    if (title == null) return titles;
+    titles.add(title);
 
     while (titles.last.parentId != -1) {
-      titles.add(await getTitleById(titles.last.parentId));
+      final title = await getTitleById(titles.last.parentId);
+      if (title == null) break;
+      titles.add(title);
     }
     return titles.reversed.toList();
   }
