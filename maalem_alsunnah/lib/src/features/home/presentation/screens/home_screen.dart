@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/bookmarks_screen.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/continue_reading_card.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/home_app_bar.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
-import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/notes_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,7 +84,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
           bottomNavigationBar:
-              tabController.index > 0 ? null : ContinueReadingCard(),
+              (tabController.index == 0) && (state.lastReadTitle != null)
+                  ? ContinueReadingCard(
+                      title: state.lastReadTitle!,
+                    )
+                  : null,
         );
       },
     );
