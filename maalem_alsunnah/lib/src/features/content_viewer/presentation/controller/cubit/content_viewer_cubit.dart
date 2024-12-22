@@ -64,12 +64,9 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
 
-    final contentId = state.content.id;
-    if (contentId > 1 && contentId < state.contentCount) {
-      final ContentModel nextContent =
-          await hadithDbHelper.getContentById(contentId + by);
-
-      start(nextContent.titleId, isContent: true);
+    final titleId = state.content.titleId;
+    if (titleId > 1 && titleId < state.contentCount) {
+      start(titleId + by, isContent: true);
     }
   }
 
