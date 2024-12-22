@@ -6,26 +6,32 @@ import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart
 
 class TitlesChainRichTextBuilder extends StatelessWidget {
   final List<TitleModel> titlesChains;
-  final Function(int index, TitleModel title) onPressed;
+  final Function(int index, TitleModel title)? onPressed;
+  final TextStyle? textStyle;
 
   const TitlesChainRichTextBuilder({
     super.key,
     required this.titlesChains,
-    required this.onPressed,
+    this.onPressed,
+    this.textStyle,
   });
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle defaultTextStyle = TextStyle(
+      fontSize: 15,
+      color: Theme.of(context).colorScheme.secondary,
+      fontWeight: FontWeight.bold,
+    );
     final List<InlineSpan> spans = titlesChains.map((title) {
       return TextSpan(
         text: title.name,
-        style: TextStyle(
-          fontSize: 15,
-          color: Theme.of(context).colorScheme.secondary,
-          fontWeight: FontWeight.bold,
-        ),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => onPressed(titlesChains.indexOf(title), title),
+        style: textStyle ?? defaultTextStyle,
+        recognizer: onPressed == null
+            ? null
+            : (TapGestureRecognizer()
+              ..onTap =
+                  () => onPressed?.call(titlesChains.indexOf(title), title)),
       );
     }).toList();
 
@@ -33,7 +39,7 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
     final InlineSpan separator = WidgetSpan(
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Text("/"),
+      child: Text("/", style: textStyle ?? defaultTextStyle),
     ));
 
 // Interleave the separator between the spans
