@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/note_dialog.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
@@ -29,6 +30,7 @@ class AddNoteButton extends StatelessWidget {
             .firstOrNull;
 
         return IconButton(
+          tooltip: S.of(context).addNotes,
           onPressed: () {
             showNoteDialog(context, itemId: itemId, type: type);
           },

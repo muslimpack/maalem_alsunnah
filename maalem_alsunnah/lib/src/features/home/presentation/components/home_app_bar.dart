@@ -31,7 +31,7 @@ class HomeAppBar extends StatelessWidget {
       actions: [
         if (!state.search)
           IconButton(
-            tooltip: S.of(context).settings,
+            tooltip: S.of(context).search,
             onPressed: () {
               sl<HomeCubit>().toggleSearch(!state.search);
               tabController.animateTo(1);
@@ -40,7 +40,7 @@ class HomeAppBar extends StatelessWidget {
           )
         else
           IconButton(
-            tooltip: S.of(context).settings,
+            tooltip: S.of(context).close,
             onPressed: () {
               sl<HomeCubit>().toggleSearch(!state.search);
             },

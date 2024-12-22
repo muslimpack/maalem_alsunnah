@@ -60,6 +60,26 @@ class S {
     );
   }
 
+  /// `Add bookmark`
+  String get addBookmark {
+    return Intl.message(
+      'Add bookmark',
+      name: 'addBookmark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add notes`
+  String get addNotes {
+    return Intl.message(
+      'Add notes',
+      name: 'addNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `#maalem_alsunnah`
   String get appHashtag {
     return Intl.message(
@@ -170,6 +190,16 @@ class S {
     );
   }
 
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Decrease font size`
   String get fontDecreaseSize {
     return Intl.message(
@@ -270,11 +300,41 @@ class S {
     );
   }
 
+  /// `Mark as read`
+  String get markAsRead {
+    return Intl.message(
+      'Mark as read',
+      name: 'markAsRead',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as unread`
+  String get markAsUnread {
+    return Intl.message(
+      'Mark as unread',
+      name: 'markAsUnread',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Misspelled`
   String get misspelled {
     return Intl.message(
       'Misspelled',
       name: 'misspelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get next {
+    return Intl.message(
+      'Next',
+      name: 'next',
       desc: '',
       args: [],
     );
@@ -340,11 +400,31 @@ class S {
     );
   }
 
+  /// `Previous`
+  String get previous {
+    return Intl.message(
+      'Previous',
+      name: 'previous',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Refresh`
   String get refresh {
     return Intl.message(
       'Refresh',
       name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove bookmark`
+  String get removeBookmark {
+    return Intl.message(
+      'Remove bookmark',
+      name: 'removeBookmark',
       desc: '',
       args: [],
     );

@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("Typical"),
         "aboutApp": MessageLookupByLibrary.simpleMessage("About app"),
+        "addBookmark": MessageLookupByLibrary.simpleMessage("Add bookmark"),
+        "addNotes": MessageLookupByLibrary.simpleMessage("Add notes"),
         "appHashtag": MessageLookupByLibrary.simpleMessage("#maalem_alsunnah"),
         "appTitle": MessageLookupByLibrary.simpleMessage("Maalem Al-Sunnah"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
@@ -38,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "displayedResultsCount":
             MessageLookupByLibrary.simpleMessage("Displayed results count"),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
         "fontDecreaseSize":
             MessageLookupByLibrary.simpleMessage("Decrease font size"),
         "fontIncreaseSize":
@@ -55,7 +58,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "The Prophetic Sunnah from the most authentic to the weakest"),
         "index": MessageLookupByLibrary.simpleMessage("Index"),
+        "markAsRead": MessageLookupByLibrary.simpleMessage("Mark as read"),
+        "markAsUnread": MessageLookupByLibrary.simpleMessage("Mark as unread"),
         "misspelled": MessageLookupByLibrary.simpleMessage("Misspelled"),
+        "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "That\'s it, there are no more results."),
         "noResultsFound":
@@ -65,7 +71,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Pray for us and our parents."),
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("App language"),
         "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+        "previous": MessageLookupByLibrary.simpleMessage("Previous"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+        "removeBookmark":
+            MessageLookupByLibrary.simpleMessage("Remove bookmark"),
         "reportMisspelled":
             MessageLookupByLibrary.simpleMessage("Report misspelled"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),

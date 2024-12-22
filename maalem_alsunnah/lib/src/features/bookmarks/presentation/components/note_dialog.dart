@@ -102,6 +102,7 @@ class _NoteDialogState extends State<NoteDialog> {
                   ),
                 ),
               ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: [
           IconButton(
             tooltip: S.of(context).clear,
@@ -109,7 +110,7 @@ class _NoteDialogState extends State<NoteDialog> {
             onPressed: onClear,
           ),
           IconButton(
-            tooltip: S.of(context).apply,
+            tooltip: S.of(context).done,
             icon: const Icon(Icons.done_all_rounded),
             onPressed: onDone,
           ),

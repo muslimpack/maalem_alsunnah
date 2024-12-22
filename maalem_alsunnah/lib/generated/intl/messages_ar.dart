@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
         "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
+        "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
+        "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
         "appHashtag":
             MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
         "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
@@ -39,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "displayedResultsCount":
             MessageLookupByLibrary.simpleMessage("عدد النتائج المعروضة"),
+        "done": MessageLookupByLibrary.simpleMessage("تم"),
         "fontDecreaseSize":
             MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
         "fontIncreaseSize":
@@ -56,7 +59,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة"),
         "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
+        "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
+        "markAsUnread":
+            MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
         "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
+        "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "هذا كل شيء لا مزيد من النتائج."),
         "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
@@ -66,7 +73,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("لغة التطبيق"),
         "prefThemeDarkMode":
             MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
+        "previous": MessageLookupByLibrary.simpleMessage("السابق"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
+        "removeBookmark":
+            MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
         "reportMisspelled":
             MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
         "search": MessageLookupByLibrary.simpleMessage("بحث"),

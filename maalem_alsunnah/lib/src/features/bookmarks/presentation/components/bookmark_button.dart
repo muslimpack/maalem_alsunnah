@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 
@@ -26,6 +27,7 @@ class BookmarkButton extends StatelessWidget {
             element.isBookmarked);
         if (isBookmarked) {
           return IconButton(
+            tooltip: S.of(context).removeBookmark,
             onPressed: () {
               context.read<BookmarksBloc>().add(
                     BookmarksBookmarkItemEvent(
@@ -39,6 +41,7 @@ class BookmarkButton extends StatelessWidget {
           );
         }
         return IconButton(
+          tooltip: S.of(context).addBookmark,
           onPressed: () {
             context.read<BookmarksBloc>().add(
                   BookmarksBookmarkItemEvent(

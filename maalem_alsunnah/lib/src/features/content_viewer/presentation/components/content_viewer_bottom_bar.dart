@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/add_note_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
@@ -24,6 +25,7 @@ class ContentViewerBottomBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         IconButton(
+          tooltip: S.of(context).previous,
           onPressed: !state.hasPrevious
               ? null
               : () {
@@ -45,6 +47,7 @@ class ContentViewerBottomBar extends StatelessWidget {
           type: BookmarkType.title,
         ),
         IconButton(
+          tooltip: S.of(context).next,
           onPressed: !state.hasNext
               ? null
               : () {
