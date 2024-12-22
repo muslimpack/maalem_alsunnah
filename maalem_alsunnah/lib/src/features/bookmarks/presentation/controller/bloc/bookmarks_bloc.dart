@@ -69,9 +69,72 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   FutureOr<void> _markItemAsRead(
     BookmarksMarkItemAsReadEvent event,
     Emitter<BookmarksState> emit,
-  ) async {}
+  ) async {
+    final state = this.state;
+    if (state is! BookmarksLoadedState) return;
+
+    BookmarkModel? bookmark = state.bookmarks.where(
+      (element) {
+        return element.itemId == event.itemId && element.type == event.type;
+      },
+    ).firstOrNull;
+    final timeStamp = DateTime.now();
+    bookmark ??= BookmarkModel(
+      itemId: event.itemId,
+      type: event.type,
+      isBookmarked: false,
+      isRead: event.isRead,
+      note: "",
+      addedDate: timeStamp,
+      updateDate: timeStamp,
+    );
+
+    try {
+      final result = await bookmarkRepository.addOrUpdateBookmark(
+        bookmark: bookmark.copyWith(isRead: event.isRead),
+      );
+      appPrint(result);
+    } catch (e) {
+      appPrint(e);
+    }
+
+    final bookmarks = await bookmarkRepository.getBookmarks();
+    emit(BookmarksLoadedState(bookmarks: bookmarks));
+  }
+
   FutureOr<void> _note(
     BookmarksNoteEvent event,
     Emitter<BookmarksState> emit,
-  ) async {}
+  ) async {
+    final state = this.state;
+    if (state is! BookmarksLoadedState) return;
+
+    BookmarkModel? bookmark = state.bookmarks.where(
+      (element) {
+        return element.itemId == event.itemId && element.type == event.type;
+      },
+    ).firstOrNull;
+    final timeStamp = DateTime.now();
+    bookmark ??= BookmarkModel(
+      itemId: event.itemId,
+      type: event.type,
+      isBookmarked: false,
+      isRead: false,
+      note: event.note,
+      addedDate: timeStamp,
+      updateDate: timeStamp,
+    );
+
+    try {
+      final result = await bookmarkRepository.addOrUpdateBookmark(
+        bookmark: bookmark.copyWith(note: event.note),
+      );
+      appPrint(result);
+    } catch (e) {
+      appPrint(e);
+    }
+
+    final bookmarks = await bookmarkRepository.getBookmarks();
+    emit(BookmarksLoadedState(bookmarks: bookmarks));
+  }
 }
