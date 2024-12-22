@@ -28,7 +28,9 @@ class TitleCard extends StatelessWidget {
           );
         },
         leading: Icon(
-          MdiIcons.bookOpenPageVariant,
+          title.subTitlesCount > 0
+              ? MdiIcons.bookOpenPageVariant
+              : MdiIcons.bookOpenPageVariantOutline,
           color: Theme.of(context).colorScheme.primary,
         ),
         title: Text(title.name),
