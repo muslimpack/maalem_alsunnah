@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
@@ -7,6 +9,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/a
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -37,6 +40,7 @@ class ContentViewerScreen extends StatefulWidget {
 class _ContentViewerScreenState extends State<ContentViewerScreen> {
   bool isLoading = true;
   late final ContentModel content;
+  Timer? timer;
 
   @override
   void initState() {
@@ -46,9 +50,21 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
 
   Future init() async {
     content = await sl<HadithDbHelper>().getContentByTitleId(widget.title.id);
+    timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
+
     setState(() {
       isLoading = false;
     });
+  }
+
+  void _timePassed(Timer timer) {
+    sl<HomeCubit>().updateLastReadTitle(widget.title.id);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
