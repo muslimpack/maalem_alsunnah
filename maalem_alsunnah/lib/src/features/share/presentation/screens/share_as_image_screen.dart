@@ -1,23 +1,41 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:maalem_alsunnah/generated/l10n.dart';
-import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
-import 'package:maalem_alsunnah/src/features/share/presentation/components/hadith_as_image_card.dart';
-import 'package:maalem_alsunnah/src/features/share/presentation/controller/cubit/share_image_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
+import 'package:maalem_alsunnah/src/features/share/presentation/components/content_image_card.dart';
+import 'package:maalem_alsunnah/src/features/share/presentation/controller/cubit/share_image_cubit.dart';
 
 class ShareAsImageScreen extends StatelessWidget {
-  final Hadith hadith;
+  final int itemId;
+  final ShareType shareType;
+
+  static const String routeName = "/shareAsImage";
+
+  static Route route({required int itemId, required ShareType shareType}) {
+    return MaterialPageRoute(
+      settings: RouteSettings(
+        name: routeName,
+        arguments: {"itemId": itemId, "shareType": shareType},
+      ),
+      builder: (_) => ShareAsImageScreen(itemId: itemId, shareType: shareType),
+    );
+  }
+
   const ShareAsImageScreen({
     super.key,
-    required this.hadith,
+    required this.itemId,
+    required this.shareType,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ShareImageCubit>()..start(hadith),
+      create: (context) =>
+          sl<ShareImageCubit>()..start(itemId: itemId, shareType: shareType),
       child: BlocBuilder<ShareImageCubit, ShareImageState>(
         builder: (context, state) {
           if (state is! ShareImageLoadedState) {
@@ -56,13 +74,17 @@ class ShareAsImageScreen extends StatelessWidget {
                     FittedBox(
                       child: RepaintBoundary(
                         key: context.read<ShareImageCubit>().imageKeys[index],
-                        child: HadithAsImageCard(
-                          hadith: hadith,
-                          settings: state.settings,
-                          matnRange: state.splittedMatn[index],
-                          splittedLength: state.splittedMatn.length,
-                          splittedindex: index,
-                        ),
+                        child: switch (state.shareType) {
+                          ShareType.content => ContentImageCard(
+                              content: state.imageCardArgs[0] as ContentModel,
+                              title: state.imageCardArgs[1] as TitleModel,
+                              settings: state.settings,
+                              matnRange: state.splittedMatn[index],
+                              splittedLength: state.splittedMatn.length,
+                              splittedindex: index,
+                            ),
+                          ShareType.hadith => SizedBox(), //TODO
+                        },
                       ),
                     ),
                   ],

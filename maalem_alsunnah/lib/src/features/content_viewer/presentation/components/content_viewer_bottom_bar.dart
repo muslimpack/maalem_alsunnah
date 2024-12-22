@@ -8,6 +8,8 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/a
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
+import 'package:maalem_alsunnah/src/features/share/presentation/components/share_dialog.dart';
 
 class ContentViewerBottomBar extends StatelessWidget {
   const ContentViewerBottomBar({
@@ -35,6 +37,17 @@ class ContentViewerBottomBar extends StatelessWidget {
                       context.read<ContentViewerCubit>().previousContent();
                     },
               icon: Icon(Icons.arrow_back_ios),
+            ),
+            IconButton(
+              tooltip: S.of(context).share,
+              onPressed: () {
+                showShareDialog(
+                  context,
+                  itemId: state.content.id,
+                  shareType: ShareType.content,
+                );
+              },
+              icon: Icon(Icons.share),
             ),
             BookmarkButton(
               itemId: state.content.titleId,

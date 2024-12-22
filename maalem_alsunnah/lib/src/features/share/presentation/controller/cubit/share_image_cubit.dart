@@ -1,17 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
-import 'package:maalem_alsunnah/src/features/share/data/models/hadith_image_card_settings.dart';
 import 'package:bloc/bloc.dart';
 import 'package:capture_widget/core/widget_capture_controller.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/hadith_image_card_settings.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,8 +24,11 @@ class ShareImageCubit extends Cubit<ShareImageState> {
   final PageController pageController = PageController();
 
   late final List<GlobalKey> imageKeys;
+  final HadithDbHelper hadithDbHelper;
 
-  ShareImageCubit() : super(ShareImageLoadingState());
+  ShareImageCubit(
+    this.hadithDbHelper,
+  ) : super(ShareImageLoadingState());
 
   Future onPageChanged(int index) async {
     final state = this.state;
@@ -32,32 +37,38 @@ class ShareImageCubit extends Cubit<ShareImageState> {
     emit(state.copyWith(activeIndex: index));
   }
 
-  int charPer1080(int standardLength, String text) {
-    if (text.length < standardLength) {
-      return standardLength;
+  FutureOr start({required int itemId, required ShareType shareType}) async {
+    final String text;
+    int wordsCountPerSize = 0;
+    Size imageSize;
+    final List imageCardArgs = [];
+    switch (shareType) {
+      case ShareType.content:
+        final content = await hadithDbHelper.getContentById(itemId);
+        final title = await hadithDbHelper.getTitleById(content.titleId);
+        imageCardArgs.add(content);
+        imageCardArgs.add(title);
+        text = content.text;
+        wordsCountPerSize = 300;
+        imageSize = Size(1500, 1920);
+        break;
+      case ShareType.hadith:
+        text = "";
+        wordsCountPerSize = 120;
+        imageSize = Size(1080, 1080);
     }
 
-    final chunkCount = (text.length / standardLength).ceil();
-
-    final charLength = text.length ~/ chunkCount;
-    final overflowChars = text.length % chunkCount;
-    final result = charLength + overflowChars;
-
-    appPrint(overflowChars);
-
-    return result + 2;
-  }
-
-  FutureOr start(Hadith hadith) async {
     final settings = const HadithImageCardSettings.defaultSettings().copyWith(
-      charLengthPerSize: 560,
+      charLengthPerSize: wordsCountPerSize,
+      imageSize: imageSize,
     );
 
-    final charsPerChunk =
-        charPer1080(settings.charLengthPerSize, hadith.hadith);
+    final charsPerChunk = charPer1080(settings.charLengthPerSize, text);
+
+    appPrint(charsPerChunk);
 
     final List<TextRange> splittedMatnRanges = splitStringIntoChunksRange(
-      hadith.hadith,
+      text,
       charsPerChunk,
     );
 
@@ -66,66 +77,67 @@ class ShareImageCubit extends Cubit<ShareImageState> {
 
     emit(
       ShareImageLoadedState(
-        hadith: hadith,
+        itemId: itemId,
+        shareType: shareType,
         showLoadingIndicator: false,
         settings: settings.copyWith(charLengthPerSize: charsPerChunk),
         splittedMatn: splittedMatnRanges,
         activeIndex: 0,
+        imageCardArgs: imageCardArgs,
       ),
     );
   }
 
   ///MARK: Split
+  int charPer1080(int standardLength, String text) {
+    if (text.length < standardLength) {
+      return standardLength;
+    }
 
-  List<TextRange> splitStringIntoChunksRange(String text, int charsPerChunk) {
-    // Split the text into individual words
+    final chunkCount = (text.split(" ").length / standardLength).ceil();
+
+    final charLength = text.split(" ").length ~/ chunkCount;
+    final overflowChars = text.split(" ").length % chunkCount;
+    final result = charLength + overflowChars;
+
+    appPrint(overflowChars);
+
+    return result + 2;
+  }
+
+  List<TextRange> splitStringIntoChunksRange(String text, int wordsPerChunk) {
+    // Handle edge cases
+    if (text.isEmpty || wordsPerChunk <= 0) {
+      return [];
+    }
+
     final List<String> words = text.split(' ');
     final List<TextRange> chunkIndices = [];
 
     int chunkStart = 0;
-    int chunkCharCount = 0;
-    int start = 0;
-    String currentChunk = '';
+    int wordCount = 0;
+    int currentPos = 0;
 
-    for (final String word in words) {
-      // Get the word's position in the original text
-      final int wordStart = text.indexOf(word, start);
+    for (int i = 0; i < words.length; i++) {
+      // Get the word's start and end indices in the text
+      final String word = words[i];
+      final int wordStart = text.indexOf(word, currentPos);
       final int wordEnd = wordStart + word.length;
 
-      // Check if adding the word will exceed charsPerChunk
-      if (chunkCharCount + word.length + 1 <= charsPerChunk) {
+      if (wordCount < wordsPerChunk) {
         // Add the word to the current chunk
-        currentChunk += (currentChunk.isEmpty ? word : ' $word');
-        chunkCharCount = currentChunk.length;
-        start = wordEnd;
-      } else {
-        // If current chunk size is valid, add it to the list of ranges
-        if (chunkCharCount >= charsPerChunk / 3) {
-          chunkIndices.add(TextRange(start: chunkStart, end: wordStart));
-
-          // Start a new chunk with the current word
-          currentChunk = word;
-          chunkCharCount = word.length;
-          chunkStart = wordStart;
-        } else {
-          // Merge small chunk into the previous one
-          if (chunkIndices.isNotEmpty) {
-            chunkIndices.last =
-                TextRange(start: chunkIndices.last.start, end: wordEnd);
-          } else {
-            chunkIndices.add(TextRange(start: chunkStart, end: wordEnd));
-          }
-          currentChunk = word;
-          chunkStart = wordStart;
-        }
-
-        start = wordEnd;
+        wordCount++;
+        currentPos = wordEnd;
       }
-    }
 
-    // Add the last chunk if it's non-empty
-    if (currentChunk.isNotEmpty) {
-      chunkIndices.add(TextRange(start: chunkStart, end: text.length));
+      // If the chunk reaches the word limit, finalize it
+      if (wordCount == wordsPerChunk || i == words.length - 1) {
+        chunkIndices.add(TextRange(start: chunkStart, end: wordEnd));
+
+        // Start a new chunk
+        chunkStart = wordEnd + 1; // Skip the space
+        wordCount = 0;
+      }
     }
 
     return chunkIndices;
@@ -155,7 +167,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
           if (byteData == null) continue;
 
           final fileName = _getHadithOutputFileName(
-            state.hadith,
+            state.itemId,
             i,
             state.splittedMatn.length,
           );
@@ -172,7 +184,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
         if (byteData == null) return;
 
         final fileName = _getHadithOutputFileName(
-          state.hadith,
+          state.itemId,
           state.activeIndex,
           state.splittedMatn.length,
         );
@@ -198,9 +210,9 @@ class ShareImageCubit extends Cubit<ShareImageState> {
 
   ///MARK: save Image
 
-  String _getHadithOutputFileName(Hadith hadith, int index, int length) {
+  String _getHadithOutputFileName(int itemId, int index, int length) {
     return _getOutputFileName(
-      "maalem_alsunnah-${hadith.id}_${index + 1}_of_$length",
+      "maalem_alsunnah-${itemId}_${index + 1}_of_$length",
     );
   }
 

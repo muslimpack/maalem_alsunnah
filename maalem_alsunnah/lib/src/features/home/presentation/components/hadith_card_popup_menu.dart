@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/utils/email_manager.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
-import 'package:maalem_alsunnah/src/features/share/presentation/components/share_dialog.dart';
-import 'package:flutter/material.dart';
 
 class HadithCardPopupMenu extends StatelessWidget {
   final Hadith hadith;
@@ -18,7 +17,7 @@ class HadithCardPopupMenu extends StatelessWidget {
   }
 
   Future share(BuildContext context) async {
-    showShareDialog(context, hadith: hadith);
+    // showShareDialog(context, hadith: hadith);
   }
 
   @override

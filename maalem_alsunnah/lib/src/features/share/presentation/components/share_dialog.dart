@@ -2,41 +2,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/show_toast.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as_image_screen.dart';
 import 'package:share_plus/share_plus.dart';
 
-Future showShareDialog(BuildContext context, {required Hadith hadith}) {
+Future showShareDialog(BuildContext context,
+    {required int itemId, required ShareType shareType}) {
   return showDialog(
     context: context,
     builder: (context) {
-      return ShareDialog(hadith: hadith);
+      return ShareDialog(itemId: itemId, shareType: shareType);
     },
   );
 }
 
-class ShareDialog extends StatelessWidget {
-  final Hadith hadith;
+class ShareDialog extends StatefulWidget {
+  final int itemId;
+  final ShareType shareType;
   const ShareDialog({
     super.key,
-    required this.hadith,
+    required this.itemId,
+    required this.shareType,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final StringBuffer sb = StringBuffer();
-    sb.write(hadith.narrator);
-    if (hadith.narratorReference.isNotEmpty) {
-      sb.write(" (${hadith.narratorReference})");
-    }
-    sb.write("\n\n-------\n\n");
-    sb.write(hadith.hadith);
-    sb.write("\n\n-------\n\n");
-    sb.write("المرتبة: ${hadith.rank}");
-    sb.write("\n\n${S.of(context).appHashtag}");
+  State<ShareDialog> createState() => _ShareDialogState();
+}
 
+class _ShareDialogState extends State<ShareDialog> {
+  final StringBuffer sb = StringBuffer();
+  bool isLoading = true;
+  late ContentModel content;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future init() async {
+    switch (widget.shareType) {
+      case ShareType.content:
+        content = await sl<HadithDbHelper>().getContentById(widget.itemId);
+      case ShareType.hadith:
+
+        ///TODO
+        break;
+    }
+
+    await perpareSharedText();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future perpareSharedText() async {
+    switch (widget.shareType) {
+      case ShareType.content:
+        sb.write(content.text);
+      case ShareType.hadith:
+
+        ///TODO
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final shareText = sb.toString();
 
     return ConstrainedBox(
@@ -64,10 +101,12 @@ class ShareDialog extends StatelessWidget {
             tooltip: S.of(context).shareAsImage,
             icon: const Icon(Icons.camera_alt_outlined),
             onPressed: () {
-              context.push(
-                ShareAsImageScreen(
-                  hadith: hadith,
-                ),
+              context.pushNamed(
+                ShareAsImageScreen.routeName,
+                arguments: {
+                  "itemId": widget.itemId,
+                  "shareType": widget.shareType
+                },
               );
             },
           ),

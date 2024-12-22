@@ -3,6 +3,7 @@ import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/settings_screen.dart';
+import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as_image_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -12,6 +13,12 @@ class AppRouter {
       return SettingsScreen.route();
     } else if (settings.name == AboutScreen.routeName) {
       return AboutScreen.route();
+    } else if (settings.name == ShareAsImageScreen.routeName) {
+      final Map args = settings.arguments as Map;
+      return ShareAsImageScreen.route(
+        itemId: args["itemId"],
+        shareType: args["shareType"],
+      );
     }
     return HomeScreen.route();
   }
