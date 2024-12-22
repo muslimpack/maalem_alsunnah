@@ -51,7 +51,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
         imageCardArgs.add(title);
         imageCardArgs.add(titleChain);
         text = content.text;
-        wordsCountPerSize = 300;
+        wordsCountPerSize = 200;
         imageSize = Size(1500, 1920);
         break;
       case ShareType.hadith:
