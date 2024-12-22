@@ -127,7 +127,6 @@ class ContentImageCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -147,12 +146,12 @@ class ContentImageCard extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.only(left: 0, bottom: 5),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Image.asset(
                 "assets/images/app_icon.png",
-                height: 125,
+                height: 140,
               ),
             ),
           ),
