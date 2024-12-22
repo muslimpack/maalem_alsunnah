@@ -46,7 +46,10 @@ class TitlesChainRichTextBuilder extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Text.rich(TextSpan(children: interleavedSpans)),
+      child: Text.rich(
+        TextSpan(children: interleavedSpans),
+        style: const TextStyle(fontSize: 15, height: 2),
+      ),
     );
   }
 }
