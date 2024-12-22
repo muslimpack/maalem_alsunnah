@@ -43,6 +43,6 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => BookmarksBloc(sl(), sl()));
 
   /// Factory BLoC
-  sl.registerFactory(() => ContentViewerCubit(sl()));
+  sl.registerFactory(() => ContentViewerCubit(sl(), sl()));
   sl.registerFactory(() => ShareImageCubit());
 }

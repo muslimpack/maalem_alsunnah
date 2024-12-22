@@ -11,7 +11,7 @@ class AppRouter {
     if (settings.name == SubTitlesViewerScreen.routeName) {
       return SubTitlesViewerScreen.route(settings.arguments as TitleModel);
     } else if (settings.name == ContentViewerScreen.routeName) {
-      return ContentViewerScreen.route(settings.arguments as TitleModel);
+      return ContentViewerScreen.route(settings.arguments as int);
     } else if (settings.name == SettingsScreen.routeName) {
       return SettingsScreen.route();
     } else if (settings.name == AboutScreen.routeName) {

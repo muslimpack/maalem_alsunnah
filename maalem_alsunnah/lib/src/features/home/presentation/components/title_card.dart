@@ -26,7 +26,7 @@ class TitleCard extends StatelessWidget {
           if (title.subTitlesCount == 0) {
             context.pushNamed(
               ContentViewerScreen.routeName,
-              arguments: title,
+              arguments: title.id,
             );
           } else {
             context.pushNamed(

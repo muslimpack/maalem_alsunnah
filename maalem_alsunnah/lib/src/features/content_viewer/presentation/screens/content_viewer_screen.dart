@@ -8,31 +8,30 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/b
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
 class ContentViewerScreen extends StatelessWidget {
-  final TitleModel title;
+  final int titleId;
 
   static const String routeName = "/viewer";
 
-  static Route route(TitleModel title) {
+  static Route route(int title) {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName, arguments: title),
-      builder: (_) => ContentViewerScreen(title: title),
+      builder: (_) => ContentViewerScreen(titleId: title),
     );
   }
 
   const ContentViewerScreen({
     super.key,
-    required this.title,
+    required this.titleId,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ContentViewerCubit>()..start(title.id),
+      create: (context) => sl<ContentViewerCubit>()..start(titleId),
       child: BlocBuilder<ContentViewerCubit, ContentViewerState>(
         builder: (context, state) {
           if (state is! ContentViewerLoadedState) {
