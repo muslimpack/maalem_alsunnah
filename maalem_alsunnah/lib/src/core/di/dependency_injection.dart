@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark_repository.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/domain/repository/home_repo.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -42,5 +43,6 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => BookmarksBloc(sl(), sl()));
 
   /// Factory BLoC
+  sl.registerFactory(() => ContentViewerCubit(sl()));
   sl.registerFactory(() => ShareImageCubit());
 }

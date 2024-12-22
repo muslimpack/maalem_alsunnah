@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
@@ -9,14 +7,12 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/a
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_button.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/mark_as_read_button.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
-import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
-class ContentViewerScreen extends StatefulWidget {
+class ContentViewerScreen extends StatelessWidget {
   final TitleModel title;
 
   static const String routeName = "/viewer";
@@ -34,59 +30,30 @@ class ContentViewerScreen extends StatefulWidget {
   });
 
   @override
-  State<ContentViewerScreen> createState() => _ContentViewerScreenState();
-}
-
-class _ContentViewerScreenState extends State<ContentViewerScreen> {
-  bool isLoading = true;
-  late final ContentModel content;
-  Timer? timer;
-
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  Future init() async {
-    content = await sl<HadithDbHelper>().getContentByTitleId(widget.title.id);
-    timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  void _timePassed(Timer timer) {
-    sl<HomeCubit>().updateLastReadTitle(widget.title.id);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer?.cancel();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title.name),
-        centerTitle: true,
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
+    return BlocProvider(
+      create: (context) => sl<ContentViewerCubit>()..start(title.id),
+      child: BlocBuilder<ContentViewerCubit, ContentViewerState>(
+        builder: (context, state) {
+          if (state is! ContentViewerLoadedState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(title.name),
+              centerTitle: true,
+            ),
+            body: Column(
               children: [
-                TitlesChainBreadCrumb(titleId: widget.title.id),
+                TitlesChainBreadCrumb(titleId: state.content.titleId),
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.all(15),
                     children: [
                       SelectableText(
                         context.watch<SettingsCubit>().state.showDiacritics
-                            ? content.text
-                            : content.searchText,
+                            ? state.content.text
+                            : state.content.searchText,
                         style: TextStyle(
                           fontSize:
                               context.watch<SettingsCubit>().state.fontSize *
@@ -99,27 +66,44 @@ class _ContentViewerScreenState extends State<ContentViewerScreen> {
                 ),
               ],
             ),
-      bottomNavigationBar: isLoading
-          ? const SizedBox()
-          : BottomAppBar(
-              child: Row(
+            bottomNavigationBar: BottomAppBar(
+                child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                IconButton(
+                  onPressed: !state.hasPrevious
+                      ? null
+                      : () {
+                          context.read<ContentViewerCubit>().previousContent();
+                        },
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
                 FontSettingsIconButton(),
                 BookmarkButton(
-                  itemId: content.titleId,
+                  itemId: state.content.titleId,
                   type: BookmarkType.title,
                 ),
                 MarkAsReadButton(
-                  itemId: content.titleId,
+                  itemId: state.content.titleId,
                   type: BookmarkType.title,
                 ),
                 AddNoteButton(
-                  itemId: content.titleId,
+                  itemId: state.content.titleId,
                   type: BookmarkType.title,
-                )
+                ),
+                IconButton(
+                  onPressed: !state.hasNext
+                      ? null
+                      : () {
+                          context.read<ContentViewerCubit>().nextContent();
+                        },
+                  icon: Icon(Icons.arrow_forward_ios),
+                ),
               ],
             )),
+          );
+        },
+      ),
     );
   }
 }
