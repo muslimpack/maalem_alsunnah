@@ -45,21 +45,26 @@ class ContentScreen extends StatelessWidget {
                       ? state.content.text
                       : state.content.searchText,
                   settings: TextFormatterSettings(
-                      deafaultStyle: defaultStyle,
-                      hadithTextStyle: defaultStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amber,
-                      ),
-                      quranTextStyle: defaultStyle.copyWith(
-                        fontFamily: "hafs",
-                        color: Colors.green,
-                      ),
-                      squareBracketsStyle: defaultStyle.copyWith(
-                        color: Colors.blue,
-                      ),
-                      roundBracketsStyle: defaultStyle.copyWith(
-                        color: Colors.red,
-                      )),
+                    deafaultStyle: defaultStyle,
+                    hadithTextStyle: defaultStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber,
+                    ),
+                    quranTextStyle: defaultStyle.copyWith(
+                      fontFamily: "hafs",
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    squareBracketsStyle: defaultStyle.copyWith(
+                      color: Colors.blue,
+                    ),
+                    roundBracketsStyle: defaultStyle.copyWith(
+                      color: Colors.red,
+                    ),
+                    startingNumberStyle: defaultStyle.copyWith(
+                      color: Colors.purple,
+                    ),
+                  ),
                 ),
               ],
             ),

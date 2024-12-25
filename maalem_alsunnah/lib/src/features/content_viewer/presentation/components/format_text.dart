@@ -31,7 +31,8 @@ class FormattedText extends StatelessWidget {
     TextFormatterSettings settings,
   ) {
     final List<TextSpan> spans = [];
-    final RegExp exp = RegExp(r'\((.*?)\)|\«[\s\S]*?»|\﴿(.*?)﴾|\[(.*?)\]');
+    final RegExp exp =
+        RegExp(r'\((.*?)\)|\«[\s\S]*?»|\﴿(.*?)﴾|\[(.*?)\]|(\d+)');
 
     final Iterable<RegExpMatch> matches = exp.allMatches(text);
 
@@ -80,6 +81,14 @@ class FormattedText extends StatelessWidget {
           TextSpan(
             text: matchedText,
             style: settings.quranTextStyle,
+          ),
+        );
+      } else if (num.tryParse(matchedText) != null) {
+        // Starting number
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.startingNumberStyle,
           ),
         );
       } else {

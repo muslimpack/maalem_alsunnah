@@ -6,6 +6,7 @@ class TextFormatterSettings {
   final TextStyle quranTextStyle;
   final TextStyle squareBracketsStyle;
   final TextStyle roundBracketsStyle;
+  final TextStyle startingNumberStyle;
 
   const TextFormatterSettings({
     required this.deafaultStyle,
@@ -13,5 +14,6 @@ class TextFormatterSettings {
     required this.quranTextStyle,
     required this.squareBracketsStyle,
     required this.roundBracketsStyle,
+    required this.startingNumberStyle,
   });
 }
