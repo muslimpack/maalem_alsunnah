@@ -26,6 +26,13 @@ class FormattedText extends StatelessWidget {
         : RichText(text: textSpan);
   }
 
+  TextSpan textSpan() {
+    final textSpansChildren = _getTextSpans(text, settings);
+    return TextSpan(
+      children: textSpansChildren,
+    );
+  }
+
   List<TextSpan> _getTextSpans(
     String text,
     TextFormatterSettings settings,
