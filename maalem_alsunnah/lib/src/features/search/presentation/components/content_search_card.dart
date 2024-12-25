@@ -28,7 +28,7 @@ class ContentSearchCard extends StatelessWidget {
           searchedText: searchedText,
           style: TextStyle(
               fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
-              fontFamily: 'kitab'),
+              fontFamily: 'adwaa'),
         ),
         isThreeLine: true,
       ),

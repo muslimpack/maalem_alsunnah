@@ -128,7 +128,7 @@ class TextSample extends StatelessWidget {
                   softWrap: true,
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
-                    fontFamily: 'kitab',
+                    fontFamily: 'adwaa',
                     fontSize: state.fontSize * 10,
                   ),
                 ),

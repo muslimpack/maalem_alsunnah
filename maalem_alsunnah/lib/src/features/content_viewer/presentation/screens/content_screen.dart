@@ -40,7 +40,9 @@ class ContentScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize:
                         context.watch<SettingsCubit>().state.fontSize * 10,
-                    fontFamily: 'kitab',
+                    fontFamily: 'adwaa',
+                    fontWeight: FontWeight.bold,
+                    height: 1.5,
                   ),
                 ),
               ],

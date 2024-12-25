@@ -55,15 +55,19 @@ flutter:
     - assets/fonts/
 
   fonts:
-    - family: djadli_sarkha
-      fonts:
-        - asset: assets/fonts/djadli_sarkha.ttf
-    - family: alhadari-medium
-      fonts:
-        - asset: assets/fonts/alhadari-medium.ttf
     - family: kitab
       fonts:
-        - asset: assets/fonts/kitab.ttf
+        - asset: assets/fonts/Kitab-Regular.ttf
+        - asset: assets/fonts/Kitab-bold.ttf
+          weight: 700
+    - family: hafs
+      fonts:
+        - asset: assets/fonts/Hafs-Regular.otf
+    - family: adwaa
+      fonts:
+        - asset: assets/fonts/adwaa-alsalaf-regular.ttf
+        - asset: assets/fonts/adwaa-alsalaf-bold.ttf
+          weight: 700
 
 flutter_intl:
   enabled: true
