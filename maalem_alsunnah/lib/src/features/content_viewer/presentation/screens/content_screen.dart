@@ -47,11 +47,10 @@ class ContentScreen extends StatelessWidget {
                   settings: TextFormatterSettings(
                     deafaultStyle: defaultStyle,
                     hadithTextStyle: defaultStyle.copyWith(
-                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
                       color: Colors.yellow[700],
                     ),
                     quranTextStyle: defaultStyle.copyWith(
-                      // fontFamily: "hafs",
                       color: Colors.lightGreen[300],
                       fontWeight: FontWeight.bold,
                     ),
