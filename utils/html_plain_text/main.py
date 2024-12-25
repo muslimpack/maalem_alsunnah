@@ -16,6 +16,8 @@ html_converter.ignore_emphasis = True  # Ignore formatting like bold, italic, et
 def render_html_as_text(html_content):
     # Convert HTML to text
     text = html_converter.handle(html_content).strip()
+    # Replace "\-" with a new line
+    text = text.replace("\\-", " -")
     # Remove the specific unwanted line
     unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
     return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
