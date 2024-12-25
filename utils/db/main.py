@@ -14,6 +14,8 @@ def render_html_as_text(html_content):
     text = html_converter.handle(html_content).strip()
     # Replace "\-" with a new line
     text = text.replace("\\-", " -")
+    # Replace multiple new lines with a new line
+    text = re.sub(r'^\s*\n', '\n', text, flags=re.MULTILINE)
     # Remove the specific unwanted line
     unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
     return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
