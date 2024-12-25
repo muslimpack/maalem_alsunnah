@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 
 class FormattedText extends StatelessWidget {
@@ -56,7 +55,6 @@ class FormattedText extends StatelessWidget {
       }
 
       final String matchedText = match.group(0) ?? "";
-      appPrint(matchedText.toString());
 
       if (matchedText.startsWith('«') || matchedText.endsWith('»')) {
         // Text between double quotes
