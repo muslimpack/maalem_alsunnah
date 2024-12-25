@@ -1,75 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 
 class FormattedText extends StatelessWidget {
   final String text;
   final TextFormatterSettings settings;
-
+  final bool isSelectable;
   const FormattedText({
     super.key,
     required this.text,
     required this.settings,
+    this.isSelectable = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SelectableText.rich(_buildTextSpan());
+    final textSpansChildren = _getTextSpans(text, settings);
+    final textSpan = TextSpan(
+      style: DefaultTextStyle.of(context).style,
+      children: textSpansChildren,
+    );
+
+    return isSelectable
+        ? SelectableText.rich(textSpan)
+        : RichText(text: textSpan);
   }
 
-  TextSpan _buildTextSpan() {
-    final RegExp regex = RegExp(r'(«(.*?)»)|(﴿(.*?)﴾)|(\[(.*?)\])|(\((.*?)\))');
-    final matches = regex.allMatches(text);
+  List<TextSpan> _getTextSpans(
+    String text,
+    TextFormatterSettings settings,
+  ) {
+    final List<TextSpan> spans = [];
+    final RegExp exp = RegExp(r'\((.*?)\)|\«[\s\S]*?»|\﴿(.*?)﴾|\[(.*?)\]');
 
-    List<InlineSpan> spans = [];
-    int currentIndex = 0;
+    final Iterable<RegExpMatch> matches = exp.allMatches(text);
 
-    for (final match in matches) {
-      // Add any plain text before the current match
-      if (currentIndex < match.start) {
-        spans.add(TextSpan(
-          text: text.substring(currentIndex, match.start),
+    int start = 0;
+
+    for (final RegExpMatch match in matches) {
+      if (match.start > start) {
+        spans.add(
+          TextSpan(
+            text: text.substring(start, match.start),
+            style: settings.deafaultStyle,
+          ),
+        );
+      }
+
+      final String matchedText = match.group(0) ?? "";
+      appPrint(matchedText.toString());
+
+      if (matchedText.startsWith('«') || matchedText.endsWith('»')) {
+        // Text between double quotes
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.hadithTextStyle,
+          ),
+        );
+      } else if (matchedText.startsWith("[") && matchedText.endsWith("]")) {
+        // Text between double square brackets
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.squareBracketsStyle,
+          ),
+        );
+      } else if (matchedText.startsWith("(") && matchedText.endsWith(")")) {
+        // Text between double square brackets
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.roundBracketsStyle,
+          ),
+        );
+      } else if (matchedText.startsWith("﴿") && matchedText.endsWith("﴾")) {
+        // Text between double angle brackets
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.quranTextStyle,
+          ),
+        );
+      } else {
+        // Normal text
+        spans.add(
+          TextSpan(
+            text: matchedText,
+            style: settings.deafaultStyle,
+          ),
+        );
+      }
+
+      start = match.end;
+    }
+
+    if (start < text.length) {
+      spans.add(
+        TextSpan(
+          text: text.substring(start),
           style: settings.deafaultStyle,
-        ));
-      }
-
-      // Determine which formatting group matched
-      if (match.group(1) != null) {
-        // Bold text
-        spans.add(TextSpan(
-          text: "«${match.group(2)}»",
-          style: settings.hadithTextStyle,
-        ));
-      } else if (match.group(3) != null) {
-        // Different font family text
-        spans.add(TextSpan(
-          text: "﴿${match.group(4)}﴾",
-          style: settings.quranTextStyle,
-        ));
-      } else if (match.group(5) != null) {
-        // Different color text (square brackets)
-        spans.add(TextSpan(
-          text: "[${match.group(6)}]",
-          style: settings.squareBracketsStyle,
-        ));
-      } else if (match.group(7) != null) {
-        // Different color text (round brackets)
-        spans.add(TextSpan(
-          text: "(${match.group(8)})",
-          style: settings.roundBracketsStyle,
-        ));
-      }
-
-      // Update the current index
-      currentIndex = match.end;
+        ),
+      );
     }
 
-    // Add any remaining plain text after the last match
-    if (currentIndex < text.length) {
-      spans.add(TextSpan(
-        text: text.substring(currentIndex),
-      ));
-    }
-
-    return TextSpan(children: spans);
+    return spans;
   }
 }
