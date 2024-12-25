@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 
@@ -5,11 +6,15 @@ class FormattedText extends StatelessWidget {
   final String text;
   final TextFormatterSettings settings;
   final bool isSelectable;
+  final TextRange? textRange;
+  final String textSeparator;
   const FormattedText({
     super.key,
     required this.text,
     required this.settings,
     this.isSelectable = true,
+    this.textRange,
+    this.textSeparator = "...",
   });
 
   @override
