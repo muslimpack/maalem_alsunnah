@@ -48,21 +48,22 @@ class ContentScreen extends StatelessWidget {
                     deafaultStyle: defaultStyle,
                     hadithTextStyle: defaultStyle.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.amber,
+                      color: Colors.yellow[700],
                     ),
                     quranTextStyle: defaultStyle.copyWith(
-                      fontFamily: "hafs",
-                      color: Colors.green,
+                      // fontFamily: "hafs",
+                      color: Colors.lightGreen[300],
                       fontWeight: FontWeight.bold,
                     ),
                     squareBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.blue,
+                      color: Colors.cyan[300],
                     ),
                     roundBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.red,
+                      color: Colors.red[300],
                     ),
                     startingNumberStyle: defaultStyle.copyWith(
-                      color: Colors.purple,
+                      color: Colors.purple[300],
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
