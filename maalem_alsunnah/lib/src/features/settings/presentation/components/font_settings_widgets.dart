@@ -130,6 +130,7 @@ class TextSample extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'adwaa',
                     fontSize: state.fontSize * 10,
+                    height: 1.5,
                   ),
                 ),
               ),

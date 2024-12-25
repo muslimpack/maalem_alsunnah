@@ -41,7 +41,6 @@ class ContentScreen extends StatelessWidget {
                     fontSize:
                         context.watch<SettingsCubit>().state.fontSize * 10,
                     fontFamily: 'adwaa',
-                    fontWeight: FontWeight.bold,
                     height: 1.5,
                   ),
                 ),
