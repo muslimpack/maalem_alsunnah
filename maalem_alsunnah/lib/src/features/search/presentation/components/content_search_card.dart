@@ -5,6 +5,7 @@ import 'package:maalem_alsunnah/src/features/content_viewer/presentation/compone
 import 'package:maalem_alsunnah/src/features/home/presentation/components/responsive_text.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ContentSearchCard extends StatelessWidget {
   final String searchedText;
@@ -19,16 +20,16 @@ class ContentSearchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.book_outlined),
+        leading: Icon(MdiIcons.bookOpenPageVariantOutline),
         title: TitlesChainBreadCrumb(titleId: content.titleId),
         subtitle: ResponsiveText(
-          context.watch<SettingsCubit>().state.showDiacritics
-              ? content.text
-              : content.searchText,
+          content.searchText,
           searchedText: searchedText,
           style: TextStyle(
-              fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
-              fontFamily: 'kitab'),
+            fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
+            fontFamily: 'adwaa',
+            height: 1.5,
+          ),
         ),
         isThreeLine: true,
       ),

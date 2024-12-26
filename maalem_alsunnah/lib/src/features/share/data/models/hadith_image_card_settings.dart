@@ -23,8 +23,8 @@ class HadithImageCardSettings extends Equatable {
       : this(
           imageSize: const Size(1080, 1080),
           charLengthPerSize: 1500,
-          mainFontFamily: "kitab",
-          secondaryFontFamily: "kitab",
+          mainFontFamily: "adwaa",
+          secondaryFontFamily: "adwaa",
         );
 
   @override

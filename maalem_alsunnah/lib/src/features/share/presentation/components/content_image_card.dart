@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -26,28 +28,6 @@ class ContentImageCard extends StatelessWidget {
     this.splittedindex = 0,
   });
 
-  String get hadithText {
-    const String separator = "...";
-    String hadithText = matnRange != null
-        ? content.text.substring(
-            matnRange!.start,
-            matnRange!.end,
-          )
-        : content.text;
-
-    if (splittedLength > 1) {
-      if (splittedindex == 0) {
-        hadithText += separator;
-      } else if (splittedindex == splittedLength - 1) {
-        hadithText = "$separator$hadithText";
-      } else {
-        hadithText = "$separator$hadithText$separator";
-      }
-    }
-
-    return hadithText;
-  }
-
   @override
   Widget build(BuildContext context) {
     const imageBackgroundColor = Color(0xff1a110e);
@@ -61,10 +41,43 @@ class ContentImageCard extends StatelessWidget {
     );
 
     final secondaryTextStyle = TextStyle(
-      fontSize: 45,
+      fontSize: 55,
       color: secondaryColor,
       fontFamily: settings.secondaryFontFamily,
     );
+
+    final defaultStyle = TextStyle(
+      fontFamily: 'adwaa',
+      height: 1.5,
+    );
+
+    final textSpan = FormattedText(
+      text: content.text,
+      textRange: matnRange,
+      settings: TextFormatterSettings(
+        deafaultStyle: defaultStyle,
+        hadithTextStyle: defaultStyle.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Colors.yellow[700],
+        ),
+        quranTextStyle: defaultStyle.copyWith(
+          // fontFamily: "hafs",
+          color: Colors.lightGreen[300],
+          fontWeight: FontWeight.bold,
+        ),
+        squareBracketsStyle: defaultStyle.copyWith(
+          color: Colors.cyan[300],
+        ),
+        roundBracketsStyle: defaultStyle.copyWith(
+          color: Colors.red[300],
+        ),
+        startingNumberStyle: defaultStyle.copyWith(
+          color: Colors.purple[300],
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ).textSpan();
+
     return Container(
       width: settings.imageSize.width,
       height: settings.imageSize.height,
@@ -119,8 +132,8 @@ class ContentImageCard extends StatelessWidget {
                 const SizedBox(height: 30),
                 Expanded(
                   child: Center(
-                    child: AutoSizeText(
-                      hadithText,
+                    child: AutoSizeText.rich(
+                      textSpan,
                       minFontSize: 30,
                       textAlign: TextAlign.center,
                       style: mainTextStyle,
