@@ -17,6 +17,7 @@ class ContentViewerLoadedState extends ContentViewerState {
   final TitleModel title;
   final ContentModel content;
   final int contentCount;
+  final RangeValues titleIdRange;
 
   double get progress => content.id / contentCount;
   bool get hasPrevious => content.id > 2;
@@ -26,20 +27,23 @@ class ContentViewerLoadedState extends ContentViewerState {
     required this.title,
     required this.content,
     required this.contentCount,
+    required this.titleIdRange,
   });
 
   @override
-  List<Object> get props => [content, title, contentCount];
+  List<Object> get props => [content, title, contentCount, titleIdRange];
 
   ContentViewerLoadedState copyWith({
     TitleModel? title,
     ContentModel? content,
     int? contentCount,
+    RangeValues? titleIdRange,
   }) {
     return ContentViewerLoadedState(
       title: title ?? this.title,
       content: content ?? this.content,
       contentCount: contentCount ?? this.contentCount,
+      titleIdRange: titleIdRange ?? this.titleIdRange,
     );
   }
 }
