@@ -371,6 +371,26 @@ LIMIT ? OFFSET ?
     return 0;
   }
 
+  Future<List<int>> getContentMinMaxTitleId() async {
+    final Database db =
+        await database; // Assuming `database` is your db connection.
+
+    // Query to get the min and max titleId.
+    final List<Map<String, dynamic>> results = await db.rawQuery('''
+    SELECT MIN(titleId) as minTitleId, MAX(titleId) as maxTitleId FROM contents
+  ''');
+
+    if (results.isNotEmpty) {
+      final row = results.first;
+      int minTitleId = row['minTitleId'];
+      int maxTitleId = row['maxTitleId'];
+
+      return [minTitleId, maxTitleId];
+    }
+
+    return [0, 0]; // Default if no results.
+  }
+
   Future<ContentModel> getContentByTitleId(int titleId) async {
     final Database db = await database;
 
