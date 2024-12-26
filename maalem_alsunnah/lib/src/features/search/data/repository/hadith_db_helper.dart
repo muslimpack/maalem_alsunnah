@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
@@ -371,7 +372,7 @@ LIMIT ? OFFSET ?
     return 0;
   }
 
-  Future<List<int>> getContentMinMaxTitleId() async {
+  Future<RangeValues> getContentTitleIdRange() async {
     final Database db =
         await database; // Assuming `database` is your db connection.
 
@@ -385,10 +386,10 @@ LIMIT ? OFFSET ?
       int minTitleId = row['minTitleId'];
       int maxTitleId = row['maxTitleId'];
 
-      return [minTitleId, maxTitleId];
+      return RangeValues(minTitleId.toDouble(), maxTitleId.toDouble());
     }
 
-    return [0, 0]; // Default if no results.
+    return RangeValues(0, 0); // Default if no results.
   }
 
   Future<ContentModel> getContentByTitleId(int titleId) async {
