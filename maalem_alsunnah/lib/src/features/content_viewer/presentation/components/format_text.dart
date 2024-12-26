@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/format_type_enum.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_item.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 
 class FormattedText extends StatelessWidget {
@@ -42,8 +45,41 @@ class FormattedText extends StatelessWidget {
     TextFormatterSettings settings,
   ) {
     final List<TextSpan> spans = [];
-    final RegExp exp =
-        RegExp(r'\((.*?)\)|\«[\s\S]*?»|\﴿(.*?)﴾|\[(.*?)\]|(\d+)');
+
+    final List<TextFormatterItem> items = [
+      TextFormatterItem(
+        formatType: FormatTypeEnum.hadith,
+        regExp: RegExp(r'\«[\s\S]*?»'),
+        textStyle: settings.hadithTextStyle,
+        predicate: (text) => text.startsWith('«') || text.endsWith('»'),
+      ),
+      TextFormatterItem(
+        formatType: FormatTypeEnum.quran,
+        regExp: RegExp(r'\﴿(.*?)﴾'),
+        textStyle: settings.quranTextStyle,
+      ),
+      TextFormatterItem(
+        formatType: FormatTypeEnum.squareBrackets,
+        regExp: RegExp(r'\[(.*?)\]'),
+        textStyle: settings.squareBracketsStyle,
+      ),
+      TextFormatterItem(
+        formatType: FormatTypeEnum.roundBrackets,
+        regExp: RegExp(r'\([\s\S]*?\)'),
+        textStyle: settings.roundBracketsStyle,
+      ),
+      TextFormatterItem(
+        formatType: FormatTypeEnum.number,
+        regExp: RegExp(r'(\d+)'),
+        textStyle: settings.startingNumberStyle,
+      ),
+    ];
+
+    final RegExp exp = RegExp(
+      items.map((item) => item.regExp.pattern).join("|"),
+    );
+
+    appPrint(exp);
 
     final Iterable<RegExpMatch> matches = exp.allMatches(text);
 
@@ -60,55 +96,40 @@ class FormattedText extends StatelessWidget {
       }
 
       final String matchedText = match.group(0) ?? "";
-
-      if (matchedText.startsWith('«') || matchedText.endsWith('»')) {
-        // Text between double quotes
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.hadithTextStyle,
-          ),
-        );
-      } else if (matchedText.startsWith("[") && matchedText.endsWith("]")) {
-        // Text between double square brackets
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.squareBracketsStyle,
-          ),
-        );
-      } else if (matchedText.startsWith("(") && matchedText.endsWith(")")) {
-        // Text between double square brackets
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.roundBracketsStyle,
-          ),
-        );
-      } else if (matchedText.startsWith("﴿") && matchedText.endsWith("﴾")) {
-        // Text between double angle brackets
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.quranTextStyle,
-          ),
-        );
-      } else if (num.tryParse(matchedText) != null) {
-        // Starting number
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.startingNumberStyle,
-          ),
-        );
-      } else {
-        // Normal text
-        spans.add(
-          TextSpan(
-            text: matchedText,
-            style: settings.deafaultStyle,
-          ),
-        );
+      appPrint(matchedText);
+      for (var item in items) {
+        if (item.predicate.call(matchedText)) {
+          if (item.formatType == FormatTypeEnum.roundBrackets) {
+            if (matchedText.length > 3) {
+              final lastWord = spans.lastOrNull?.text ?? "";
+              if (lastWord.contains("قال تعالى") ||
+                  lastWord.contains("عزوجل")) {
+                spans.add(
+                  TextSpan(
+                    text: matchedText,
+                    style: settings.quranTextStyle,
+                  ),
+                );
+                break;
+              } else {
+                spans.add(
+                  TextSpan(
+                    text: matchedText,
+                    style: settings.hadithTextStyle,
+                  ),
+                );
+                break;
+              }
+            }
+          }
+          spans.add(
+            TextSpan(
+              text: matchedText,
+              style: item.textStyle,
+            ),
+          );
+          break;
+        }
       }
 
       start = match.end;
