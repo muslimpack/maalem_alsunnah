@@ -5,19 +5,20 @@ import re
 conn = sqlite3.connect('book.db')
 cursor = conn.cursor()
 
+cursor.execute("DROP TABLE if EXISTS hadith;")
+conn.commit()
+
 # Create the hadith table if it doesn't exist
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS hadith (
     id INTEGER,
     titleId INTEGER,
+    orderId INTEGER,
     html TEXT,
     text TEXT,
     searchText TEXT
 )
 """)
-conn.commit()
-
-cursor.execute("Delete from hadith")
 conn.commit()
 
 # Fetch all rows from the contents table
@@ -39,7 +40,10 @@ for row in rows:
     hadith_splits = hadith_start_regex.split(text_content)
     if len(hadith_splits) > 1:
         # Skip the first split, process subsequent Hadiths
+        orderId = 0
         for i in range(1, len(hadith_splits), 2):
+            orderId += 1
+
             hadith_id = int(hadith_splits[i])  # The number is the ID
             hadith_text = hadith_splits[i + 1].strip()  # Hadith text
 
@@ -48,9 +52,11 @@ for row in rows:
 
             # Insert the Hadith into the hadith table
             cursor.execute("""
-            INSERT INTO hadith (id, titleId, html, text, searchText)
-            VALUES (?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, None, hadith_text, search_text))
+            INSERT INTO hadith (id, titleId, orderId, html, text, searchText)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """, (hadith_id, title_id, orderId, None, hadith_text, search_text))
+        # Skip the first split, process subsequent Hadiths
+        orderId = 0
 
 # Commit the changes and close the connection
 conn.commit()
