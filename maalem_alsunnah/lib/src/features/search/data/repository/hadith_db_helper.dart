@@ -105,7 +105,7 @@ class HadithDbHelper {
     );
 
     final String qurey =
-        '''SELECT * FROM hadith ${whereFilters.query} LIMIT ? OFFSET ?''';
+        '''SELECT * FROM hadith ${whereFilters.query} and id is not null LIMIT ? OFFSET ?''';
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
       qurey,
