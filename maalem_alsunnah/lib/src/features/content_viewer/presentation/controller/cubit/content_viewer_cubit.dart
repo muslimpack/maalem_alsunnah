@@ -16,6 +16,7 @@ part 'content_viewer_state.dart';
 class ContentViewerCubit extends Cubit<ContentViewerState> {
   final HadithDbHelper hadithDbHelper;
   final HomeCubit homeCubit;
+  final ScrollController scrollController = ScrollController();
   Timer? _timer;
   ContentViewerCubit(
     this.hadithDbHelper,
@@ -50,6 +51,10 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
       final hadithList = await hadithDbHelper.getHadithListByContentId(
         content.id,
       );
+
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(0);
+      }
 
       emit(
         ContentViewerLoadedState(
@@ -92,6 +97,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   @override
   Future<void> close() {
     _timer?.cancel();
+    scrollController.dispose();
     return super.close();
   }
 }

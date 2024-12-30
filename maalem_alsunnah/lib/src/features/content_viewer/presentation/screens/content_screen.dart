@@ -54,6 +54,7 @@ class ContentScreen extends StatelessWidget {
           // ),
           Expanded(
             child: ListView(
+              controller: context.read<ContentViewerCubit>().scrollController,
               padding: EdgeInsets.all(15),
               children: [
                 ...state.hadithList.map(
