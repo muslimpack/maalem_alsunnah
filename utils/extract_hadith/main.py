@@ -59,7 +59,7 @@ for row in rows:
             cursor.execute("""
             INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, search_text))
+            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, None))
         # Skip the first split, process subsequent Hadiths
         orderId = 0
 
