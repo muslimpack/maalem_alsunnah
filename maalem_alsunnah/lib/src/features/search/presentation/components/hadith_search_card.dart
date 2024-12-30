@@ -33,7 +33,7 @@ class HadithSearchCard extends StatelessWidget {
           children: [
             TitlesChainBreadCrumb(titleId: hadith.titleId),
             ResponsiveText(
-              hadith.searchText,
+              "${hadith.id} - ${hadith.searchText}",
               searchedText: searchedText,
               style: TextStyle(
                 fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
