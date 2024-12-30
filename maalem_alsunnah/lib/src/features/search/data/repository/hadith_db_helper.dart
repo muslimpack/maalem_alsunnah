@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
@@ -64,111 +65,36 @@ class HadithDbHelper {
     }).firstOrNull;
   }
 
-  Future<List<HadithModel>> searchByHadithText(String hadithText) async {
-    if (hadithText.isEmpty) return [];
-
-    final Database db = await database;
-
-    ///TODO |  ORDER BY `order` ASC
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE hadith LIKE ?',
-      ['%$hadithText%'],
-    );
-
-    return List.generate(maps.length, (i) {
-      return HadithModel.fromMap(maps[i]);
-    });
-  }
-
-  SqlQuery _searchByHadithTextWithFiltersSqlQuery(
-    String searchText, {
+  Future<List<HadithModel>> searchHadith({
+    required String searchText,
     required SearchType searchType,
-    required bool useFilters,
-  }) {
-    final SqlQuery sqlQuery = SqlQuery();
-
-    final List<String> splittedSearchWords = searchText.trim().split(' ');
-
-    final dataForm = "*";
-
-    switch (searchType) {
-      case SearchType.typical:
-        sqlQuery.query = 'SELECT $dataForm FROM hadith';
-        sqlQuery.args.addAll(['%$searchText%']);
-
-      case SearchType.allWords:
-        final String allWordsQuery =
-            splittedSearchWords.map((word) => 'hadith LIKE ?').join(' AND ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
-        sqlQuery.args.addAll([...params]);
-
-      case SearchType.anyWords:
-        final String allWordsQuery =
-            splittedSearchWords.map((word) => 'hadith LIKE ?').join(' OR ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
-        sqlQuery.args.addAll([...params]);
-    }
-
-    return sqlQuery;
-  }
-
-  Future<List<HadithModel>> searchByHadithTextWithFilters(
-    String searchText, {
-    required SearchType searchType,
-    required int limit, // Number of items per page
-    required int offset, // Offset to start fetching items from
+    required int limit,
+    required int offset,
   }) async {
     if (searchText.isEmpty) return [];
 
     final Database db = await database;
 
-    final SqlQuery sqlQuery = _searchByHadithTextWithFiltersSqlQuery(
+    final whereFilters = _searchTitlesSearchType(
       searchText,
+      "searchText",
       searchType: searchType,
       useFilters: true,
     );
 
+    appPrint(whereFilters);
+
+    final String qurey =
+        '''SELECT * FROM hadith ${whereFilters.query} LIMIT ? OFFSET ?''';
+
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-      '${sqlQuery.query} LIMIT ? OFFSET ?',
-      [...sqlQuery.args, limit, offset],
+      qurey,
+      [...whereFilters.args, limit, offset],
     );
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
     });
-  }
-
-  Future<List<HadithModel>> searchByRawy(String rawy) async {
-    final Database db = await database;
-
-    ///TODO |  ORDER BY `order` ASC
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE hadith LIKE ?',
-      ['%$rawy%'],
-    );
-
-    return List.generate(maps.length, (i) {
-      return HadithModel.fromMap(maps[i]);
-    });
-  }
-
-  Future<HadithModel?> randomHadith() async {
-    final Database db = await database;
-
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE ruling like ? ORDER BY RANDOM() LIMIT 1',
-      ['%%'],
-    );
-
-    if (maps.isNotEmpty) {
-      return HadithModel.fromMap(maps.first);
-    }
-
-    return null;
   }
 
   ///*********************************** */
