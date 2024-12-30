@@ -58,11 +58,22 @@ class HadithDbHelper {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps =
-        await db.rawQuery('SELECT * FRMO hadith where id = ?', [id]);
+        await db.rawQuery('SELECT * FROM hadith where id = ?', [id]);
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
     }).firstOrNull;
+  }
+
+  Future<List<HadithModel>> getHadithListByContentId(int contentId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM hadith where contentId = ?', [contentId]);
+
+    return List.generate(maps.length, (i) {
+      return HadithModel.fromMap(maps[i]);
+    });
   }
 
   Future<List<HadithModel>> searchHadith({
