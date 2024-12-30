@@ -24,6 +24,27 @@ class ContentScreen extends StatelessWidget {
       fontFamily: 'adwaa',
       height: 1.5,
     );
+    final TextFormatterSettings textFormatterSettings = TextFormatterSettings(
+      deafaultStyle: defaultStyle,
+      hadithTextStyle: defaultStyle.copyWith(
+        // fontWeight: FontWeight.bold,
+        color: Colors.yellow[700],
+      ),
+      quranTextStyle: defaultStyle.copyWith(
+        color: Colors.lightGreen[300],
+        fontWeight: FontWeight.bold,
+      ),
+      squareBracketsStyle: defaultStyle.copyWith(
+        color: Colors.cyan[300],
+      ),
+      roundBracketsStyle: defaultStyle.copyWith(
+        color: Colors.red[300],
+      ),
+      startingNumberStyle: defaultStyle.copyWith(
+        color: Colors.purple[300],
+        fontWeight: FontWeight.bold,
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(state.title.name),
@@ -44,27 +65,7 @@ class ContentScreen extends StatelessWidget {
                   text: context.watch<SettingsCubit>().state.showDiacritics
                       ? state.content.text
                       : state.content.searchText,
-                  settings: TextFormatterSettings(
-                    deafaultStyle: defaultStyle,
-                    hadithTextStyle: defaultStyle.copyWith(
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.yellow[700],
-                    ),
-                    quranTextStyle: defaultStyle.copyWith(
-                      color: Colors.lightGreen[300],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    squareBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.cyan[300],
-                    ),
-                    roundBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.red[300],
-                    ),
-                    startingNumberStyle: defaultStyle.copyWith(
-                      color: Colors.purple[300],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  settings: textFormatterSettings,
                 ),
               ],
             ),
