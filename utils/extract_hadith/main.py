@@ -8,6 +8,11 @@ cursor = conn.cursor()
 cursor.execute("DROP TABLE if EXISTS hadith;")
 conn.commit()
 
+# Function to remove Arabic diacritics
+def remove_diacritics(text):
+    arabic_diacritics = re.compile(r'[\u0610-\u061A\u064B-\u065F\u0670]')
+    return arabic_diacritics.sub('', text)
+
 # Create the hadith table if it doesn't exist
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS hadith (
@@ -56,13 +61,13 @@ for row in rows:
             hadith_text = hadith_splits[i + 1].strip()  # Hadith text
 
             # Normalize the text for searching
-            search_text = ' '.join(hadith_text.split())
+            search_text = remove_diacritics(hadith_text)
 
             # Insert the Hadith into the hadith table
             cursor.execute("""
             INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, None))
+            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, search_text))
         # Skip the first split, process subsequent Hadiths
         orderId = 0
 
