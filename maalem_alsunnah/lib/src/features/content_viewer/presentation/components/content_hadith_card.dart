@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/hadith_card_popup_menu.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
@@ -40,6 +41,8 @@ class ContentHadithCard extends StatelessWidget {
         child: FormattedText(
           text: formattedText,
           settings: textFormatterSettings,
+          textLeadingWidget:
+              isTitle ? null : HadithCardPopupMenu(hadith: hadith),
         ),
       ),
     );

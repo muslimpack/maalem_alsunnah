@@ -13,6 +13,7 @@ class FormattedText extends StatelessWidget {
   final bool isSelectable;
   final TextRange? textRange;
   final String textSeparator;
+  final Widget? textLeadingWidget;
   FormattedText({
     super.key,
     required this.text,
@@ -20,26 +21,34 @@ class FormattedText extends StatelessWidget {
     this.isSelectable = true,
     this.textRange,
     this.textSeparator = "...",
+    this.textLeadingWidget,
   }) : textSpans = [];
 
   @override
   Widget build(BuildContext context) {
-    final textSpansChildren = _getTextSpans(text, settings);
-    final textSpan = TextSpan(
-      style: DefaultTextStyle.of(context).style,
-      children: textSpansChildren,
-    );
+    final text = textSpan(style: DefaultTextStyle.of(context).style);
 
-    return isSelectable
-        ? SelectableText.rich(textSpan)
-        : RichText(text: textSpan);
+    return isSelectable ? SelectableText.rich(text) : RichText(text: text);
   }
 
-  TextSpan textSpan() {
-    final textSpansChildren = _getTextSpans(text, settings);
-    return TextSpan(
+  TextSpan textSpan({TextStyle? style}) {
+    final List<InlineSpan> textSpansChildren =
+        List<InlineSpan>.from(_getTextSpans(text, settings));
+    if (textLeadingWidget != null) {
+      textSpansChildren.insert(
+        0,
+        WidgetSpan(
+          child: textLeadingWidget!,
+          alignment: PlaceholderAlignment.middle,
+        ),
+      );
+    }
+    final textSpan = TextSpan(
+      style: style,
       children: textSpansChildren,
     );
+
+    return textSpan;
   }
 
   final List<TextSpan> textSpans;
