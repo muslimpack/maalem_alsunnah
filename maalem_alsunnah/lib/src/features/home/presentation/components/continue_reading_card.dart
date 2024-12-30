@@ -29,7 +29,11 @@ class ContinueReadingCard extends StatelessWidget {
                 ? MdiIcons.bookOpenPageVariant
                 : MdiIcons.bookOpenPageVariantOutline,
           ),
-          subtitle: Text(title.name),
+          subtitle: Text(
+            title.name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
           title: Text(S.of(context).continueReading),
           onTap: () {
             context.pushNamed(
