@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_for.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -18,6 +19,8 @@ class SearchCubit extends Cubit<SearchState> {
       PagingController(firstPageKey: 0);
   final PagingController<int, ContentModel> contentPagingController =
       PagingController(firstPageKey: 0);
+  final PagingController<int, HadithModel> hadithPagingController =
+      PagingController(firstPageKey: 0);
 
   final HadithDbHelper hadithDbHelper;
   final SearchRepo searchRepo;
@@ -30,6 +33,9 @@ class SearchCubit extends Cubit<SearchState> {
       _fetchPage(pageKey);
     });
     contentPagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
+    hadithPagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
   }
@@ -56,7 +62,7 @@ class SearchCubit extends Cubit<SearchState> {
         contentPagingController.refresh();
 
       case SearchFor.hadith:
-        titlePagingController.refresh();
+        hadithPagingController.refresh();
     }
   }
 
@@ -117,7 +123,7 @@ class SearchCubit extends Cubit<SearchState> {
         _fetchContentPage(pageKey, state);
         break;
       case SearchFor.hadith:
-        _fetchTitlePage(pageKey, state);
+        _fetchHadithPage(pageKey, state);
         break;
     }
   }
@@ -170,11 +176,37 @@ class SearchCubit extends Cubit<SearchState> {
     }
   }
 
+  Future _fetchHadithPage(int pageKey, SearchLoadedState state) async {
+    final pageSize = state.pageSize;
+    final searchText = state.searchText;
+
+    try {
+      final newItems = await hadithDbHelper.searchHadith(
+        searchText: searchText,
+        searchType: state.searchType,
+        limit: pageSize,
+        offset: pageKey,
+      );
+
+      final isLastPage = newItems.length < pageSize;
+      if (isLastPage) {
+        hadithPagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        hadithPagingController.appendPage(newItems, nextPageKey);
+      }
+    } catch (error) {
+      hadithPagingController.error = error;
+    }
+  }
+
   ///MARK: close
   @override
   Future<void> close() {
-    titlePagingController.dispose();
     searchController.dispose();
+    titlePagingController.dispose();
+    contentPagingController.dispose();
+    hadithPagingController.dispose();
     return super.close();
   }
 }
