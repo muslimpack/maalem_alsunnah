@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -28,17 +29,29 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   Future<void> start(int titleId, {bool? isContent}) async {
     _timer?.cancel();
 
-    final title = (await hadithDbHelper.getTitleById(titleId))!;
+    final tempTitle = await hadithDbHelper.getTitleById(titleId);
+
+    if (tempTitle == null) {
+      final state = this.state;
+      if (state is ContentViewerLoadedState) {
+        start(state.content.titleId, isContent: isContent);
+      }
+      return;
+    }
+
+    final title = tempTitle;
     if (title.subTitlesCount == 0 || isContent == true) {
       _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
       final content = await hadithDbHelper.getContentByTitleId(titleId);
       final contentCount = await hadithDbHelper.getContentCount();
+      final titleIdRange = await hadithDbHelper.getContentTitleIdRange();
 
       emit(
         ContentViewerLoadedState(
           title: title,
           content: content,
           contentCount: contentCount,
+          titleIdRange: titleIdRange,
         ),
       );
     } else {
