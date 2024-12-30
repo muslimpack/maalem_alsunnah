@@ -16,7 +16,6 @@ class ContentSlider extends StatefulWidget {
   State<ContentSlider> createState() => _ContentSliderState();
 }
 
-
 class _ContentSliderState extends State<ContentSlider> {
   late double value;
 
@@ -42,7 +41,7 @@ class _ContentSliderState extends State<ContentSlider> {
   @override
   Widget build(BuildContext context) {
     return Slider(
-      min: widget.state.titleIdRange.start,
+      min: widget.state.titleIdRange.start + 1,
       max: widget.state.titleIdRange.end,
       divisions: widget.state.contentCount - 1,
       value: isChanging ? value : widget.state.content.titleId.toDouble(),
