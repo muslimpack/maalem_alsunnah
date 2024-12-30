@@ -1,1 +1,0 @@
-enum ShareType { content, hadith }

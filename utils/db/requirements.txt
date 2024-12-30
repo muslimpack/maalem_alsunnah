@@ -1,3 +1,0 @@
-html2text
-tqdm
-sqlite3

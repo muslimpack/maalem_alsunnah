@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="معالم السنة النبوية"
+        android:label="maalem_alsunnah"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
