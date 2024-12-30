@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/utils/email_manager.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 
 class HadithCardPopupMenu extends StatelessWidget {
-  final Hadith hadith;
+  final HadithModel hadith;
   const HadithCardPopupMenu({
     super.key,
     required this.hadith,

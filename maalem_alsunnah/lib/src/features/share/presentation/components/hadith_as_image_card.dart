@@ -1,13 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/hadith_image_card_settings.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/components/dot_bar.dart';
 
 class HadithAsImageCard extends StatelessWidget {
-  final Hadith hadith;
+  final HadithModel hadith;
   final HadithImageCardSettings settings;
+  final List<TitleModel> titleChain;
   final TextRange? matnRange;
   final int splittedLength;
   final int splittedindex;
@@ -15,6 +18,7 @@ class HadithAsImageCard extends StatelessWidget {
     super.key,
     required this.hadith,
     required this.settings,
+    required this.titleChain,
     this.matnRange,
     this.splittedLength = 0,
     this.splittedindex = 0,
@@ -23,11 +27,11 @@ class HadithAsImageCard extends StatelessWidget {
   String get hadithText {
     const String separator = "...";
     String hadithText = matnRange != null
-        ? hadith.hadith.substring(
+        ? hadith.text.substring(
             matnRange!.start,
             matnRange!.end,
           )
-        : hadith.hadith;
+        : hadith.text;
 
     if (splittedLength > 1) {
       if (splittedindex == 0) {
@@ -101,13 +105,10 @@ class HadithAsImageCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  hadith.narrator +
-                      (hadith.narratorReference.isNotEmpty
-                          ? " (${hadith.narratorReference})"
-                          : ""),
+                TitlesChainRichTextBuilder(
+                  titlesChains: titleChain.sublist(0, titleChain.length - 1),
+                  textStyle: secondaryTextStyle,
                   textAlign: TextAlign.center,
-                  style: secondaryTextStyle,
                 ),
                 const SizedBox(height: 30),
                 Expanded(
@@ -118,14 +119,6 @@ class HadithAsImageCard extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: mainTextStyle,
                     ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50),
-                  child: Text(
-                    "المرتبة: ${hadith.rank}",
-                    style: secondaryTextStyle,
                   ),
                 ),
               ],

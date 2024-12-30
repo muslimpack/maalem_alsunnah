@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/sql_query.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -41,7 +41,7 @@ class HadithDbHelper {
 
   /* ************* | ************* */
 
-  Future<List<Hadith>> getAll() async {
+  Future<List<HadithModel>> getAll() async {
     final Database db = await database;
 
     ///TODO |  ORDER BY `order` ASC
@@ -49,22 +49,22 @@ class HadithDbHelper {
         await db.rawQuery('SELECT * FROM hadith');
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
-  Future<Hadith?> getHadithById(int id) async {
+  Future<HadithModel?> getHadithById(int id) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps =
         await db.rawQuery('SELECT * FRMO hadith where id = ?', [id]);
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     }).firstOrNull;
   }
 
-  Future<List<Hadith>> searchByHadithText(String hadithText) async {
+  Future<List<HadithModel>> searchByHadithText(String hadithText) async {
     if (hadithText.isEmpty) return [];
 
     final Database db = await database;
@@ -76,7 +76,7 @@ class HadithDbHelper {
     );
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
@@ -116,7 +116,7 @@ class HadithDbHelper {
     return sqlQuery;
   }
 
-  Future<List<Hadith>> searchByHadithTextWithFilters(
+  Future<List<HadithModel>> searchByHadithTextWithFilters(
     String searchText, {
     required SearchType searchType,
     required int limit, // Number of items per page
@@ -138,11 +138,11 @@ class HadithDbHelper {
     );
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
-  Future<List<Hadith>> searchByRawy(String rawy) async {
+  Future<List<HadithModel>> searchByRawy(String rawy) async {
     final Database db = await database;
 
     ///TODO |  ORDER BY `order` ASC
@@ -152,11 +152,11 @@ class HadithDbHelper {
     );
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
-  Future<Hadith?> randomHadith() async {
+  Future<HadithModel?> randomHadith() async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
@@ -165,7 +165,7 @@ class HadithDbHelper {
     );
 
     if (maps.isNotEmpty) {
-      return Hadith.fromMap(maps.first);
+      return HadithModel.fromMap(maps.first);
     }
 
     return null;
