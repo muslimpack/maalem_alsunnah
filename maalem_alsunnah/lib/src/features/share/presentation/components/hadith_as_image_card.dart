@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -59,10 +61,42 @@ class HadithAsImageCard extends StatelessWidget {
     );
 
     final secondaryTextStyle = TextStyle(
-      fontSize: 30,
+      fontSize: 40,
       color: secondaryColor,
       fontFamily: settings.secondaryFontFamily,
     );
+
+    final defaultStyle = TextStyle(
+      fontFamily: 'adwaa',
+      height: 1.5,
+    );
+
+    final textSpan = FormattedText(
+      text: hadith.text,
+      textRange: matnRange,
+      settings: TextFormatterSettings(
+        deafaultStyle: defaultStyle,
+        hadithTextStyle: defaultStyle.copyWith(
+          fontWeight: FontWeight.bold,
+          color: Colors.yellow[700],
+        ),
+        quranTextStyle: defaultStyle.copyWith(
+          // fontFamily: "hafs",
+          color: Colors.lightGreen[300],
+          fontWeight: FontWeight.bold,
+        ),
+        squareBracketsStyle: defaultStyle.copyWith(
+          color: Colors.cyan[300],
+        ),
+        roundBracketsStyle: defaultStyle.copyWith(
+          color: Colors.red[300],
+        ),
+        startingNumberStyle: defaultStyle.copyWith(
+          color: Colors.purple[300],
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ).textSpan();
     return Container(
       color: imageBackgroundColor,
       width: settings.imageSize.width,
@@ -106,15 +140,15 @@ class HadithAsImageCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TitlesChainRichTextBuilder(
-                  titlesChains: titleChain.sublist(0, titleChain.length - 1),
+                  titlesChains: titleChain.sublist(0, titleChain.length),
                   textStyle: secondaryTextStyle,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
                 Expanded(
                   child: Center(
-                    child: AutoSizeText(
-                      hadithText,
+                    child: AutoSizeText.rich(
+                      textSpan,
                       minFontSize: 30,
                       textAlign: TextAlign.center,
                       style: mainTextStyle,

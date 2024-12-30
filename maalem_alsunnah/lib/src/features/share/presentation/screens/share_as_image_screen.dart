@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/components/content_image_card.dart';
+import 'package:maalem_alsunnah/src/features/share/presentation/components/hadith_as_image_card.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/controller/cubit/share_image_cubit.dart';
 
 class ShareAsImageScreen extends StatelessWidget {
@@ -85,7 +87,15 @@ class ShareAsImageScreen extends StatelessWidget {
                               splittedLength: state.splittedMatn.length,
                               splittedindex: index,
                             ),
-                          ShareType.hadith => SizedBox(), //TODO
+                          ShareType.hadith => HadithAsImageCard(
+                              hadith: state.imageCardArgs[0] as HadithModel,
+                              titleChain:
+                                  state.imageCardArgs[2] as List<TitleModel>,
+                              settings: state.settings,
+                              matnRange: state.splittedMatn[index],
+                              splittedLength: state.splittedMatn.length,
+                              splittedindex: index,
+                            ),
                         },
                       ),
                     ),
