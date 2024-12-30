@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS hadith (
     id INTEGER,
     titleId INTEGER,
     orderId INTEGER,
+    count INTEGER,
     html TEXT,
     text TEXT,
     searchText TEXT
@@ -44,6 +45,10 @@ for row in rows:
         for i in range(1, len(hadith_splits), 2):
             orderId += 1
 
+            count = None
+            if i == 1:
+                count = ((len(hadith_splits) + 1 )/2)-1
+
             hadith_id = int(hadith_splits[i])  # The number is the ID
             hadith_text = hadith_splits[i + 1].strip()  # Hadith text
 
@@ -52,9 +57,9 @@ for row in rows:
 
             # Insert the Hadith into the hadith table
             cursor.execute("""
-            INSERT INTO hadith (id, titleId, orderId, html, text, searchText)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, orderId, None, hadith_text, search_text))
+            INSERT INTO hadith (id, titleId, orderId, count, html, text, searchText)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (hadith_id, title_id, orderId, count ,None, hadith_text, search_text))
         # Skip the first split, process subsequent Hadiths
         orderId = 0
 
