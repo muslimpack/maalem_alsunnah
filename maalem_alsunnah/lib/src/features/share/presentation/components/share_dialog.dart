@@ -6,6 +6,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/show_toast.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as_image_screen.dart';
@@ -38,6 +39,7 @@ class _ShareDialogState extends State<ShareDialog> {
   final StringBuffer sb = StringBuffer();
   bool isLoading = true;
   late ContentModel content;
+  late HadithModel hadith;
 
   @override
   void initState() {
@@ -50,8 +52,7 @@ class _ShareDialogState extends State<ShareDialog> {
       case ShareType.content:
         content = await sl<HadithDbHelper>().getContentById(widget.itemId);
       case ShareType.hadith:
-
-        ///TODO
+        hadith = (await sl<HadithDbHelper>().getHadithById(widget.itemId))!;
         break;
     }
 
@@ -66,10 +67,12 @@ class _ShareDialogState extends State<ShareDialog> {
       case ShareType.content:
         sb.write(content.text);
       case ShareType.hadith:
-
-        ///TODO
+        sb.write(hadith.text);
         break;
     }
+
+    sb.write("\n\n");
+    sb.write(S.of(context).appHashtag);
   }
 
   @override
