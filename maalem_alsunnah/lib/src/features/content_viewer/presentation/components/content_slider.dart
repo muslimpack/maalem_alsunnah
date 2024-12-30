@@ -43,7 +43,7 @@ class _ContentSliderState extends State<ContentSlider> {
     return Slider(
       min: widget.state.titleIdRange.start + 1,
       max: widget.state.titleIdRange.end,
-      divisions: widget.state.contentCount - 1,
+      divisions: widget.state.contentCount,
       value: isChanging ? value : widget.state.content.titleId.toDouble(),
       onChanged: (value) {
         setState(() {
