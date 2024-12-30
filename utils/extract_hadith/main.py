@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS hadith (
     contentId INTEGER,
     orderId INTEGER,
     count INTEGER,
-    html TEXT,
     text TEXT,
     searchText TEXT
 )
@@ -58,9 +57,9 @@ for row in rows:
 
             # Insert the Hadith into the hadith table
             cursor.execute("""
-            INSERT INTO hadith (id, titleId, contentId, orderId, count, html, text, searchText)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, content_id, orderId, count ,None, hadith_text, search_text))
+            INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, search_text))
         # Skip the first split, process subsequent Hadiths
         orderId = 0
 
