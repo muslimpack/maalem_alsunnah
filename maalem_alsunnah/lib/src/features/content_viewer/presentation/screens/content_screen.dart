@@ -57,10 +57,55 @@ class ContentScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TitlesChainBreadCrumb(titleId: state.content.titleId),
+          // Expanded(
+          //   child: ListView(
+          //     padding: EdgeInsets.all(15),
+          //     children: [
+          //       FormattedText(
+          //         text: context.watch<SettingsCubit>().state.showDiacritics
+          //             ? state.content.text
+          //             : state.content.searchText,
+          //         settings: textFormatterSettings,
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Expanded(
             child: ListView(
               padding: EdgeInsets.all(15),
               children: [
+                ...state.hadithList.map(
+                  (e) {
+                    final bool isTitle = e.text.startsWith('باب');
+                    final String text =
+                        context.watch<SettingsCubit>().state.showDiacritics
+                            ? e.text
+                            : e.searchText;
+                    final String formattedText =
+                        isTitle ? text : "${e.id} - $text";
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: FormattedText(
+                          text: formattedText,
+                          settings: textFormatterSettings,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                if (state.hadithList.isEmpty)
+                  FormattedText(
+                    text: context.watch<SettingsCubit>().state.showDiacritics
+                        ? state.content.text
+                        : state.content.searchText,
+                    settings: textFormatterSettings,
+                  ),
+                Container(
+                  margin: EdgeInsets.all(50),
+                  height: 10,
+                  color: Colors.amber,
+                ),
                 FormattedText(
                   text: context.watch<SettingsCubit>().state.showDiacritics
                       ? state.content.text
