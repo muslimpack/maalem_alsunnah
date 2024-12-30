@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_for.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/content_search_card.dart';
+import 'package:maalem_alsunnah/src/features/search/presentation/components/hadith_search_card.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_filters_dialog.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_for_bar.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/search_result_viewer.dart';
@@ -51,10 +53,13 @@ class SearchScreen extends StatelessWidget {
                       );
                     },
                   ),
-                SearchFor.hadith => SearchResultViewer(
-                    pagingController: sl<SearchCubit>().titlePagingController,
+                SearchFor.hadith => SearchResultViewer<HadithModel>(
+                    pagingController: sl<SearchCubit>().hadithPagingController,
                     itemBuilder: (context, item, index) {
-                      return TitleCard(title: item);
+                      return HadithSearchCard(
+                        hadith: item,
+                        searchedText: state.searchText,
+                      );
                     },
                   ),
               },
