@@ -38,6 +38,7 @@ for row in rows:
         continue
 
     # Find all Hadith start positions
+    text_content = text_content.replace("–", "-")
     hadith_splits = hadith_start_regex.split(text_content)
     if len(hadith_splits) > 1:
         # Skip the first split, process subsequent Hadiths
