@@ -57,8 +57,11 @@ for row in rows:
             if i == 1:
                 count = ((len(hadith_splits) + 1 )/2)-1
 
-            hadith_id = int(hadith_splits[i])  # The number is the ID
             hadith_text = hadith_splits[i + 1].strip()  # Hadith text
+
+            hadith_id = int(hadith_splits[i])  # The number is the ID
+            if hadith_text.startswith("باب"):
+              hadith_id = None
 
             # Normalize the text for searching
             search_text = remove_diacritics(hadith_text)
