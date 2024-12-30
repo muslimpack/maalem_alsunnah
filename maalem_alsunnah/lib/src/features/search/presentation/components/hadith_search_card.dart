@@ -5,7 +5,6 @@ import 'package:maalem_alsunnah/src/features/content_viewer/presentation/compone
 import 'package:maalem_alsunnah/src/features/home/presentation/components/responsive_text.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HadithSearchCard extends StatelessWidget {
   final String searchedText;
@@ -19,19 +18,31 @@ class HadithSearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        leading: Icon(MdiIcons.magnify),
-        title: TitlesChainBreadCrumb(titleId: hadith.titleId),
-        subtitle: ResponsiveText(
-          hadith.searchText,
-          searchedText: searchedText,
-          style: TextStyle(
-            fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
-            fontFamily: 'adwaa',
-            height: 1.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+              color: Colors.brown.withValues(alpha: .3),
+              width: 7,
+            ),
           ),
         ),
-        isThreeLine: true,
+        child: Column(
+          children: [
+            TitlesChainBreadCrumb(titleId: hadith.titleId),
+            ResponsiveText(
+              hadith.searchText,
+              searchedText: searchedText,
+              style: TextStyle(
+                fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
+                fontFamily: 'adwaa',
+                height: 1.5,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
