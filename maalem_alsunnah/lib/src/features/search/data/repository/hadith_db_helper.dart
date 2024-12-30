@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
@@ -92,8 +91,6 @@ class HadithDbHelper {
       searchType: searchType,
       useFilters: true,
     );
-
-    appPrint(whereFilters);
 
     final String qurey =
         '''SELECT * FROM hadith ${whereFilters.query} LIMIT ? OFFSET ?''';
