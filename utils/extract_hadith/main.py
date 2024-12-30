@@ -45,7 +45,9 @@ for row in rows:
         for i in range(1, len(hadith_splits), 2):
             orderId += 1
 
+            # Extract the length of the Hadith in each title
             count = None
+            # Only set count to first record in each title
             if i == 1:
                 count = ((len(hadith_splits) + 1 )/2)-1
 
