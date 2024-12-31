@@ -70,21 +70,22 @@ def process_contents(rows, cursor):
             header = text_content[:first_match_start].strip()
             body = text_content[first_match_start:].strip()
 
-            if header:
-                insert_single(header, content_id, title_id, cursor)
-
             # Process the remaining Hadiths
             hadith_splits = hadith_start_regex.split(body)
+            hadith_count = (len(hadith_splits) - 1) // 2
+            if header:
+                insert_single(header, content_id, title_id, hadith_count + 1, cursor)
+
             if len(hadith_splits) > 1:
-                insert_hadiths(hadith_splits, content_id, title_id, cursor)
+                insert_hadiths(hadith_splits, content_id, title_id, header, cursor)
             else:
-                insert_single(body, content_id, title_id, cursor)
+                insert_single(body, content_id, title_id,None, cursor)
         else:
             # If no Hadith starting lines are found, insert the entire text as a single entry
-            insert_single(text_content.strip(), content_id, title_id, cursor)
+            insert_single(text_content.strip(), content_id, title_id, None, cursor)
 
 
-def insert_hadiths(hadith_splits, content_id, title_id, cursor):
+def insert_hadiths(hadith_splits, content_id, title_id, haveHeader, cursor):
     """Insert Hadiths into the database based on split text."""
     order_id = 0
     hadith_count = (len(hadith_splits) - 1) // 2  # Calculate the count of Hadiths
@@ -105,10 +106,10 @@ def insert_hadiths(hadith_splits, content_id, title_id, cursor):
             INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            (hadith_id, title_id, content_id, order_id, hadith_count if order_id == 1 else None, hadith_text, search_text)
+            (hadith_id, title_id, content_id, order_id,  hadith_count if order_id == 1 and not haveHeader else None, hadith_text, search_text)
         )
 
-def insert_single(hadith_text, content_id, title_id, cursor):
+def insert_single(hadith_text, content_id, title_id, count, cursor):
     """Insert titles which not satisfy regex."""
 
     # Normalize the text for searching
@@ -120,7 +121,7 @@ def insert_single(hadith_text, content_id, title_id, cursor):
         INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
-        (None, title_id, content_id, 1, 1, hadith_text, search_text)
+        (None, title_id, content_id, 1,count if count else 1, hadith_text, search_text)
     )
 
 if __name__ == "__main__":
