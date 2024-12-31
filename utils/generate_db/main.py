@@ -1,24 +1,34 @@
 import sqlite3
+import os
+from generate_titles_table import process_generate_titles_table
 from html_to_plain_text import process_html_to_plain_text
-from remove_diacritics import process_remove_diacritics
 from generate_hadith_table import process_generate_hadith_table
+from remove_diacritics import process_remove_diacritics
+
+db_name = 'book.db'
 
 if __name__ == "__main__":
-    conn = sqlite3.connect('book.db')
+    if os.path.exists(db_name):
+        os.remove(db_name)
+    conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
     try:
-        print("\n# Phase 1: Converting HTML to plain text...")
+        print("\n# Phase 1: Building 'titles' table...")
+        process_generate_titles_table(cursor)
+        conn.commit()
+
+        print("\n# Phase 2: Building 'contents' table | Converting HTML to plain text...")
         process_html_to_plain_text(cursor)
         conn.commit()
 
         print("\n------------------------------")
-        print("# Phase 2: Recreating Hadith table and processing Hadiths...")
+        print("# Phase 3: Recreating Hadith table and processing Hadiths...")
         process_generate_hadith_table(cursor)
         conn.commit()
 
         print("\n------------------------------")
-        print("# Phase 3: Removing diacritics...")
+        print("# Phase 4: Removing diacritics...")
         process_remove_diacritics(cursor)
         conn.commit()
     finally:
