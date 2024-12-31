@@ -18,6 +18,7 @@ def recreate_contents_table(cursor):
 
 def render_html_as_text(html_content, html_converter):
     text = html_converter.handle(html_content).strip()
+    text = text.replace("–", "-")
     text = text.replace("\\-", " -")
     text = re.sub(r'^\s*\n', '\n', text, flags=re.MULTILINE)
     unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
