@@ -79,8 +79,9 @@ class HadithDbHelper {
   Future<List<HadithModel>> getHadithListByContentId(int contentId) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db
-        .rawQuery('SELECT * FROM hadith where contentId = ?', [contentId]);
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM hadith where contentId = ? order by orderId ASC',
+        [contentId]);
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
