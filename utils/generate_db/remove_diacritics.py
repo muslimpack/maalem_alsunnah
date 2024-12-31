@@ -46,5 +46,5 @@ def process_remove_diacritics(cursor):
         cursor.execute("""
             UPDATE hadith
             SET searchText = ?
-            WHERE id = ?
-        """, (processed_text, record_id))
+            WHERE text = ?
+        """, (processed_text, text))
