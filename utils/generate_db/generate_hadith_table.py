@@ -2,7 +2,7 @@ import re
 from tqdm import tqdm
 
 def recreate_hadith_table(cursor):
-    cursor.execute( "DROP TABLE hadith" )
+    cursor.execute( "DROP TABLE IF EXISTS hadith" )
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS hadith (
