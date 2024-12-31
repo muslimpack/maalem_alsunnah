@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_card_popup_menu.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/responsive_text.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
@@ -31,7 +32,12 @@ class HadithSearchCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            TitlesChainBreadCrumb(titleId: hadith.titleId),
+            Row(
+              children: [
+                HadithCardPopupMenu(hadith: hadith),
+                Expanded(child: TitlesChainBreadCrumb(titleId: hadith.titleId)),
+              ],
+            ),
             ResponsiveText(
               "${hadith.id} - ${hadith.searchText}",
               searchedText: searchedText,
