@@ -24,7 +24,7 @@ def render_html_as_text(html_content, html_converter):
     return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
 
 def get_contents():    
-    contentsConn = sqlite3.connect('assets\\contents.db')
+    contentsConn = sqlite3.connect('assets\\original.db')
     contentsCursor = contentsConn.cursor()
     
     contentsCursor.execute("SELECT id, titleId, html FROM contents")
