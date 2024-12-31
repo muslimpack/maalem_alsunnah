@@ -47,6 +47,8 @@ def remove_diacritics(text):
     arabic_diacritics = re.compile(r'[\u0610-\u061A\u064B-\u065F\u0670]')
     return arabic_diacritics.sub('', text)
 
+import re
+
 def process_contents(rows, cursor):
     """Process rows from the contents table and insert Hadiths into the hadith table."""
     hadith_start_regex = re.compile(r"^\s*(\d+)\s*-\s*", re.MULTILINE)
@@ -59,12 +61,28 @@ def process_contents(rows, cursor):
         # Normalize text for processing
         text_content = text_content.replace("\u2013", "-")  # Replace en dash with hyphen
 
-        # Split text by Hadith starting lines
-        hadith_splits = hadith_start_regex.split(text_content)
-        if len(hadith_splits) > 1:
-            insert_hadiths(hadith_splits, content_id, title_id, cursor)
+        # Find Hadith starting lines and split the text
+        matches = list(hadith_start_regex.finditer(text_content))
+        
+        if matches:
+            # Process the text before the first Hadith as the header
+            first_match_start = matches[0].start()
+            header = text_content[:first_match_start].strip()
+            body = text_content[first_match_start:].strip()
+
+            if header:
+                insert_single(header, content_id, title_id, cursor)
+
+            # Process the remaining Hadiths
+            hadith_splits = hadith_start_regex.split(body)
+            if len(hadith_splits) > 1:
+                insert_hadiths(hadith_splits, content_id, title_id, cursor)
+            else:
+                insert_single(body, content_id, title_id, cursor)
         else:
-            insert_single(text_content, content_id, title_id, cursor)
+            # If no Hadith starting lines are found, insert the entire text as a single entry
+            insert_single(text_content.strip(), content_id, title_id, cursor)
+
 
 def insert_hadiths(hadith_splits, content_id, title_id, cursor):
     """Insert Hadiths into the database based on split text."""
