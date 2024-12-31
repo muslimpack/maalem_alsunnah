@@ -1,31 +1,35 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 class HadithEntity extends Equatable {
   final int id;
-  final int srcBookId;
-  final String narrator;
-  final String narratorReference;
-  final String rank;
-  final String hadith;
+  final int titleId;
+  final int contentId;
+  final int orderId;
+  final int count;
+  final String text;
+  final String searchText;
 
   const HadithEntity({
     required this.id,
-    required this.srcBookId,
-    required this.narrator,
-    required this.narratorReference,
-    required this.rank,
-    required this.hadith,
+    required this.titleId,
+    required this.contentId,
+    required this.orderId,
+    required this.count,
+    required this.text,
+    required this.searchText,
   });
 
   @override
   List<Object> get props {
     return [
       id,
-      srcBookId,
-      narrator,
-      narratorReference,
-      rank,
-      hadith,
+      titleId,
+      contentId,
+      orderId,
+      count,
+      text,
+      searchText,
     ];
   }
 }

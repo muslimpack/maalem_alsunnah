@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_bottom_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
@@ -24,6 +25,8 @@ class ContentScreen extends StatelessWidget {
       fontFamily: 'adwaa',
       height: 1.5,
     );
+    final TextFormatterSettings textFormatterSettings =
+        state.textFormatterSettings(defaultStyle);
     return Scaffold(
       appBar: AppBar(
         title: Text(state.title.name),
@@ -37,37 +40,34 @@ class ContentScreen extends StatelessWidget {
         children: [
           TitlesChainBreadCrumb(titleId: state.content.titleId),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(15),
-              children: [
-                FormattedText(
-                  text: context.watch<SettingsCubit>().state.showDiacritics
-                      ? state.content.text
-                      : state.content.searchText,
-                  settings: TextFormatterSettings(
-                    deafaultStyle: defaultStyle,
-                    hadithTextStyle: defaultStyle.copyWith(
-                      // fontWeight: FontWeight.bold,
-                      color: Colors.yellow[700],
-                    ),
-                    quranTextStyle: defaultStyle.copyWith(
-                      color: Colors.lightGreen[300],
-                      fontWeight: FontWeight.bold,
-                    ),
-                    squareBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.cyan[300],
-                    ),
-                    roundBracketsStyle: defaultStyle.copyWith(
-                      color: Colors.red[300],
-                    ),
-                    startingNumberStyle: defaultStyle.copyWith(
-                      color: Colors.purple[300],
-                      fontWeight: FontWeight.bold,
-                    ),
+            child: state.hadithList.isEmpty
+                ? ListView(
+                    controller:
+                        context.read<ContentViewerCubit>().scrollController,
+                    padding: EdgeInsets.all(15),
+                    children: [
+                      FormattedText(
+                        text:
+                            context.watch<SettingsCubit>().state.showDiacritics
+                                ? state.content.text
+                                : state.content.searchText,
+                        settings: textFormatterSettings,
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    controller:
+                        context.read<ContentViewerCubit>().scrollController,
+                    padding: EdgeInsets.all(15),
+                    itemCount: state.hadithList.length,
+                    itemBuilder: (context, index) {
+                      final hadith = state.hadithList[index];
+                      return ContentHadithCard(
+                        hadith: hadith,
+                        textFormatterSettings: textFormatterSettings,
+                      );
+                    },
                   ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/format_type_enum.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_item.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
@@ -13,90 +11,48 @@ class FormattedText extends StatelessWidget {
   final bool isSelectable;
   final TextRange? textRange;
   final String textSeparator;
-  FormattedText({
+  final Widget? textLeadingWidget;
+
+  const FormattedText({
     super.key,
     required this.text,
     required this.settings,
     this.isSelectable = true,
     this.textRange,
     this.textSeparator = "...",
-  }) : textSpans = [];
+    this.textLeadingWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textSpansChildren = _getTextSpans(text, settings);
-    final textSpan = TextSpan(
-      style: DefaultTextStyle.of(context).style,
-      children: textSpansChildren,
-    );
+    final text = textSpan(style: DefaultTextStyle.of(context).style);
 
-    return isSelectable
-        ? SelectableText.rich(textSpan)
-        : RichText(text: textSpan);
+    return isSelectable ? SelectableText.rich(text) : RichText(text: text);
   }
 
-  TextSpan textSpan() {
-    final textSpansChildren = _getTextSpans(text, settings);
-    return TextSpan(
-      children: textSpansChildren,
-    );
-  }
-
-  final List<TextSpan> textSpans;
-
-  String get _textSpansString => textSpans.map((e) => e.text).join("");
-  int get _textSpansLength => _textSpansString.length;
-  int skipepdChar = 0;
-  void addTextSpan(TextSpan textSpan) {
-    final textSpansLength = _textSpansString.length;
-    final textRangeWidth = ((textRange?.end) ?? 0) - ((textRange?.start) ?? 0);
-    final bool applySplit = textRange != null && text.length > textRangeWidth;
-
-    if (applySplit) {
-      if (textSpansLength > textRangeWidth) {
-        return;
-      } else {
-        if (textRange!.start != 0 && textSpans.isEmpty) {
-          textSpans.add(TextSpan(text: textSeparator, style: textSpan.style));
-        }
-
-        if (skipepdChar + textSpan.text!.length >= textRange!.start) {
-          final remaning = textRangeWidth - textSpansLength + 1;
-          final lastSub = min(textSpan.text!.length, remaning);
-          final firstSub = textSpans.length == 1 && skipepdChar > 0
-              ? max(
-                  0,
-                  min(
-                    textSpan.text!.length,
-                    textRange!.start - skipepdChar,
-                  ),
-                )
-              : 0;
-          appPrint(firstSub);
-          textSpans.add(TextSpan(
-              text: textSpan.text!.substring(firstSub, lastSub),
-              style: textSpan.style));
-
-          skipepdChar += firstSub;
-
-          if (textRange!.end != text.length &&
-              _textSpansLength >= textRangeWidth) {
-            textSpans.add(TextSpan(text: textSeparator, style: textSpan.style));
-          }
-        } else {
-          skipepdChar += textSpan.text!.length;
-        }
-      }
-    } else {
-      textSpans.add(textSpan);
+  TextSpan textSpan({TextStyle? style}) {
+    final List<InlineSpan> textSpansChildren =
+        List<InlineSpan>.from(_applyTextRange(_getTextSpans(text, settings)));
+    if (textLeadingWidget != null) {
+      textSpansChildren.insert(
+        0,
+        WidgetSpan(
+          child: textLeadingWidget!,
+          alignment: PlaceholderAlignment.middle,
+        ),
+      );
     }
+    return TextSpan(
+      style: style,
+      children: textSpansChildren,
+    );
   }
 
   List<TextSpan> _getTextSpans(
     String text,
     TextFormatterSettings settings,
   ) {
-    textSpans.clear();
+    final List<TextSpan> textSpans = [];
 
     final List<TextFormatterItem> items = [
       TextFormatterItem(
@@ -137,7 +93,7 @@ class FormattedText extends StatelessWidget {
 
     for (final RegExpMatch match in matches) {
       if (match.start > start) {
-        addTextSpan(
+        textSpans.add(
           TextSpan(
             text: text.substring(start, match.start),
             style: settings.deafaultStyle,
@@ -151,10 +107,11 @@ class FormattedText extends StatelessWidget {
         if (item.predicate.call(matchedText)) {
           if (item.formatType == FormatTypeEnum.roundBrackets) {
             if (matchedText.length > 3) {
-              final lastWord = textSpans.lastOrNull?.text ?? "";
+              final lastWord =
+                  textSpans.isNotEmpty ? textSpans.last.text ?? "" : "";
               if (lastWord.contains("قال تعالى") ||
                   lastWord.contains("عزوجل")) {
-                addTextSpan(
+                textSpans.add(
                   TextSpan(
                     text: matchedText,
                     style: settings.quranTextStyle,
@@ -162,7 +119,7 @@ class FormattedText extends StatelessWidget {
                 );
                 break;
               } else {
-                addTextSpan(
+                textSpans.add(
                   TextSpan(
                     text: matchedText,
                     style: settings.hadithTextStyle,
@@ -172,7 +129,7 @@ class FormattedText extends StatelessWidget {
               }
             }
           }
-          addTextSpan(
+          textSpans.add(
             TextSpan(
               text: matchedText,
               style: item.textStyle,
@@ -186,7 +143,7 @@ class FormattedText extends StatelessWidget {
     }
 
     if (start < text.length) {
-      addTextSpan(
+      textSpans.add(
         TextSpan(
           text: text.substring(start),
           style: settings.deafaultStyle,
@@ -195,5 +152,49 @@ class FormattedText extends StatelessWidget {
     }
 
     return textSpans;
+  }
+
+  List<InlineSpan> _applyTextRange(List<TextSpan> textSpans) {
+    if (textRange == null) return textSpans;
+
+    final int rangeStart = textRange!.start;
+    final int rangeEnd = textRange!.end;
+
+    final List<TextSpan> filteredSpans = [];
+    int currentLength = 0;
+
+    for (final span in textSpans) {
+      final spanText = span.text ?? "";
+      final spanLength = spanText.length;
+
+      if (currentLength + spanLength < rangeStart) {
+        currentLength += spanLength;
+        continue;
+      }
+
+      final int spanStart = max(0, rangeStart - currentLength);
+      final int spanEnd = min(spanLength, rangeEnd - currentLength);
+
+      if (spanStart < spanEnd) {
+        filteredSpans.add(
+          TextSpan(
+            text: spanText.substring(spanStart, spanEnd),
+            style: span.style,
+          ),
+        );
+      }
+
+      currentLength += spanLength;
+
+      if (currentLength >= rangeEnd) break;
+    }
+
+    if (rangeEnd < text.length) {
+      filteredSpans.add(
+        TextSpan(text: textSeparator),
+      );
+    }
+
+    return filteredSpans;
   }
 }

@@ -4,8 +4,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
@@ -14,6 +16,7 @@ part 'content_viewer_state.dart';
 class ContentViewerCubit extends Cubit<ContentViewerState> {
   final HadithDbHelper hadithDbHelper;
   final HomeCubit homeCubit;
+  final ScrollController scrollController = ScrollController();
   Timer? _timer;
   ContentViewerCubit(
     this.hadithDbHelper,
@@ -45,6 +48,13 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
       final content = await hadithDbHelper.getContentByTitleId(titleId);
       final contentCount = await hadithDbHelper.getContentCount();
       final titleIdRange = await hadithDbHelper.getContentTitleIdRange();
+      final hadithList = await hadithDbHelper.getHadithListByContentId(
+        content.id,
+      );
+
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(0);
+      }
 
       emit(
         ContentViewerLoadedState(
@@ -52,6 +62,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
           content: content,
           contentCount: contentCount,
           titleIdRange: titleIdRange,
+          hadithList: hadithList,
         ),
       );
     } else {
@@ -86,6 +97,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   @override
   Future<void> close() {
     _timer?.cancel();
+    scrollController.dispose();
     return super.close();
   }
 }

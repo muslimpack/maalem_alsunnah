@@ -26,6 +26,11 @@ class SearchField extends StatelessWidget {
                 icon: Icon(MdiIcons.eraser),
               ),
             ),
+            style: TextStyle(
+              fontFamily: 'adwaa',
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
             onChanged: (value) {
               EasyDebounce.debounce(
                 'search',

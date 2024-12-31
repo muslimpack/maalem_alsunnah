@@ -12,7 +12,7 @@ class TitleModel extends TitleEntity {
     return TitleModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      parentId: num.parse((map['parentId'] as String?) ?? "-1") as int,
+      parentId: (map['parentId'] as int?) ?? -1,
       subTitlesCount: map['subTitlesCount'] as int,
     );
   }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/utils/db_helper.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_type.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/sql_query.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -41,134 +41,81 @@ class HadithDbHelper {
 
   /* ************* | ************* */
 
-  Future<List<Hadith>> getAll() async {
+  Future<List<HadithModel>> getAll() async {
     final Database db = await database;
 
-    ///TODO |  ORDER BY `order` ASC
     final List<Map<String, dynamic>> maps =
         await db.rawQuery('SELECT * FROM hadith');
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
-  Future<Hadith?> getHadithById(int id) async {
+  Future<HadithModel?> getHadithById(int id) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps =
-        await db.rawQuery('SELECT * FRMO hadith where id = ?', [id]);
+        await db.rawQuery('SELECT * FROM hadith where id = ?', [id]);
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     }).firstOrNull;
   }
 
-  Future<List<Hadith>> searchByHadithText(String hadithText) async {
-    if (hadithText.isEmpty) return [];
-
+  Future<HadithModel?> getHadithByIdAndTitleId(
+      {required int hadithId, required int titled}) async {
     final Database db = await database;
 
-    ///TODO |  ORDER BY `order` ASC
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE hadith LIKE ?',
-      ['%$hadithText%'],
-    );
+        'SELECT * FROM hadith where id = ? and titleId = ?',
+        [hadithId, titled]);
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
+    }).firstOrNull;
+  }
+
+  Future<List<HadithModel>> getHadithListByContentId(int contentId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM hadith where contentId = ? order by orderId ASC',
+        [contentId]);
+
+    return List.generate(maps.length, (i) {
+      return HadithModel.fromMap(maps[i]);
     });
   }
 
-  SqlQuery _searchByHadithTextWithFiltersSqlQuery(
-    String searchText, {
+  Future<List<HadithModel>> searchHadith({
+    required String searchText,
     required SearchType searchType,
-    required bool useFilters,
-  }) {
-    final SqlQuery sqlQuery = SqlQuery();
-
-    final List<String> splittedSearchWords = searchText.trim().split(' ');
-
-    final dataForm = "*";
-
-    switch (searchType) {
-      case SearchType.typical:
-        sqlQuery.query = 'SELECT $dataForm FROM hadith';
-        sqlQuery.args.addAll(['%$searchText%']);
-
-      case SearchType.allWords:
-        final String allWordsQuery =
-            splittedSearchWords.map((word) => 'hadith LIKE ?').join(' AND ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
-        sqlQuery.args.addAll([...params]);
-
-      case SearchType.anyWords:
-        final String allWordsQuery =
-            splittedSearchWords.map((word) => 'hadith LIKE ?').join(' OR ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
-        sqlQuery.query = 'SELECT $dataForm FROM hadith WHERE ($allWordsQuery)';
-        sqlQuery.args.addAll([...params]);
-    }
-
-    return sqlQuery;
-  }
-
-  Future<List<Hadith>> searchByHadithTextWithFilters(
-    String searchText, {
-    required SearchType searchType,
-    required int limit, // Number of items per page
-    required int offset, // Offset to start fetching items from
+    required int limit,
+    required int offset,
   }) async {
     if (searchText.isEmpty) return [];
 
     final Database db = await database;
 
-    final SqlQuery sqlQuery = _searchByHadithTextWithFiltersSqlQuery(
+    final whereFilters = _searchTitlesSearchType(
       searchText,
+      "searchText",
       searchType: searchType,
       useFilters: true,
     );
 
+    final String qurey =
+        '''SELECT * FROM hadith ${whereFilters.query} and id is not null LIMIT ? OFFSET ?''';
+
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-      '${sqlQuery.query} LIMIT ? OFFSET ?',
-      [...sqlQuery.args, limit, offset],
+      qurey,
+      [...whereFilters.args, limit, offset],
     );
 
     return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
+      return HadithModel.fromMap(maps[i]);
     });
-  }
-
-  Future<List<Hadith>> searchByRawy(String rawy) async {
-    final Database db = await database;
-
-    ///TODO |  ORDER BY `order` ASC
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE hadith LIKE ?',
-      ['%$rawy%'],
-    );
-
-    return List.generate(maps.length, (i) {
-      return Hadith.fromMap(maps[i]);
-    });
-  }
-
-  Future<Hadith?> randomHadith() async {
-    final Database db = await database;
-
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-      'SELECT * FROM hadith WHERE ruling like ? ORDER BY RANDOM() LIMIT 1',
-      ['%%'],
-    );
-
-    if (maps.isNotEmpty) {
-      return Hadith.fromMap(maps.first);
-    }
-
-    return null;
   }
 
   ///*********************************** */

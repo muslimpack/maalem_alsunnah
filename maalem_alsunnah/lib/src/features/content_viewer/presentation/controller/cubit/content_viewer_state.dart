@@ -18,6 +18,7 @@ class ContentViewerLoadedState extends ContentViewerState {
   final ContentModel content;
   final int contentCount;
   final RangeValues titleIdRange;
+  final List<HadithModel> hadithList;
 
   double get progress => content.id / contentCount;
   bool get hasPrevious => content.id > 2;
@@ -28,22 +29,49 @@ class ContentViewerLoadedState extends ContentViewerState {
     required this.content,
     required this.contentCount,
     required this.titleIdRange,
+    required this.hadithList,
   });
 
   @override
-  List<Object> get props => [content, title, contentCount, titleIdRange];
+  List<Object> get props =>
+      [content, title, contentCount, titleIdRange, hadithList];
+
+  TextFormatterSettings textFormatterSettings(TextStyle defaultStyle) =>
+      TextFormatterSettings(
+        deafaultStyle: defaultStyle,
+        hadithTextStyle: defaultStyle.copyWith(
+          // fontWeight: FontWeight.bold,
+          color: Colors.yellow[700],
+        ),
+        quranTextStyle: defaultStyle.copyWith(
+          color: Colors.lightGreen[300],
+          fontWeight: FontWeight.bold,
+        ),
+        squareBracketsStyle: defaultStyle.copyWith(
+          color: Colors.cyan[300],
+        ),
+        roundBracketsStyle: defaultStyle.copyWith(
+          color: Colors.red[300],
+        ),
+        startingNumberStyle: defaultStyle.copyWith(
+          color: Colors.purple[300],
+          fontWeight: FontWeight.bold,
+        ),
+      );
 
   ContentViewerLoadedState copyWith({
     TitleModel? title,
     ContentModel? content,
     int? contentCount,
     RangeValues? titleIdRange,
+    List<HadithModel>? hadithList,
   }) {
     return ContentViewerLoadedState(
       title: title ?? this.title,
       content: content ?? this.content,
       contentCount: contentCount ?? this.contentCount,
       titleIdRange: titleIdRange ?? this.titleIdRange,
+      hadithList: hadithList ?? this.hadithList,
     );
   }
 }
