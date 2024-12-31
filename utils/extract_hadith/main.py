@@ -1,79 +1,92 @@
 import sqlite3
 import re
 
-# Connect to the SQLite database
-conn = sqlite3.connect('book.db')
-cursor = conn.cursor()
+def main():
+    # Connect to the SQLite database
+    conn = sqlite3.connect('book.db')
+    cursor = conn.cursor()
 
-cursor.execute("DROP TABLE if EXISTS hadith;")
-conn.commit()
+    try:
+        # Recreate the hadith table
+        recreate_hadith_table(cursor)
 
-# Function to remove Arabic diacritics
+        # Fetch all rows from the contents table
+        cursor.execute("SELECT id, titleId, text FROM contents")
+        rows = cursor.fetchall()
+
+        # Process each row to extract and insert Hadiths
+        process_contents(rows, cursor)
+
+        # Commit changes
+        conn.commit()
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        # Close the connection
+        conn.close()
+
+def recreate_hadith_table(cursor):
+    """Drop and recreate the hadith table."""
+    cursor.execute("DROP TABLE IF EXISTS hadith;")
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS hadith (
+            id INTEGER,
+            titleId INTEGER,
+            contentId INTEGER,
+            orderId INTEGER,
+            count INTEGER,
+            text TEXT,
+            searchText TEXT
+        )
+        """
+    )
+
 def remove_diacritics(text):
+    """Remove Arabic diacritics from text."""
     arabic_diacritics = re.compile(r'[\u0610-\u061A\u064B-\u065F\u0670]')
     return arabic_diacritics.sub('', text)
 
-# Create the hadith table if it doesn't exist
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS hadith (
-    id INTEGER,
-    titleId INTEGER,
-    contentId INTEGER,
-    orderId INTEGER,
-    count INTEGER,
-    text TEXT,
-    searchText TEXT
-)
-""")
-conn.commit()
+def process_contents(rows, cursor):
+    """Process rows from the contents table and insert Hadiths into the hadith table."""
+    hadith_start_regex = re.compile(r"^\s*(\d+)\s*-\s*", re.MULTILINE)
 
-# Fetch all rows from the contents table
-cursor.execute("SELECT id, titleId, text FROM contents")
-rows = cursor.fetchall()
+    for content_id, title_id, text_content in rows:
+        # Skip introduction titles
+        if title_id < 7:
+            continue
 
-# Regular expression to identify Hadith starting lines
-hadith_start_regex = re.compile(r"^\s*(\d+)\s*-\s*", re.MULTILINE)
+        # Normalize text for processing
+        text_content = text_content.replace("\u2013", "-")  # Replace en dash with hyphen
 
-# Process each row to extract Hadiths
-for row in rows:
-    content_id, title_id, text_content = row
+        # Split text by Hadith starting lines
+        hadith_splits = hadith_start_regex.split(text_content)
+        if len(hadith_splits) > 1:
+            insert_hadiths(hadith_splits, content_id, title_id, cursor)
 
-    # Skip introduction titles
-    if title_id < 7:
-        continue
+def insert_hadiths(hadith_splits, content_id, title_id, cursor):
+    """Insert Hadiths into the database based on split text."""
+    order_id = 0
+    hadith_count = (len(hadith_splits) - 1) // 2  # Calculate the count of Hadiths
 
-    # Find all Hadith start positions
-    text_content = text_content.replace("–", "-")
-    hadith_splits = hadith_start_regex.split(text_content)
-    if len(hadith_splits) > 1:
-        # Skip the first split, process subsequent Hadiths
-        orderId = 0
-        for i in range(1, len(hadith_splits), 2):
-            orderId += 1
+    for i in range(1, len(hadith_splits), 2):
+        order_id += 1
 
-            # Extract the length of the Hadith in each title
-            count = None
-            # Only set count to first record in each title
-            if i == 1:
-                count = ((len(hadith_splits) + 1 )/2)-1
+        # Parse Hadith ID and text
+        hadith_id = int(hadith_splits[i]) if not hadith_splits[i + 1].startswith("\u0628\u0627\u0628") else None
+        hadith_text = hadith_splits[i + 1].strip()
 
-            hadith_text = hadith_splits[i + 1].strip()  # Hadith text
+        # Normalize the text for searching
+        search_text = remove_diacritics(hadith_text)
 
-            hadith_id = int(hadith_splits[i])  # The number is the ID
-            if hadith_text.startswith("باب"):
-              hadith_id = None
-
-            # Normalize the text for searching
-            search_text = remove_diacritics(hadith_text)
-
-            # Insert the Hadith into the hadith table
-            cursor.execute("""
+        # Insert into the hadith table
+        cursor.execute(
+            """
             INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (hadith_id, title_id, content_id, orderId, count, hadith_text, search_text))
-        # Skip the first split, process subsequent Hadiths
-        orderId = 0
+            """,
+            (hadith_id, title_id, content_id, order_id, hadith_count if order_id == 1 else None, hadith_text, search_text)
+        )
 
-# Commit the changes and close the connection
-conn.commit()
-conn.close()
+if __name__ == "__main__":
+    main()
