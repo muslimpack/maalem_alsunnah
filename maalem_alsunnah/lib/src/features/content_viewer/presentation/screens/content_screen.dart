@@ -39,52 +39,35 @@ class ContentScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TitlesChainBreadCrumb(titleId: state.content.titleId),
-          // Expanded(
-          //   child: ListView(
-          //     padding: EdgeInsets.all(15),
-          //     children: [
-          //       FormattedText(
-          //         text: context.watch<SettingsCubit>().state.showDiacritics
-          //             ? state.content.text
-          //             : state.content.searchText,
-          //         settings: textFormatterSettings,
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Expanded(
-            child: ListView(
-              controller: context.read<ContentViewerCubit>().scrollController,
-              padding: EdgeInsets.all(15),
-              children: [
-                ...state.hadithList.map(
-                  (hadith) {
-                    return ContentHadithCard(
-                      hadith: hadith,
-                      textFormatterSettings: textFormatterSettings,
-                    );
-                  },
-                ),
-                if (state.hadithList.isEmpty)
-                  FormattedText(
-                    text: context.watch<SettingsCubit>().state.showDiacritics
-                        ? state.content.text
-                        : state.content.searchText,
-                    settings: textFormatterSettings,
+            child: state.hadithList.isEmpty
+                ? ListView(
+                    controller:
+                        context.read<ContentViewerCubit>().scrollController,
+                    padding: EdgeInsets.all(15),
+                    children: [
+                      FormattedText(
+                        text:
+                            context.watch<SettingsCubit>().state.showDiacritics
+                                ? state.content.text
+                                : state.content.searchText,
+                        settings: textFormatterSettings,
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    controller:
+                        context.read<ContentViewerCubit>().scrollController,
+                    padding: EdgeInsets.all(15),
+                    itemCount: state.hadithList.length,
+                    itemBuilder: (context, index) {
+                      final hadith = state.hadithList[index];
+                      return ContentHadithCard(
+                        hadith: hadith,
+                        textFormatterSettings: textFormatterSettings,
+                      );
+                    },
                   ),
-                Container(
-                  margin: EdgeInsets.all(50),
-                  height: 10,
-                  color: Colors.amber,
-                ),
-                FormattedText(
-                  text: context.watch<SettingsCubit>().state.showDiacritics
-                      ? state.content.text
-                      : state.content.searchText,
-                  settings: textFormatterSettings,
-                ),
-              ],
-            ),
           ),
         ],
       ),
