@@ -14,21 +14,27 @@ if __name__ == "__main__":
     cursor = conn.cursor()
 
     try:
-        print("\n# Phase 1: Building 'titles' table...")
+        print("\n------------------------------")
+        print("# Phase 1: Building 'titles' table...")
+        print("------------------------------\n")
         process_generate_titles_table(cursor)
         conn.commit()
 
-        print("\n# Phase 2: Building 'contents' table | Converting HTML to plain text...")
+        print("\n------------------------------")
+        print("# Phase 2: Building 'contents' table | Converting HTML to plain text...")
+        print("------------------------------\n")
         process_html_to_plain_text(cursor)
         conn.commit()
 
         print("\n------------------------------")
         print("# Phase 3: Recreating Hadith table and processing Hadiths...")
+        print("------------------------------\n")
         process_generate_hadith_table(cursor)
         conn.commit()
 
         print("\n------------------------------")
         print("# Phase 4: Removing diacritics...")
+        print("------------------------------\n")
         process_remove_diacritics(cursor)
         conn.commit()
     finally:
