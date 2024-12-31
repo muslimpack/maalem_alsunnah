@@ -63,6 +63,8 @@ def process_contents(rows, cursor):
         hadith_splits = hadith_start_regex.split(text_content)
         if len(hadith_splits) > 1:
             insert_hadiths(hadith_splits, content_id, title_id, cursor)
+        else:
+            insert_single(text_content, content_id, title_id, cursor)
 
 def insert_hadiths(hadith_splits, content_id, title_id, cursor):
     """Insert Hadiths into the database based on split text."""
@@ -87,6 +89,21 @@ def insert_hadiths(hadith_splits, content_id, title_id, cursor):
             """,
             (hadith_id, title_id, content_id, order_id, hadith_count if order_id == 1 else None, hadith_text, search_text)
         )
+
+def insert_single(hadith_text, content_id, title_id, cursor):
+    """Insert titles which not satisfy regex."""
+
+    # Normalize the text for searching
+    search_text = remove_diacritics(hadith_text)
+
+    # Insert into the hadith table
+    cursor.execute(
+        """
+        INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+        (None, title_id, content_id, 1, 1, hadith_text, search_text)
+    )
 
 if __name__ == "__main__":
     main()
