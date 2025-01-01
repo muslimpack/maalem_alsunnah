@@ -21,9 +21,9 @@ class NotesScreen extends StatelessWidget {
 
         return ListView.builder(
           padding: const EdgeInsets.all(10),
-          itemCount: state.notes.length,
+          itemCount: state.titlesWithNotes.length,
           itemBuilder: (context, index) {
-            final title = state.notes[index];
+            final title = state.titlesWithNotes[index];
             return TitleCard(title: title);
           },
         );

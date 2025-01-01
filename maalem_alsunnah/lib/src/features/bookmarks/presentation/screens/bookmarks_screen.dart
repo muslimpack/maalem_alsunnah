@@ -22,9 +22,9 @@ class BookmarksScreen extends StatelessWidget {
 
         return ListView.builder(
           padding: const EdgeInsets.all(10),
-          itemCount: state.favorites.length,
+          itemCount: state.favoriteTitles.length,
           itemBuilder: (context, index) {
-            final title = state.favorites[index];
+            final title = state.favoriteTitles[index];
             return TitleCard(title: title);
           },
         );

@@ -13,23 +13,36 @@ final class BookmarksLoadingState extends BookmarksState {}
 final class BookmarksLoadedState extends BookmarksState {
   final List<BookmarkModel> bookmarks;
   final List<TitleModel> bookmarkedTitle;
-  List<TitleModel> get favorites {
-    final favorites =
-        bookmarks.where((element) => element.isBookmarked).toList();
+  List<TitleModel> get favoriteTitles {
+    final favorites = bookmarks
+        .where(
+          (e) => e.isBookmarked && e.type == BookmarkType.title,
+        )
+        .toList();
 
     return favorites
-        .map((e) => bookmarkedTitle.firstWhere((element) {
+        .map(
+          (e) => bookmarkedTitle.firstWhere(
+            (element) {
               return element.id.toString() == e.itemId;
-            }))
+            },
+          ),
+        )
         .toList();
   }
 
-  List<TitleModel> get notes {
-    final notes =
-        bookmarks.where((element) => element.note.isNotEmpty).toList();
+  List<TitleModel> get titlesWithNotes {
+    final notes = bookmarks
+        .where(
+          (e) => e.note.isNotEmpty && e.type == BookmarkType.title,
+        )
+        .toList();
     return notes
-        .map((e) => bookmarkedTitle
-            .firstWhere((element) => element.id.toString() == e.itemId))
+        .map(
+          (e) => bookmarkedTitle.firstWhere((element) =>
+              element.id.toString() == e.itemId &&
+              e.type == BookmarkType.title),
+        )
         .toList();
   }
 
