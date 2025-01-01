@@ -10,7 +10,7 @@ def recreate_hadith_table(cursor):
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS hadith (
-            id INTEGER,
+            id TEXT,
             titleId INTEGER,
             contentId INTEGER,
             orderId INTEGER,
@@ -49,6 +49,7 @@ def process_contents(rows, cursor):
 def insert_hadiths(hadith_splits, content_id, title_id, haveHeader, cursor):
     order_id = 0
     hadith_count = (len(hadith_splits) - 1) // 2
+    seen_hadith_ids = {}  # Dictionary to track occurrences of hadith_id
 
     for i in range(1, len(hadith_splits), 2):
         order_id += 1
@@ -57,6 +58,14 @@ def insert_hadiths(hadith_splits, content_id, title_id, haveHeader, cursor):
 
         hadith_count = hadith_count if order_id == 1 and not haveHeader else None
         hadith_id = None if (hadith_id in excluded_titles and hadith_count is not None) else hadith_id
+
+        # Handle duplicated hadith_id by appending "م" to duplicates
+        if hadith_id is not None:
+            if hadith_id in seen_hadith_ids:
+                seen_hadith_ids[hadith_id] += 1
+                hadith_id = f"{hadith_id}م"  # Append "م" for duplicates
+            else:
+                seen_hadith_ids[hadith_id] = 1
 
         cursor.execute(
             """
