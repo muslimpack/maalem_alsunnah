@@ -127,6 +127,7 @@ class HadithDbHelper {
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
 SELECT 
     t1.id,
+    t1.orderId,
     t1.name,
     t1.searchText,
     t1.parentId,
@@ -154,6 +155,7 @@ GROUP BY
     final List<Map<String, dynamic>> maps = await db.rawQuery('''
 SELECT 
     t1.id,
+    t1.orderId,
     t1.name,
     t1.searchText,
     t1.parentId,
@@ -182,6 +184,7 @@ GROUP BY
       '''
 SELECT 
     t1.id,
+    t1.orderId,
     t1.name,
     t1.searchText,
     t1.parentId,
@@ -275,6 +278,7 @@ GROUP BY
     final String qurey = '''
 SELECT 
     t1.id,
+    t1.orderId,
     t1.name,
     t1.searchText,
     t1.parentId,

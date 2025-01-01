@@ -3,17 +3,27 @@ import 'package:equatable/equatable.dart';
 
 class TitleEntity extends Equatable {
   final int id;
+  final int orderId;
   final String name;
   final int parentId;
   final int subTitlesCount;
 
   const TitleEntity({
     required this.id,
+    required this.orderId,
     required this.name,
     required this.parentId,
     required this.subTitlesCount,
   });
 
   @override
-  List<Object> get props => [id, name, parentId, subTitlesCount];
+  List<Object> get props {
+    return [
+      id,
+      orderId,
+      name,
+      parentId,
+      subTitlesCount,
+    ];
+  }
 }
