@@ -64,3 +64,13 @@ class BookmarksNoteEvent extends BookmarksEvent {
   @override
   List<Object?> get props => [itemId, type, note];
 }
+
+class BookmarksChangeViewEvent extends BookmarksEvent {
+  final BookmarkViewEnum bookmarkView;
+  const BookmarksChangeViewEvent({
+    required this.bookmarkView,
+  });
+
+  @override
+  List<Object?> get props => [bookmarkView];
+}

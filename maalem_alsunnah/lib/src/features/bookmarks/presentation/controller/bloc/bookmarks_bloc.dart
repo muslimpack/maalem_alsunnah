@@ -7,6 +7,9 @@ import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark_repository.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_model.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_view_enum.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/domain/repository/bookmark_repo.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
@@ -16,15 +19,18 @@ part 'bookmarks_state.dart';
 class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   final BookmarkRepository bookmarkRepository;
   final HadithDbHelper hadithDbHelper;
+  final BookmarkRepo bookmarkRepo;
   BookmarksBloc(
     this.bookmarkRepository,
     this.hadithDbHelper,
+    this.bookmarkRepo,
   ) : super(BookmarksLoadingState()) {
     on<BookmarksStartEvent>(_start);
     on<BookmarksLoadDataEvent>(_loadData);
     on<BookmarksBookmarkItemEvent>(_bookmarkItem);
     on<BookmarksMarkItemAsReadEvent>(_markItemAsRead);
     on<BookmarksNoteEvent>(_note);
+    on<BookmarksChangeViewEvent>(_changeView);
   }
 
   FutureOr<void> _start(
@@ -40,11 +46,14 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   ) async {
     final bookmarks = await bookmarkRepository.getBookmarks();
     final List<TitleModel> titles = [];
+    final List<HadithModel> hadithList = [];
     for (var item in bookmarks) {
       switch (item.type) {
         case BookmarkType.hadith:
-
-          ///TODO
+          final hadith = await hadithDbHelper.getHadithById(item.itemId);
+          if (hadith != null) {
+            hadithList.add(hadith);
+          }
           break;
 
         case BookmarkType.title:
@@ -56,10 +65,14 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
           break;
       }
     }
-    emit(BookmarksLoadedState(
-      bookmarks: bookmarks,
-      bookmarkedTitle: titles,
-    ));
+    emit(
+      BookmarksLoadedState(
+        bookmarkView: bookmarkRepo.bookmarkView,
+        bookmarks: bookmarks,
+        bookmarkedTitle: titles,
+        bookmarkedHadithList: hadithList,
+      ),
+    );
   }
 
   FutureOr<void> _handleBookmarkEvent({
@@ -143,6 +156,20 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
       type: event.type,
       emit: emit,
       note: event.note,
+    );
+  }
+
+  FutureOr<void> _changeView(
+    BookmarksChangeViewEvent event,
+    Emitter<BookmarksState> emit,
+  ) async {
+    final state = this.state;
+    if (state is! BookmarksLoadedState) return;
+
+    await bookmarkRepo.setBookmarkView(event.bookmarkView);
+
+    emit(
+      state.copyWith(bookmarkView: event.bookmarkView),
     );
   }
 }

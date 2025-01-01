@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/screens/list_view.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
@@ -14,18 +13,11 @@ class NotesScreen extends StatelessWidget {
         if (state is! BookmarksLoadedState) {
           return const Center(child: CircularProgressIndicator());
         }
-        final homeState = context.read<HomeCubit>().state;
-        if (homeState is! HomeLoadedState) {
-          return const Center(child: CircularProgressIndicator());
-        }
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(10),
-          itemCount: state.titlesWithNotes.length,
-          itemBuilder: (context, index) {
-            final title = state.titlesWithNotes[index];
-            return TitleCard(title: title);
-          },
+        return BookmarkListView(
+          titles: state.titlesWithNotes,
+          hadithList: state.hadithListWithNotes,
+          bookmarkView: state.bookmarkView,
         );
       },
     );

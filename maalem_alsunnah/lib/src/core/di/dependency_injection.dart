@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark_repository.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/domain/repository/bookmark_repo.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/domain/repository/home_repo.dart';
@@ -26,6 +27,7 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => TextFontRepo(sl()));
   sl.registerLazySingleton(() => SearchRepo(sl()));
   sl.registerLazySingleton(() => HomeRepo(sl()));
+  sl.registerLazySingleton(() => BookmarkRepo(sl()));
 
   ///MARK: Init Repo
   sl.registerLazySingleton(() => HadithDbHelper());
@@ -40,7 +42,7 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => ThemeCubit(sl()));
   sl.registerLazySingleton(() => SearchCubit(sl(), sl()));
   sl.registerLazySingleton(() => HomeCubit(sl(), sl()));
-  sl.registerLazySingleton(() => BookmarksBloc(sl(), sl()));
+  sl.registerLazySingleton(() => BookmarksBloc(sl(), sl(), sl()));
 
   /// Factory BLoC
   sl.registerFactory(() => ContentViewerCubit(sl(), sl()));
