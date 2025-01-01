@@ -49,14 +49,16 @@ def insert_hadiths(hadith_splits, content_id, title_id, haveHeader, cursor):
     for i in range(1, len(hadith_splits), 2):
         order_id += 1
         hadith_id = int(hadith_splits[i]) if not hadith_splits[i + 1].startswith("\u0628\u0627\u0628") else None
-        hadith_text = hadith_splits[i + 1].strip()
+        hadith_text = hadith_splits[i].strip() + " - " + hadith_splits[i + 1].strip()
+
+        hadith_count = hadith_count if order_id == 1 and not haveHeader else None
 
         cursor.execute(
             """
             INSERT INTO hadith (id, titleId, contentId, orderId, count, text, searchText)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            (hadith_id, title_id, content_id, order_id, hadith_count if order_id == 1 and not haveHeader else None, hadith_text, None)
+            (hadith_id, title_id, content_id, order_id, hadith_count, hadith_text, None)
         )
 
 def insert_single(hadith_text, content_id, title_id, count, cursor):
