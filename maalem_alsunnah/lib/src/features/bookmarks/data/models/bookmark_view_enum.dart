@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 
 enum BookmarkViewEnum {
+  all,
   titles,
-  hadith,
-  all;
+  hadith;
 
   static BookmarkViewEnum fromString(String map) {
     return BookmarkViewEnum.values.where((e) => e.name == map).firstOrNull ??
-        BookmarkViewEnum.titles;
+        BookmarkViewEnum.all;
   }
 }
 
