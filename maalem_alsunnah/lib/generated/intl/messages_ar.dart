@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
         "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
         "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
+        "all": MessageLookupByLibrary.simpleMessage("الجميع"),
         "appHashtag":
             MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
         "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
@@ -52,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeAdFreeAndOpenSourceApp": MessageLookupByLibrary.simpleMessage(
             "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر"),
         "github": MessageLookupByLibrary.simpleMessage("الكود المصدري للمشروع"),
+        "hadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
         "hadithBookAuthor":
             MessageLookupByLibrary.simpleMessage("الشيخ صالح أحمد الشامي"),
         "hadithBookSource":
@@ -95,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
         "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
         "source": MessageLookupByLibrary.simpleMessage("المصدر"),
-        "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب")
+        "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
+        "titles": MessageLookupByLibrary.simpleMessage("العناوين")
       };
 }

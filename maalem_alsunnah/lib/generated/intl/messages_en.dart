@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutApp": MessageLookupByLibrary.simpleMessage("About app"),
         "addBookmark": MessageLookupByLibrary.simpleMessage("Add bookmark"),
         "addNotes": MessageLookupByLibrary.simpleMessage("Add notes"),
+        "all": MessageLookupByLibrary.simpleMessage("All"),
         "appHashtag": MessageLookupByLibrary.simpleMessage("#maalem_alsunnah"),
         "appTitle": MessageLookupByLibrary.simpleMessage("Maalem Al-Sunnah"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
@@ -51,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "freeAdFreeAndOpenSourceApp": MessageLookupByLibrary.simpleMessage(
             "Free, ad-free and open source app"),
         "github": MessageLookupByLibrary.simpleMessage("Github source code"),
+        "hadith": MessageLookupByLibrary.simpleMessage("Hadith"),
         "hadithBookAuthor":
             MessageLookupByLibrary.simpleMessage("Sheikh Saleh Ahmed Al Shami"),
         "hadithBookSource":
@@ -92,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showDiacritics":
             MessageLookupByLibrary.simpleMessage("Show diacritics"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
-        "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author")
+        "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author"),
+        "titles": MessageLookupByLibrary.simpleMessage("Titles")
       };
 }

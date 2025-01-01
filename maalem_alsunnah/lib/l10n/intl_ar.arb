@@ -3,6 +3,7 @@
   "aboutApp": "عن التطبيق",
   "addBookmark": "أضف للمفضلة",
   "addNotes": "كتابة ملاحظات",
+  "all": "الجميع",
   "appHashtag": "#معالم_السنة_النبوية",
   "apply": "تطبيق",
   "appTitle": "معالم السنة النبوية",
@@ -21,6 +22,7 @@
   "fontSettings": "إعدادات الخط",
   "freeAdFreeAndOpenSourceApp": "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر",
   "github": "الكود المصدري للمشروع",
+  "hadith": "الأحاديث",
   "hadithBookAuthor": "الشيخ صالح أحمد الشامي",
   "hadithBookSource": "كتاب معالم السنة النبوية",
   "hadithBookSourceDesc": "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
@@ -53,5 +55,6 @@
   "shareAsImage": "مشاركة كصورة",
   "showDiacritics": "عرض التشكيل",
   "source": "المصدر",
-  "sourceBookAuthor": "مؤلف الكتاب"
+  "sourceBookAuthor": "مؤلف الكتاب",
+  "titles": "العناوين"
 }

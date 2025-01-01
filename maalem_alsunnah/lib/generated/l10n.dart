@@ -80,6 +80,16 @@ class S {
     );
   }
 
+  /// `All`
+  String get all {
+    return Intl.message(
+      'All',
+      name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `#maalem_alsunnah`
   String get appHashtag {
     return Intl.message(
@@ -255,6 +265,16 @@ class S {
     return Intl.message(
       'Github source code',
       name: 'github',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hadith`
+  String get hadith {
+    return Intl.message(
+      'Hadith',
+      name: 'hadith',
       desc: '',
       args: [],
     );
@@ -585,6 +605,16 @@ class S {
     return Intl.message(
       'Book Author',
       name: 'sourceBookAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Titles`
+  String get titles {
+    return Intl.message(
+      'Titles',
+      name: 'titles',
       desc: '',
       args: [],
     );

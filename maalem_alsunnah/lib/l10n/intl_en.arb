@@ -3,6 +3,7 @@
   "aboutApp": "About app",
   "addBookmark": "Add bookmark",
   "addNotes": "Add notes",
+  "all": "All",
   "appHashtag": "#maalem_alsunnah",
   "apply": "Apply",
   "appTitle": "Maalem Al-Sunnah",
@@ -21,6 +22,7 @@
   "fontSettings": "Font settings",
   "freeAdFreeAndOpenSourceApp": "Free, ad-free and open source app",
   "github": "Github source code",
+  "hadith": "Hadith",
   "hadithBookAuthor": "Sheikh Saleh Ahmed Al Shami",
   "hadithBookSource": "Maalem Al-sunnah",
   "hadithBookSourceDesc": "The Prophetic Sunnah from the most authentic to the weakest",
@@ -53,5 +55,6 @@
   "shareAsImage": "Share as image",
   "showDiacritics": "Show diacritics",
   "source": "Source",
-  "sourceBookAuthor": "Book Author"
+  "sourceBookAuthor": "Book Author",
+  "titles": "Titles"
 }
