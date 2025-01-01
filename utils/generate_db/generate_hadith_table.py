@@ -1,6 +1,10 @@
 import re
 from tqdm import tqdm
 
+#exclude these hadith ids when its count is not nll
+#as its not a hadith
+excluded_titles = [16,19,29,35,39]
+
 def recreate_hadith_table(cursor):
     cursor.execute( "DROP TABLE IF EXISTS hadith" )
     cursor.execute(
@@ -52,6 +56,7 @@ def insert_hadiths(hadith_splits, content_id, title_id, haveHeader, cursor):
         hadith_text = hadith_splits[i].strip() + " - " + hadith_splits[i + 1].strip()
 
         hadith_count = hadith_count if order_id == 1 and not haveHeader else None
+        hadith_id = None if (hadith_id in excluded_titles and hadith_count is not None) else hadith_id
 
         cursor.execute(
             """
