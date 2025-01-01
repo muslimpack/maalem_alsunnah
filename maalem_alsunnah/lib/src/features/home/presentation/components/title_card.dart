@@ -40,7 +40,8 @@ class TitleCard extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            BookmarkButton(itemId: title.id, type: BookmarkType.title),
+            BookmarkButton(
+                itemId: title.id.toString(), type: BookmarkType.title),
             Icon(Icons.chevron_right_outlined),
           ],
         ),

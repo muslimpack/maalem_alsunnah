@@ -18,8 +18,9 @@ final class BookmarksLoadedState extends BookmarksState {
         bookmarks.where((element) => element.isBookmarked).toList();
 
     return favorites
-        .map((e) =>
-            bookmarkedTitle.firstWhere((element) => element.id == e.itemId))
+        .map((e) => bookmarkedTitle.firstWhere((element) {
+              return element.id.toString() == e.itemId;
+            }))
         .toList();
   }
 
@@ -27,8 +28,8 @@ final class BookmarksLoadedState extends BookmarksState {
     final notes =
         bookmarks.where((element) => element.note.isNotEmpty).toList();
     return notes
-        .map((e) =>
-            bookmarkedTitle.firstWhere((element) => element.id == e.itemId))
+        .map((e) => bookmarkedTitle
+            .firstWhere((element) => element.id.toString() == e.itemId))
         .toList();
   }
 

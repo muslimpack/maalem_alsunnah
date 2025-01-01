@@ -10,7 +10,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/b
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 Future showNoteDialog(BuildContext context,
-    {required int itemId, required BookmarkType type}) {
+    {required String itemId, required BookmarkType type}) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -20,7 +20,7 @@ Future showNoteDialog(BuildContext context,
 }
 
 class NoteDialog extends StatefulWidget {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   const NoteDialog({
     super.key,
@@ -75,7 +75,7 @@ class _NoteDialogState extends State<NoteDialog> {
   Future onDone() async {
     Navigator.of(context).pop();
     sl<BookmarksBloc>().add(BookmarksNoteEvent(
-      itemId: widget.itemId,
+      itemId: widget.itemId.toString(),
       type: widget.type,
       note: _noteController.text,
     ));

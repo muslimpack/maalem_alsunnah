@@ -7,7 +7,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/n
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 
 class AddNoteButton extends StatelessWidget {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   const AddNoteButton({
     super.key,

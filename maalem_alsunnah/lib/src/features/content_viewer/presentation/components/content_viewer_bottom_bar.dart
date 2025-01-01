@@ -41,15 +41,15 @@ class ContentViewerBottomBar extends StatelessWidget {
               icon: Icon(Icons.share),
             ),
             BookmarkButton(
-              itemId: state.content.titleId,
+              itemId: state.content.titleId.toString(),
               type: BookmarkType.title,
             ),
             MarkAsReadButton(
-              itemId: state.content.titleId,
+              itemId: state.content.titleId.toString(),
               type: BookmarkType.title,
             ),
             AddNoteButton(
-              itemId: state.content.titleId,
+              itemId: state.content.titleId.toString(),
               type: BookmarkType.title,
             ),
           ],

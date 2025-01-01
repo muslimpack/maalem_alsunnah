@@ -7,7 +7,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 
 class MarkAsReadButton extends StatelessWidget {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   const MarkAsReadButton({
     super.key,

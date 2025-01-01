@@ -48,7 +48,8 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
           break;
 
         case BookmarkType.title:
-          final title = await hadithDbHelper.getTitleById(item.itemId);
+          int titleId = int.parse(item.itemId);
+          final title = await hadithDbHelper.getTitleById(titleId);
           if (title != null) {
             titles.add(title);
           }
@@ -62,7 +63,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   }
 
   FutureOr<void> _handleBookmarkEvent({
-    required int itemId,
+    required String itemId,
     required BookmarkType type,
     required Emitter<BookmarksState> emit,
     bool? isBookmarked,

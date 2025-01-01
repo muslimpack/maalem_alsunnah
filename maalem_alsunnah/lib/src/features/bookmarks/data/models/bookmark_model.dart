@@ -17,7 +17,7 @@ class BookmarkModel extends BookmarkEntity {
   factory BookmarkModel.fromMap(Map<String, dynamic> map) {
     return BookmarkModel(
       id: map['id'] as int,
-      itemId: map['itemId'] as int,
+      itemId: map['itemId'] as String,
       type: BookmarkType.fromString(map['type'] as String),
       isBookmarked: (map['isBookmarked'] as int) == 1,
       isRead: (map['isRead'] as int) == 1,
@@ -45,7 +45,7 @@ class BookmarkModel extends BookmarkEntity {
 
   BookmarkModel copyWith({
     int? id,
-    int? itemId,
+    String? itemId,
     BookmarkType? type,
     bool? isBookmarked,
     bool? isRead,

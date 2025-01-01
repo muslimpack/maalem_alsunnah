@@ -4,7 +4,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type
 
 class BookmarkEntity extends Equatable {
   final int id;
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   final bool isBookmarked;
   final bool isRead;

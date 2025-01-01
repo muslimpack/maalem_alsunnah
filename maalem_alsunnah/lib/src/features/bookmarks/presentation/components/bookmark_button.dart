@@ -6,7 +6,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 
 class BookmarkButton extends StatelessWidget {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   const BookmarkButton({
     super.key,
@@ -21,10 +21,11 @@ class BookmarkButton extends StatelessWidget {
         if (state is! BookmarksLoadedState) {
           return SizedBox();
         }
-        final isBookmarked = state.bookmarks.any((element) =>
-            element.itemId == itemId &&
-            element.type == type &&
-            element.isBookmarked);
+        final isBookmarked = state.bookmarks.any((element) {
+          return element.itemId == itemId &&
+              element.type == type &&
+              element.isBookmarked;
+        });
         if (isBookmarked) {
           return IconButton(
             tooltip: S.of(context).removeBookmark,

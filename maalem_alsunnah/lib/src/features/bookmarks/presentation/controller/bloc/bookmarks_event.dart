@@ -24,7 +24,7 @@ class BookmarksLoadDataEvent extends BookmarksEvent {
 }
 
 class BookmarksBookmarkItemEvent extends BookmarksEvent {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   final bool isBookmarked;
   const BookmarksBookmarkItemEvent({
@@ -38,7 +38,7 @@ class BookmarksBookmarkItemEvent extends BookmarksEvent {
 }
 
 class BookmarksMarkItemAsReadEvent extends BookmarksEvent {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   final bool isRead;
   const BookmarksMarkItemAsReadEvent({
@@ -52,7 +52,7 @@ class BookmarksMarkItemAsReadEvent extends BookmarksEvent {
 }
 
 class BookmarksNoteEvent extends BookmarksEvent {
-  final int itemId;
+  final String itemId;
   final BookmarkType type;
   final String note;
   const BookmarksNoteEvent({

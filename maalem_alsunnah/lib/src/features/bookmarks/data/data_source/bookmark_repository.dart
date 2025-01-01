@@ -68,7 +68,7 @@ class BookmarkRepository {
     await db.execute('''
     CREATE TABLE IF NOT EXISTS bookmarks (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      itemId INTEGER NOT NULL,
+      itemId TEXT NOT NULL,
       type TEXT NOT NULL,
       isBookmarked INTEGER NOT NULL,
       isRead INTEGER NOT NULL,
@@ -113,7 +113,7 @@ class BookmarkRepository {
 
   // Delete bookmark
   Future<void> deleteBookmark(
-      {required int itemId, required BookmarkType type}) async {
+      {required String itemId, required BookmarkType type}) async {
     final Database db = await database;
 
     await db.delete(
@@ -132,7 +132,7 @@ class BookmarkRepository {
 
   // Check if item is bookmarked
   Future<BookmarkModel?> isExist({
-    required int itemId,
+    required String itemId,
     required BookmarkType type,
   }) async {
     final Database db = await database;
