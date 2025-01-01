@@ -9,6 +9,7 @@ def recreate_contents_table(cursor):
         """
         CREATE TABLE IF NOT EXISTS contents (
             id          INTEGER,
+            orderId     INTEGER,
             titleId	    INTEGER,
             text	    TEXT,
             searchText	TEXT
@@ -28,7 +29,7 @@ def get_contents():
     contentsConn = sqlite3.connect('assets\\original.db')
     contentsCursor = contentsConn.cursor()
     
-    contentsCursor.execute("SELECT id, titleId, html FROM contents")
+    contentsCursor.execute("SELECT id, orderId, titleId, html FROM contents")
     rows = contentsCursor.fetchall()
     
     contentsConn.close()
@@ -48,11 +49,11 @@ def process_html_to_plain_text(cursor):
     rows = get_contents()
 
     for row in tqdm(rows, desc="BUILDING CONTENTS", unit="row"):
-        record_id, titleId, html_content = row
+        record_id, orderId, titleId, html_content = row
         rendered_text = render_html_as_text(html_content, html_converter)
         cursor.execute("""
-            INSERT INTO contents (id, titleId, text, searchText)
-            VALUES (?, ?, ?, ?)
-        """, (record_id, titleId, rendered_text, None))
+            INSERT INTO contents (id, orderId, titleId, text, searchText)
+            VALUES (?, ?, ?, ?, ?)
+        """, (record_id, orderId, titleId, rendered_text, None))
     
 

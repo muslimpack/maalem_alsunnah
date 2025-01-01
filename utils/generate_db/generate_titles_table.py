@@ -9,6 +9,7 @@ def recreate_titles_table(cursor):
         """
         CREATE TABLE IF NOT EXISTS titles (
             id          INTEGER,
+            orderId          INTEGER,
             name	      TEXT,
             searchText	TEXT,
             parentId	  INTEGER
@@ -20,7 +21,7 @@ def get_titles():
     conn = sqlite3.connect('assets\\original.db')
     cursor = conn.cursor()
     
-    cursor.execute("SELECT id, parentId, name FROM titles")
+    cursor.execute("SELECT id, orderId, parentId, name FROM titles")
     rows = cursor.fetchall()
     
     conn.close()
@@ -34,10 +35,10 @@ def process_generate_titles_table(cursor):
     rows = get_titles()
 
     for row in tqdm(rows, desc="BUILDING TITLES", unit="row"):
-        record_id, parentId, name = row
+        record_id, orderId, parentId, name = row
         cursor.execute("""
-            INSERT INTO titles (id, name, searchText, parentId)
-            VALUES (?, ?, ?, ?)
-        """, (record_id, name, None, parentId))
+            INSERT INTO titles (id, orderId, name, searchText, parentId)
+            VALUES (?, ?, ?, ?, ?)
+        """, (record_id, orderId, name, None, parentId))
     
 
