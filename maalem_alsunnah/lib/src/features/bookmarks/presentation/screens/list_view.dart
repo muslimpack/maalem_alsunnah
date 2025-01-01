@@ -26,13 +26,12 @@ class BookmarkListView extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
-        if (titles.isNotEmpty)
-          SliverPadding(
-            padding: EdgeInsets.only(top: padding),
-            sliver: SliverToBoxAdapter(
-              child: BookmarkViewBar(),
-            ),
+        SliverPadding(
+          padding: EdgeInsets.only(top: padding),
+          sliver: SliverToBoxAdapter(
+            child: BookmarkViewBar(),
           ),
+        ),
         if (bookmarkView != BookmarkViewEnum.hadith) ...[
           if (titles.isNotEmpty && bookmarkView == BookmarkViewEnum.all)
             SliverToBoxAdapter(
