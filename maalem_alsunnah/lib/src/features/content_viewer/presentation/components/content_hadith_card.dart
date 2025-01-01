@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
+import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_action_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/hadith_card_popup_menu.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 
 class ContentHadithCard extends StatelessWidget {
   final HadithModel hadith;
@@ -38,11 +41,23 @@ class ContentHadithCard extends StatelessWidget {
                   ),
                 ),
         ),
-        child: FormattedText(
-          text: formattedText,
-          settings: textFormatterSettings,
-          textLeadingWidget:
-              isTitle ? null : HadithCardPopupMenu(hadith: hadith),
+        child: Column(
+          children: [
+            FormattedText(
+              text: formattedText,
+              settings: textFormatterSettings,
+              textLeadingWidget:
+                  isTitle ? null : HadithCardPopupMenu(hadith: hadith),
+            ),
+            if (!isTitle) ...[
+              Divider(),
+              BookmarkActionBar(
+                itemId: hadith.id,
+                bookmarkType: BookmarkType.hadith,
+                shareType: ShareType.hadith,
+              )
+            ]
+          ],
         ),
       ),
     );
