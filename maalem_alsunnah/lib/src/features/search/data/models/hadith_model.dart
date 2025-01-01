@@ -13,7 +13,7 @@ class HadithModel extends HadithEntity {
 
   factory HadithModel.fromMap(Map<String, dynamic> map) {
     return HadithModel(
-      id: (map['id'] as int?) ?? -1,
+      id: (map['id'] as String?) ?? "",
       titleId: map['titleId'] as int,
       contentId: map['contentId'] as int,
       orderId: map['contentId'] as int,

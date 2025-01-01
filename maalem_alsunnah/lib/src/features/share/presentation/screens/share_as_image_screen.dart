@@ -12,12 +12,12 @@ import 'package:maalem_alsunnah/src/features/share/presentation/components/hadit
 import 'package:maalem_alsunnah/src/features/share/presentation/controller/cubit/share_image_cubit.dart';
 
 class ShareAsImageScreen extends StatelessWidget {
-  final int itemId;
+  final String itemId;
   final ShareType shareType;
 
   static const String routeName = "/shareAsImage";
 
-  static Route route({required int itemId, required ShareType shareType}) {
+  static Route route({required String itemId, required ShareType shareType}) {
     return MaterialPageRoute(
       settings: RouteSettings(
         name: routeName,

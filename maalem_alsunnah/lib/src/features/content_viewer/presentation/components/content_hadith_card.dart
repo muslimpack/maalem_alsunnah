@@ -19,11 +19,11 @@ class ContentHadithCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isTitle = hadith.text.startsWith('باب') || hadith.id == -1;
+    final bool isTitle = hadith.text.startsWith('باب') || hadith.id.isEmpty;
     final String text = context.watch<SettingsCubit>().state.showDiacritics
         ? hadith.text
         : hadith.searchText;
-    final String formattedText = isTitle ? text : "${hadith.id} - $text";
+    final String formattedText = text;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Container(

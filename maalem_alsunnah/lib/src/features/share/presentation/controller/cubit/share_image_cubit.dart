@@ -37,14 +37,15 @@ class ShareImageCubit extends Cubit<ShareImageState> {
     emit(state.copyWith(activeIndex: index));
   }
 
-  FutureOr start({required int itemId, required ShareType shareType}) async {
+  FutureOr start({required String itemId, required ShareType shareType}) async {
     final String text;
     int wordsCountPerSize = 0;
     Size imageSize;
     final List imageCardArgs = [];
     switch (shareType) {
       case ShareType.content:
-        final content = await hadithDbHelper.getContentById(itemId);
+        int contentId = int.parse(itemId);
+        final content = await hadithDbHelper.getContentById(contentId);
         final title = await hadithDbHelper.getTitleById(content.titleId);
         final titleChain = await hadithDbHelper.getTitleChain(content.titleId);
         imageCardArgs.add(content);
@@ -218,7 +219,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
 
   ///MARK: save Image
 
-  String _getHadithOutputFileName(int itemId, int index, int length) {
+  String _getHadithOutputFileName(String itemId, int index, int length) {
     return _getOutputFileName(
       "maalem_alsunnah-${itemId}_${index + 1}_of_$length",
     );

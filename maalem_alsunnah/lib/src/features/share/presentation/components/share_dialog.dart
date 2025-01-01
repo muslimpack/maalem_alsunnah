@@ -13,7 +13,7 @@ import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as
 import 'package:share_plus/share_plus.dart';
 
 Future showShareDialog(BuildContext context,
-    {required int itemId, required ShareType shareType}) {
+    {required String itemId, required ShareType shareType}) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -23,7 +23,7 @@ Future showShareDialog(BuildContext context,
 }
 
 class ShareDialog extends StatefulWidget {
-  final int itemId;
+  final String itemId;
   final ShareType shareType;
   const ShareDialog({
     super.key,
@@ -50,7 +50,8 @@ class _ShareDialogState extends State<ShareDialog> {
   Future init() async {
     switch (widget.shareType) {
       case ShareType.content:
-        content = await sl<HadithDbHelper>().getContentById(widget.itemId);
+        int contentId = int.parse(widget.itemId);
+        content = await sl<HadithDbHelper>().getContentById(contentId);
       case ShareType.hadith:
         hadith = (await sl<HadithDbHelper>().getHadithById(widget.itemId))!;
         break;

@@ -11,7 +11,7 @@ sealed class ShareImageState extends Equatable {
 final class ShareImageLoadingState extends ShareImageState {}
 
 class ShareImageLoadedState extends ShareImageState {
-  final int itemId;
+  final String itemId;
   final ShareType shareType;
   final bool showLoadingIndicator;
   final List<TextRange> splittedMatn;
@@ -40,7 +40,7 @@ class ShareImageLoadedState extends ShareImageState {
       ];
 
   ShareImageLoadedState copyWith({
-    int? itemId,
+    String? itemId,
     ShareType? shareType,
     bool? showLoadingIndicator,
     List<TextRange>? splittedMatn,

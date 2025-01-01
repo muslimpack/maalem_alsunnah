@@ -39,7 +39,7 @@ class HadithSearchCard extends StatelessWidget {
               ],
             ),
             ResponsiveText(
-              "${hadith.id} - ${hadith.searchText}",
+              hadith.searchText,
               searchedText: searchedText,
               style: TextStyle(
                 fontSize: context.watch<SettingsCubit>().state.fontSize * 10,

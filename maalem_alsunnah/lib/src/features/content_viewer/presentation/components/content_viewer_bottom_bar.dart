@@ -34,7 +34,7 @@ class ContentViewerBottomBar extends StatelessWidget {
               onPressed: () {
                 showShareDialog(
                   context,
-                  itemId: state.content.id,
+                  itemId: state.content.id.toString(),
                   shareType: ShareType.content,
                 );
               },

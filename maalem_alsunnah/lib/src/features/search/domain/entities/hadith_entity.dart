@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 
 class HadithEntity extends Equatable {
-  final int id;
+  final String id;
   final int titleId;
   final int contentId;
   final int orderId;

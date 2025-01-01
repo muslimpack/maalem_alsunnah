@@ -13,7 +13,7 @@ class HadithDbHelper {
   /* ************* Variables ************* */
 
   static const String dbName = "book.db";
-  static const int dbVersion = 1;
+  static const int dbVersion = 2;
 
   /* ************* Singleton Constructor ************* */
 
@@ -52,7 +52,7 @@ class HadithDbHelper {
     });
   }
 
-  Future<HadithModel?> getHadithById(int id) async {
+  Future<HadithModel?> getHadithById(String id) async {
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps =
