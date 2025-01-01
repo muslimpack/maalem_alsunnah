@@ -10,7 +10,7 @@ class BookmarkRepo {
   static const String bookmarkViewTypeKey = "bookmarkView";
   BookmarkViewEnum get bookmarkView {
     final data = box.get(bookmarkViewTypeKey) as String?;
-    if (data == null) return BookmarkViewEnum.titles;
+    if (data == null) return BookmarkViewEnum.all;
     return BookmarkViewEnum.fromString(data);
   }
 
