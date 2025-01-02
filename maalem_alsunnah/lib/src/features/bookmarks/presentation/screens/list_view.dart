@@ -85,6 +85,7 @@ class BookmarkListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 final hadith = hadithList[index];
                 return ContentHadithCard(
+                  showTitleChain: true,
                   hadith: hadith,
                   textFormatterSettings: textFormatterSettings,
                 );
