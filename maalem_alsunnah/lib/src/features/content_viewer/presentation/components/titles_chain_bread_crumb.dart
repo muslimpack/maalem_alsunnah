@@ -10,9 +10,11 @@ import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
 class TitlesChainBreadCrumb extends StatefulWidget {
+  final bool showLastOnly;
   const TitlesChainBreadCrumb({
     super.key,
     required this.titleId,
+    this.showLastOnly = false,
   });
 
   final int titleId;
@@ -90,8 +92,12 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
             ),
           );
         } else {
+          final List<TitleModel> titlesChains = snapshot.data!;
+          if (widget.showLastOnly && titlesChains.length > 1) {
+            titlesChains.removeRange(0, titlesChains.length - 1);
+          }
           return TitlesChainRichTextBuilder(
-            titlesChains: snapshot.data!,
+            titlesChains: titlesChains,
             onPressed: (index, title) => onPressed(context, index, title),
           );
         }
