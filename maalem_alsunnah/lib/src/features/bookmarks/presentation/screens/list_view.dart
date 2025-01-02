@@ -5,6 +5,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_view
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_view_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_format_text_style.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -23,6 +24,8 @@ class BookmarkListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double padding = 15;
+    final TextFormatterSettings textFormatterSettings =
+        hadithTextFormatterSettings(context);
 
     return CustomScrollView(
       slivers: [
@@ -83,14 +86,7 @@ class BookmarkListView extends StatelessWidget {
                 final hadith = hadithList[index];
                 return ContentHadithCard(
                   hadith: hadith,
-                  textFormatterSettings: TextFormatterSettings(
-                    deafaultStyle: TextStyle(),
-                    hadithTextStyle: TextStyle(),
-                    quranTextStyle: TextStyle(),
-                    squareBracketsStyle: TextStyle(),
-                    roundBracketsStyle: TextStyle(),
-                    startingNumberStyle: TextStyle(),
-                  ),
+                  textFormatterSettings: textFormatterSettings,
                 );
               },
             ),

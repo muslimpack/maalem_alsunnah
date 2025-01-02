@@ -36,29 +36,6 @@ class ContentViewerLoadedState extends ContentViewerState {
   List<Object> get props =>
       [content, title, contentCount, titleIdRange, hadithList];
 
-  TextFormatterSettings textFormatterSettings(TextStyle defaultStyle) =>
-      TextFormatterSettings(
-        deafaultStyle: defaultStyle,
-        hadithTextStyle: defaultStyle.copyWith(
-          // fontWeight: FontWeight.bold,
-          color: Colors.yellow[700],
-        ),
-        quranTextStyle: defaultStyle.copyWith(
-          color: Colors.lightGreen[300],
-          fontWeight: FontWeight.bold,
-        ),
-        squareBracketsStyle: defaultStyle.copyWith(
-          color: Colors.cyan[300],
-        ),
-        roundBracketsStyle: defaultStyle.copyWith(
-          color: Colors.red[300],
-        ),
-        startingNumberStyle: defaultStyle.copyWith(
-          color: Colors.purple[300],
-          fontWeight: FontWeight.bold,
-        ),
-      );
-
   ContentViewerLoadedState copyWith({
     TitleModel? title,
     ContentModel? content,

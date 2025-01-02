@@ -6,6 +6,7 @@ import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_for
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_bottom_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_format_text_style.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
@@ -20,13 +21,8 @@ class ContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = TextStyle(
-      fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
-      fontFamily: 'adwaa',
-      height: 1.5,
-    );
     final TextFormatterSettings textFormatterSettings =
-        state.textFormatterSettings(defaultStyle);
+        hadithTextFormatterSettings(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(state.title.name),
