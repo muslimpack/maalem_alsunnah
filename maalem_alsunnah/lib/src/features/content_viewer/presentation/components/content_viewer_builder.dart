@@ -10,7 +10,6 @@ import 'package:maalem_alsunnah/src/features/content_viewer/presentation/compone
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_format_text_style.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -99,22 +98,18 @@ class _ContentViewerBuilderBody extends StatelessWidget {
 
     final Widget contentViewer;
     if (hadithList.isEmpty) {
-      contentViewer = ListView(
-        controller: context.read<ContentViewerCubit>().scrollController,
-        padding: EdgeInsets.all(15),
-        children: [
+      contentViewer = SliverList(
+        delegate: SliverChildListDelegate([
           FormattedText(
             text: context.watch<SettingsCubit>().state.showDiacritics
                 ? content.text
                 : content.searchText,
             settings: textFormatterSettings,
-          ),
-        ],
+          )
+        ]),
       );
     } else {
-      contentViewer = ListView.builder(
-        controller: context.read<ContentViewerCubit>().scrollController,
-        padding: EdgeInsets.all(15),
+      contentViewer = SliverList.builder(
         itemCount: hadithList.length,
         itemBuilder: (context, index) {
           final hadith = hadithList[index];
@@ -125,15 +120,31 @@ class _ContentViewerBuilderBody extends StatelessWidget {
         },
       );
     }
-    return Column(
-      children: [
-        TitlesChainBreadCrumb(titleId: content.titleId),
-        ListTile(
-          leading: Icon(Icons.timer_outlined),
-          title: Text(content.text.getArabicTextReadingTimeAsString(context)),
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.all(15),
+          sliver: SliverFloatingHeader(
+              snapMode: FloatingHeaderSnapMode.overlay,
+              child: Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TitlesChainBreadCrumb(titleId: content.titleId),
+                    ListTile(
+                      leading: Icon(Icons.timer_outlined),
+                      title: Text(content.text
+                          .getArabicTextReadingTimeAsString(context)),
+                    ),
+                  ],
+                ),
+              )),
         ),
-        Expanded(
-          child: contentViewer,
+        SliverPadding(
+          padding: EdgeInsets.all(15),
+          sliver: contentViewer,
         )
       ],
     );
