@@ -11,4 +11,14 @@ extension StringExtension on String {
   String removeBrackets() {
     return replaceAll(RegExp('[()]'), '');
   }
+
+  Duration getArabicTextReadingTime() {
+    const int averageWordsPerMinute = 150;
+
+    final wordCount = split(RegExp(r'\s+')).length;
+
+    final totalReadingTimeInSeconds = (wordCount / averageWordsPerMinute) * 60;
+
+    return Duration(seconds: totalReadingTimeInSeconds.round());
+  }
 }
