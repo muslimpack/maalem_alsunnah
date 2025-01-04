@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -36,8 +35,6 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     if (pageController.page!.toInt() != pageController.page!) {
       return;
     }
-
-    appPrint("page changed: ${pageController.page}");
 
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
