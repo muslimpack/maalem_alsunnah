@@ -70,6 +70,35 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
               hadithTextFormatterSettings(context);
           final List<HadithModel> hadithList = snapshot.data!.$2;
           final ContentModel content = snapshot.data!.$1;
+
+          final Widget contentViewer;
+          if (hadithList.isEmpty) {
+            contentViewer = ListView(
+              controller: context.read<ContentViewerCubit>().scrollController,
+              padding: EdgeInsets.all(15),
+              children: [
+                FormattedText(
+                  text: context.watch<SettingsCubit>().state.showDiacritics
+                      ? content.text
+                      : content.searchText,
+                  settings: textFormatterSettings,
+                ),
+              ],
+            );
+          } else {
+            contentViewer = ListView.builder(
+              controller: context.read<ContentViewerCubit>().scrollController,
+              padding: EdgeInsets.all(15),
+              itemCount: hadithList.length,
+              itemBuilder: (context, index) {
+                final hadith = hadithList[index];
+                return ContentHadithCard(
+                  hadith: hadith,
+                  textFormatterSettings: textFormatterSettings,
+                );
+              },
+            );
+          }
           return Column(
             children: [
               TitlesChainBreadCrumb(titleId: content.titleId),
@@ -79,36 +108,7 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
                     content.text.getArabicTextReadingTimeAsString(context)),
               ),
               Expanded(
-                child: hadithList.isEmpty
-                    ? ListView(
-                        controller:
-                            context.read<ContentViewerCubit>().scrollController,
-                        padding: EdgeInsets.all(15),
-                        children: [
-                          FormattedText(
-                            text: context
-                                    .watch<SettingsCubit>()
-                                    .state
-                                    .showDiacritics
-                                ? content.text
-                                : content.searchText,
-                            settings: textFormatterSettings,
-                          ),
-                        ],
-                      )
-                    : ListView.builder(
-                        controller:
-                            context.read<ContentViewerCubit>().scrollController,
-                        padding: EdgeInsets.all(15),
-                        itemCount: hadithList.length,
-                        itemBuilder: (context, index) {
-                          final hadith = hadithList[index];
-                          return ContentHadithCard(
-                            hadith: hadith,
-                            textFormatterSettings: textFormatterSettings,
-                          );
-                        },
-                      ),
+                child: contentViewer,
               )
             ],
           );
