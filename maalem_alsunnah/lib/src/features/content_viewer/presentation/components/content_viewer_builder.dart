@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
+import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
@@ -72,6 +73,11 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
           return Column(
             children: [
               TitlesChainBreadCrumb(titleId: content.titleId),
+              ListTile(
+                leading: Icon(Icons.timer_outlined),
+                title: Text(
+                    content.text.getArabicTextReadingTimeAsString(context)),
+              ),
               Expanded(
                 child: hadithList.isEmpty
                     ? ListView(

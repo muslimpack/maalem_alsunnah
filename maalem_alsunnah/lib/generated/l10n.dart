@@ -340,6 +340,16 @@ class S {
     );
   }
 
+  /// `min`
+  String get minutes {
+    return Intl.message(
+      'min',
+      name: 'minutes',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Misspelled`
   String get misspelled {
     return Intl.message(
@@ -545,6 +555,16 @@ class S {
     return Intl.message(
       'Typical',
       name: 'SearchTypeTypical',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `sec`
+  String get seconds {
+    return Intl.message(
+      'sec',
+      name: 'seconds',
       desc: '',
       args: [],
     );
