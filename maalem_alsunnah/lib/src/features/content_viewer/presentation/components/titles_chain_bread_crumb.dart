@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
+import 'package:maalem_alsunnah/src/core/utils/dummy_data.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class TitlesChainBreadCrumb extends StatefulWidget {
   final bool showLastOnly;
@@ -82,8 +84,12 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
       future: titlesChains,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: LinearProgressIndicator(),
+          return Skeletonizer(
+            enabled: true,
+            child: TitlesChainRichTextBuilder(
+              titlesChains: titleModelDummyData,
+              onPressed: (index, title) => onPressed(context, index, title),
+            ),
           );
         } else if (snapshot.hasError) {
           return Center(
