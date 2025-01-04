@@ -49,10 +49,6 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     final tempTitle = await hadithDbHelper.getTitleById(titleId);
 
     if (tempTitle == null) {
-      final state = this.state;
-      if (state is ContentViewerLoadedState) {
-        start(state.content.titleId, isContent: isContent);
-      }
       return;
     }
 
