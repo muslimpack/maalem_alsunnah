@@ -2,46 +2,43 @@ import 'package:maalem_alsunnah/src/features/search/data/models/content_model.da
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 
-final titleModelDummyData = List.generate(
-  10,
-  (index) => TitleModel(
-    id: index + 1,
-    orderId: (index + 1) * index,
-    name: 'lorem ipsum dolor $index' * index,
-    parentId: -1,
-    subTitlesCount: 0,
-  ),
-);
-
-final contentModelDummyData = List.generate(
-  10,
-  (index) {
-    final String text = "lorem ipsum dolor" * (index + 5) * index;
-    return ContentModel(
-      id: index + 1,
-      orderId: (index + 1) * index,
-      searchText: text,
-      text: text,
-      titleId: index + 1,
+List<TitleModel> get titleModelDummyData => List.generate(
+      5,
+      (index) => TitleModel(
+        id: index + 1,
+        orderId: (index + 2) * index,
+        name: 'lorem ipsum ' * index,
+        parentId: -1,
+        subTitlesCount: 0,
+      ),
     );
-  },
-);
 
-final hadithModelDummyData = List.generate(
-  10,
-  (index) {
-    final String text =
-        List.generate((index + 15) * index, (index) => "lorem ipsum dolor")
-            .join(" ")
-            .toString();
-    return HadithModel(
-      id: "${index + 1}",
-      count: index + index,
-      contentId: index + 1,
-      orderId: (index + 1) * index,
-      searchText: text,
-      text: text,
-      titleId: index + 1,
+List<ContentModel> get contentModelDummyData => List.generate(
+      10,
+      (index) {
+        final String text = "lorem ipsum dolor " * (index + 4);
+        return ContentModel(
+          id: index + 1,
+          orderId: (index + 1) * index,
+          searchText: text,
+          text: text,
+          titleId: index + 1,
+        );
+      },
     );
-  },
-);
+
+List<HadithModel> get hadithModelDummyData => List.generate(
+      10,
+      (index) {
+        final String text = "lorem ipsum dolor " * (index + 3);
+        return HadithModel(
+          id: "${index + 1}",
+          count: index + index,
+          contentId: index + 1,
+          orderId: (index + 1) * index,
+          searchText: text,
+          text: text,
+          titleId: index + 1,
+        );
+      },
+    );
