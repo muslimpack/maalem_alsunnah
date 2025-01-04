@@ -40,7 +40,7 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
     });
   }
 
-  Future<(ContentModel content, List<HadithModel>)> _updateAndGetList() async {
+  Future<(ContentModel, List<HadithModel>)> _updateAndGetList() async {
     final content =
         await sl<HadithDbHelper>().getContentById(widget.contentOrderId);
     final hadithList =
