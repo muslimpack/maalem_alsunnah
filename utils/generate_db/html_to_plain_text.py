@@ -1,6 +1,7 @@
 import sqlite3
 import html2text
 import re
+from fix_mismatched_brackets import process_fix_mismatched_brackets
 from tqdm import tqdm
 
 def recreate_contents_table(cursor):
@@ -23,6 +24,7 @@ def render_html_as_text(html_content, html_converter):
     text = text.replace("\\-", " -")
     text = re.sub(r'\{\s*\{\s*\{', '', text)
     text = re.sub(r'^\s*\n', '\n', text, flags=re.MULTILINE)
+    text = process_fix_mismatched_brackets(text)
     unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
     return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
 
