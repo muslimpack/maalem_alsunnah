@@ -18,13 +18,15 @@ class EmailManager {
   static Future sendMisspelled({
     required HadithModel hadith,
   }) async {
+    final StringBuffer sb = StringBuffer();
+    sb.writeln("t:${hadith.titleId} | c:${hadith.contentId} | h:${hadith.id}");
+    sb.writeln(hadith.text);
+    sb.writeln();
+    sb.writeln();
     await sendEmail(
       email: Email(
         subject: S.current.misspelled,
-        body: '''
-
-
-''',
+        body: sb.toString(),
       ),
     );
   }
