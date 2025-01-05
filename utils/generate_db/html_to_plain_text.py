@@ -24,9 +24,11 @@ def render_html_as_text(html_content, html_converter):
     text = text.replace("\\-", " -")
     text = re.sub(r'\{\s*\{\s*\{', '', text)
     text = re.sub(r'^\s*\n', '\n', text, flags=re.MULTILINE)
-    text = process_fix_mismatched_brackets(text)
     unwanted_line = "الغاء التفضيلتفضيلاضف ملاحظاتكالحواشيشرح الحديثمشاركة"
-    return "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
+    text = "\n".join(line for line in text.splitlines() if line.strip() != unwanted_line)
+    #TODO need to be fixed
+    # text = process_fix_mismatched_brackets(text)
+    return text
 
 def get_contents():    
     contentsConn = sqlite3.connect('assets\\original.db')
