@@ -61,6 +61,8 @@ class HomeCubit extends Cubit<HomeState> {
     final state = this.state;
     if (state is! HomeLoadedState) return;
 
+    if (titleId == state.lastReadTitle?.id) return;
+
     TitleModel? lastReadTitle;
     lastReadTitle = await hadithDbHelper.getTitleById(titleId);
     await homeRepo.setLastReadTitleId(titleId);

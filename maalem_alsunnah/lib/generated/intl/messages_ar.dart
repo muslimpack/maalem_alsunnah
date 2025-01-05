@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
         "markAsUnread":
             MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
+        "minutes": MessageLookupByLibrary.simpleMessage("د"),
         "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
@@ -92,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchTypeAllWords":
             MessageLookupByLibrary.simpleMessage("جميع الكلمات"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("أي كلمة"),
+        "seconds": MessageLookupByLibrary.simpleMessage("ث"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),

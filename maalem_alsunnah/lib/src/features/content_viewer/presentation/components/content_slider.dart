@@ -21,9 +21,9 @@ class _ContentSliderState extends State<ContentSlider> {
 
   @override
   void didUpdateWidget(covariant ContentSlider oldWidget) {
-    if (widget.state.content.titleId != value) {
+    if (widget.state.content.orderId != value) {
       setState(() {
-        value = widget.state.content.titleId.toDouble();
+        value = widget.state.content.orderId.toDouble();
       });
     }
     super.didUpdateWidget(oldWidget);
@@ -41,10 +41,10 @@ class _ContentSliderState extends State<ContentSlider> {
   @override
   Widget build(BuildContext context) {
     return Slider(
-      min: widget.state.titleIdRange.start + 1,
-      max: widget.state.titleIdRange.end,
+      min: widget.state.contentRange.start,
+      max: widget.state.contentRange.end,
       divisions: widget.state.contentCount,
-      value: isChanging ? value : widget.state.content.titleId.toDouble(),
+      value: isChanging ? value : widget.state.content.orderId.toDouble(),
       onChanged: (value) {
         setState(() {
           isChanging = true;
@@ -53,9 +53,8 @@ class _ContentSliderState extends State<ContentSlider> {
       },
       label: value.toInt().toString(),
       onChangeEnd: (value) async {
-        context.read<ContentViewerCubit>().start(
+        context.read<ContentViewerCubit>().goToContent(
               value.toInt(),
-              isContent: true,
             );
         setState(() {
           isChanging = false;

@@ -343,6 +343,26 @@ LIMIT ? OFFSET ?
     return RangeValues(0, 0); // Default if no results.
   }
 
+  Future<RangeValues> getContentRange() async {
+    final Database db =
+        await database; // Assuming `database` is your db connection.
+
+    // Query to get the min and max titleId.
+    final List<Map<String, dynamic>> results = await db.rawQuery('''
+    SELECT MIN(orderId) as min, MAX(orderId) as max FROM contents
+  ''');
+
+    if (results.isNotEmpty) {
+      final row = results.first;
+      int minTitleId = row['min'];
+      int maxTitleId = row['max'];
+
+      return RangeValues(minTitleId.toDouble(), maxTitleId.toDouble());
+    }
+
+    return RangeValues(0, 0); // Default if no results.
+  }
+
   Future<ContentModel> getContentByTitleId(int titleId) async {
     final Database db = await database;
 
@@ -359,6 +379,17 @@ LIMIT ? OFFSET ?
 
     final List<Map<String, dynamic>> maps = await db
         .rawQuery('''SELECT * from contents where id = ?''', [contentId]);
+
+    return List.generate(maps.length, (i) {
+      return ContentModel.fromMap(maps[i]);
+    }).first;
+  }
+
+  Future<ContentModel> getContentByOrderId(int orderId) async {
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('''SELECT * from contents where orderId = ?''', [orderId]);
 
     return List.generate(maps.length, (i) {
       return ContentModel.fromMap(maps[i]);

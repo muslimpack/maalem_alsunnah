@@ -4,10 +4,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
-import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 
@@ -17,80 +15,124 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   final HadithDbHelper hadithDbHelper;
   final HomeCubit homeCubit;
   final ScrollController scrollController = ScrollController();
+  final PageController pageController = PageController();
   Timer? _timer;
   ContentViewerCubit(
     this.hadithDbHelper,
     this.homeCubit,
-  ) : super(ContentViewerLoadingState());
+  ) : super(ContentViewerLoadingState()) {
+    pageController.addListener(_onPageChanged);
+  }
 
-  void _timePassed(Timer timer) {
+  void _timePassed(Timer timer, int titleId) async {
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
-    homeCubit.updateLastReadTitle(state.content.titleId);
+    await homeCubit.updateLastReadTitle(titleId);
+    _timer?.cancel();
+  }
+
+  Future<void> _onPageChanged() async {
+    if (pageController.page!.toInt() != pageController.page!) {
+      return;
+    }
+
+    final state = this.state;
+    if (state is! ContentViewerLoadedState) return;
+    final orderId = pageController.page!.toInt() + 1;
+    if (orderId == state.content.orderId) return;
+
+    final content = await hadithDbHelper.getContentByOrderId(orderId);
+    startByContent(content.id);
   }
 
   Future<void> start(int titleId, {bool? isContent}) async {
-    _timer?.cancel();
-
     final tempTitle = await hadithDbHelper.getTitleById(titleId);
 
     if (tempTitle == null) {
-      final state = this.state;
-      if (state is ContentViewerLoadedState) {
-        start(state.content.titleId, isContent: isContent);
-      }
       return;
     }
 
     final title = tempTitle;
     if (title.subTitlesCount == 0 || isContent == true) {
-      _timer = Timer.periodic(const Duration(seconds: 5), _timePassed);
-      final content = await hadithDbHelper.getContentByTitleId(titleId);
-      final contentCount = await hadithDbHelper.getContentCount();
-      final titleIdRange = await hadithDbHelper.getContentTitleIdRange();
-      final hadithList = await hadithDbHelper.getHadithListByContentId(
-        content.id,
-      );
-
-      if (scrollController.hasClients) {
-        scrollController.jumpTo(0);
-      }
-
-      emit(
-        ContentViewerLoadedState(
-          title: title,
-          content: content,
-          contentCount: contentCount,
-          titleIdRange: titleIdRange,
-          hadithList: hadithList,
-        ),
-      );
+      _startContent(title);
     } else {
-      final titles = await hadithDbHelper.getSubTitlesByTitleId(titleId);
-      emit(
-        ContentSubListViewerLoadedState(
-          title: title,
-          titles: titles,
-        ),
+      _startTitle(title);
+    }
+  }
+
+  Future<void> startByContent(int contentId) async {
+    final content = await hadithDbHelper.getContentById(contentId);
+    final tempTitle = await hadithDbHelper.getTitleById(content.titleId);
+
+    if (tempTitle == null) {
+      return;
+    }
+
+    final title = tempTitle;
+    _startContent(title);
+  }
+
+  Future _startContent(TitleModel title) async {
+    _timer?.cancel();
+    _timer = Timer.periodic(
+        const Duration(seconds: 5), (t) => _timePassed(t, title.id));
+
+    final content = await hadithDbHelper.getContentByTitleId(title.id);
+    final contentRange = await hadithDbHelper.getContentRange();
+
+    emit(
+      ContentViewerLoadedState(
+        title: title,
+        content: content,
+        contentRange: contentRange,
+      ),
+    );
+
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    if (pageController.hasClients) {
+      await pageController.animateToPage(
+        content.orderId - 1,
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
       );
     }
   }
 
+  Future _startTitle(TitleModel title) async {
+    final titles = await hadithDbHelper.getSubTitlesByTitleId(title.id);
+    emit(
+      ContentSubListViewerLoadedState(
+        title: title,
+        titles: titles,
+      ),
+    );
+  }
+
   Future<void> nextContent() async {
-    goToContent(1);
+    pageController.nextPage(
+      duration: Duration(milliseconds: 350),
+      curve: Curves.easeInOut,
+    );
   }
 
   Future<void> previousContent() async {
-    goToContent(-1);
+    pageController.previousPage(
+      duration: Duration(milliseconds: 350),
+      curve: Curves.easeInOut,
+    );
   }
 
-  Future<void> goToContent(int by) async {
+  Future<void> goToContent(int orderId) async {
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
 
-    final titleId = state.content.titleId;
-    if (titleId > 1 && titleId < state.contentCount) {
-      start(titleId + by, isContent: true);
+    if (pageController.hasClients) {
+      pageController.animateToPage(
+        orderId - 1,
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
@@ -98,6 +140,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   Future<void> close() {
     _timer?.cancel();
     scrollController.dispose();
+    pageController.dispose();
     return super.close();
   }
 }

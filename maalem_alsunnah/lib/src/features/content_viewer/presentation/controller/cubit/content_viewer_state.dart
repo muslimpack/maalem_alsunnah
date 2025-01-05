@@ -16,62 +16,31 @@ final class ContentViewerLoadingState extends ContentViewerState {
 class ContentViewerLoadedState extends ContentViewerState {
   final TitleModel title;
   final ContentModel content;
-  final int contentCount;
-  final RangeValues titleIdRange;
-  final List<HadithModel> hadithList;
+  final RangeValues contentRange;
 
+  int get contentCount => (contentRange.end - contentRange.start + 1).toInt();
   double get progress => content.id / contentCount;
-  bool get hasPrevious => content.id > 2;
+  bool get hasPrevious => content.id > 1;
   bool get hasNext => content.id < contentCount - 1;
 
   const ContentViewerLoadedState({
     required this.title,
     required this.content,
-    required this.contentCount,
-    required this.titleIdRange,
-    required this.hadithList,
+    required this.contentRange,
   });
 
   @override
-  List<Object> get props =>
-      [content, title, contentCount, titleIdRange, hadithList];
-
-  TextFormatterSettings textFormatterSettings(TextStyle defaultStyle) =>
-      TextFormatterSettings(
-        deafaultStyle: defaultStyle,
-        hadithTextStyle: defaultStyle.copyWith(
-          // fontWeight: FontWeight.bold,
-          color: Colors.yellow[700],
-        ),
-        quranTextStyle: defaultStyle.copyWith(
-          color: Colors.lightGreen[300],
-          fontWeight: FontWeight.bold,
-        ),
-        squareBracketsStyle: defaultStyle.copyWith(
-          color: Colors.cyan[300],
-        ),
-        roundBracketsStyle: defaultStyle.copyWith(
-          color: Colors.red[300],
-        ),
-        startingNumberStyle: defaultStyle.copyWith(
-          color: Colors.purple[300],
-          fontWeight: FontWeight.bold,
-        ),
-      );
+  List<Object> get props => [content, title, contentCount];
 
   ContentViewerLoadedState copyWith({
     TitleModel? title,
     ContentModel? content,
-    int? contentCount,
-    RangeValues? titleIdRange,
-    List<HadithModel>? hadithList,
+    RangeValues? contentRange,
   }) {
     return ContentViewerLoadedState(
       title: title ?? this.title,
       content: content ?? this.content,
-      contentCount: contentCount ?? this.contentCount,
-      titleIdRange: titleIdRange ?? this.titleIdRange,
-      hadithList: hadithList ?? this.hadithList,
+      contentRange: contentRange ?? this.contentRange,
     );
   }
 }

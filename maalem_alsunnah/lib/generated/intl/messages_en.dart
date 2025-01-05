@@ -62,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "index": MessageLookupByLibrary.simpleMessage("Index"),
         "markAsRead": MessageLookupByLibrary.simpleMessage("Mark as read"),
         "markAsUnread": MessageLookupByLibrary.simpleMessage("Mark as unread"),
+        "minutes": MessageLookupByLibrary.simpleMessage("min"),
         "misspelled": MessageLookupByLibrary.simpleMessage("Misspelled"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
@@ -88,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search result count"),
         "searchTypeAllWords": MessageLookupByLibrary.simpleMessage("All words"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("Any words"),
+        "seconds": MessageLookupByLibrary.simpleMessage("sec"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("Share as image"),

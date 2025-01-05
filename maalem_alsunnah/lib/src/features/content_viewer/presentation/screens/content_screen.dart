@@ -2,14 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_bottom_bar.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_builder.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
-import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
 class ContentScreen extends StatelessWidget {
   final ContentViewerLoadedState state;
@@ -20,13 +16,6 @@ class ContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultStyle = TextStyle(
-      fontSize: context.watch<SettingsCubit>().state.fontSize * 10,
-      fontFamily: 'adwaa',
-      height: 1.5,
-    );
-    final TextFormatterSettings textFormatterSettings =
-        state.textFormatterSettings(defaultStyle);
     return Scaffold(
       appBar: AppBar(
         title: Text(state.title.name),
@@ -35,41 +24,12 @@ class ContentScreen extends StatelessWidget {
           FontSettingsIconButton(),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TitlesChainBreadCrumb(titleId: state.content.titleId),
-          Expanded(
-            child: state.hadithList.isEmpty
-                ? ListView(
-                    controller:
-                        context.read<ContentViewerCubit>().scrollController,
-                    padding: EdgeInsets.all(15),
-                    children: [
-                      FormattedText(
-                        text:
-                            context.watch<SettingsCubit>().state.showDiacritics
-                                ? state.content.text
-                                : state.content.searchText,
-                        settings: textFormatterSettings,
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    controller:
-                        context.read<ContentViewerCubit>().scrollController,
-                    padding: EdgeInsets.all(15),
-                    itemCount: state.hadithList.length,
-                    itemBuilder: (context, index) {
-                      final hadith = state.hadithList[index];
-                      return ContentHadithCard(
-                        hadith: hadith,
-                        textFormatterSettings: textFormatterSettings,
-                      );
-                    },
-                  ),
-          ),
-        ],
+      body: PageView.builder(
+        controller: context.read<ContentViewerCubit>().pageController,
+        itemCount: state.contentCount,
+        itemBuilder: (context, index) {
+          return ContentViewerBuilder(contentOrderId: index + 1);
+        },
       ),
       bottomNavigationBar: ContentViewerBottomBar(state: state),
     );
