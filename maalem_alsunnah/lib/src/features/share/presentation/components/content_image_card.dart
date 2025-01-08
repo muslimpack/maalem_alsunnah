@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
@@ -140,6 +142,17 @@ class ContentImageCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 30),
+                ListTile(
+                  leading: Icon(
+                    Icons.timer_outlined,
+                    size: 60,
+                  ),
+                  title: Text(
+                    "${S.of(context).readingTime}: ${textSpan.toPlainText().getArabicTextReadingTimeAsString(context)}",
+                    style: secondaryTextStyle,
+                  ),
+                )
               ],
             ),
           ),

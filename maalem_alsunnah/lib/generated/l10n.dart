@@ -440,6 +440,16 @@ class S {
     );
   }
 
+  /// `Reading time`
+  String get readingTime {
+    return Intl.message(
+      'Reading time',
+      name: 'readingTime',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Refresh`
   String get refresh {
     return Intl.message(

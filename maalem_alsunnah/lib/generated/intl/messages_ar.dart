@@ -77,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prefThemeDarkMode":
             MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "previous": MessageLookupByLibrary.simpleMessage("السابق"),
+        "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "removeBookmark":
             MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),

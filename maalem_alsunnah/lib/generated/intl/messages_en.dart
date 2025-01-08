@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("App language"),
         "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "previous": MessageLookupByLibrary.simpleMessage("Previous"),
+        "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
         "removeBookmark":
             MessageLookupByLibrary.simpleMessage("Remove bookmark"),
