@@ -84,8 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
         "search": MessageLookupByLibrary.simpleMessage("بحث"),
         "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
-        "searchForContent":
-            MessageLookupByLibrary.simpleMessage("الأبواب والفصول"),
+        "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
         "searchForHadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
         "searchForTitle": MessageLookupByLibrary.simpleMessage("فهرس"),
         "searchResultCount":
