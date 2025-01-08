@@ -1,0 +1,10 @@
+- A complete index of the book
+- Categorization of chapters and hadith
+- Control over font size and diacritics
+- Share a specific chapter or narration individually
+- Search within indexes, content, and hadith
+- Search filters (Exact match - All words - Any word)
+- Favorites for chapters and hadith
+- Mark chapters or hadith as read
+- Add notes to each chapter or narration
+- Share chapters or hadith as an image

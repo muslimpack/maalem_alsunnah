@@ -1,0 +1,44 @@
+Categories:
+  - Book
+License: GPL-3.0 license
+AuthorName: Hassan Eltantawy
+AuthorEmail: hasaneltantawy@gmail.com
+AuthorWebSite: http://muslimpack.github.io/
+SourceCode: https://github.com/muslimpack/maalem_alsunnah
+IssueTracker: https://github.com/muslimpack/maalem_alsunnah/issues
+Changelog: https://github.com/muslimpack/maalem_alsunnah/releases
+
+AutoName: معالم السنة النبوية
+
+RepoType: git
+Repo: https://github.com/muslimpack/maalem_alsunnah.git
+
+Builds:
+  - versionName: 0.1.0
+    versionCode: 1
+    commit: 4a1c0b2ba9f898f1245c3a11370d7d1d0d5a0198
+    subdir: maalem_alsunnah
+    output: build/app/outputs/flutter-apk/app-release.apk
+    srclibs:
+      - flutter@3.27.1
+    rm:
+      - maalem_alsunnah/ios
+      - maalem_alsunnah/web
+      - maalem_alsunnah/windows
+      - maalem_alsunnah/linux
+      - maalem_alsunnah/macos
+    prebuild:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter config --no-analytics
+      - $$flutter$$/bin/flutter pub get
+    scandelete:
+      - maalem_alsunnah/.pub-cache
+    build:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter build apk --release
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+UpdateCheckData: maalem_alsunnah/pubspec.yaml|version:\s.+\+(\d+)|.|version:\s(.+)\+
+CurrentVersion: 0.1.0
+CurrentVersionCode: 1
