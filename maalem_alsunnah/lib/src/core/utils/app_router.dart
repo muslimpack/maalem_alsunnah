@@ -4,6 +4,7 @@ import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_scre
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/settings_screen.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as_image_screen.dart';
+import 'package:maalem_alsunnah/src/features/themes/presentation/screens/themes_manager_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -23,6 +24,8 @@ class AppRouter {
         itemId: args["itemId"],
         shareType: args["shareType"],
       );
+    } else if (settings.name == ThemeManagerScreen.routeName) {
+      return ThemeManagerScreen.route();
     }
     return HomeScreen.route();
   }

@@ -5,6 +5,7 @@ import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/themes/presentation/controller/cubit/theme_cubit.dart';
+import 'package:maalem_alsunnah/src/features/themes/presentation/screens/themes_manager_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -30,20 +31,10 @@ class SettingsScreen extends StatelessWidget {
           body: ListView(
             padding: const EdgeInsets.all(15),
             children: [
-              SwitchListTile(
-                value: state.brightness == Brightness.dark,
-                title: Text(S.of(context).prefThemeDarkMode),
-                onChanged: (value) {
-                  if (state.brightness == Brightness.dark) {
-                    context
-                        .read<ThemeCubit>()
-                        .changeBrightness(Brightness.light);
-                  } else {
-                    context
-                        .read<ThemeCubit>()
-                        .changeBrightness(Brightness.dark);
-                  }
-                },
+              ListTile(
+                title: Text(S.of(context).theme),
+                leading: Icon(Icons.color_lens),
+                onTap: () => context.pushNamed(ThemeManagerScreen.routeName),
               ),
 
               ///TODO(001) uncomment when add translation for whole app

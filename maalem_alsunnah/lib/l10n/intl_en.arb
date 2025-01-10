@@ -59,5 +59,6 @@
   "showDiacritics": "Show diacritics",
   "source": "Source",
   "sourceBookAuthor": "Book Author",
+  "theme": "Theme",
   "titles": "Titles"
 }

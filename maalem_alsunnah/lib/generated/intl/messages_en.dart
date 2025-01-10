@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Show diacritics"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author"),
+        "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "titles": MessageLookupByLibrary.simpleMessage("Titles")
       };
 }

@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
         "source": MessageLookupByLibrary.simpleMessage("المصدر"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
+        "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
         "titles": MessageLookupByLibrary.simpleMessage("العناوين")
       };
 }

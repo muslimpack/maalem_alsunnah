@@ -640,6 +640,16 @@ class S {
     );
   }
 
+  /// `Theme`
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Titles`
   String get titles {
     return Intl.message(
