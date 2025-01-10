@@ -38,7 +38,7 @@ class ContinueReadingCard extends StatelessWidget {
           onTap: () {
             context.pushNamed(
               ContentViewerScreen.routeName,
-              arguments: title.id,
+              arguments: {"titleId": title.id, "viewAsContent": true},
             );
           },
         )

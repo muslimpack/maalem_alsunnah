@@ -12,9 +12,11 @@ class TitleCard extends StatelessWidget {
   const TitleCard({
     super.key,
     required this.title,
+    this.viewAsContent = false,
   });
 
   final TitleModel title;
+  final bool viewAsContent;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,10 @@ class TitleCard extends StatelessWidget {
         onTap: () {
           context.pushNamed(
             ContentViewerScreen.routeName,
-            arguments: title.id,
+            arguments: {
+              "titleId": title.id,
+              "viewAsContent": title.subTitlesCount == 0
+            },
           );
         },
         leading: Icon(

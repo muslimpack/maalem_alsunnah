@@ -8,7 +8,11 @@ import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     if (settings.name == ContentViewerScreen.routeName) {
-      return ContentViewerScreen.route(settings.arguments as int);
+      final Map args = settings.arguments as Map;
+      return ContentViewerScreen.route(
+        titleId: args["titleId"] as int,
+        viewAsContent: args["viewAsContent"] as bool? ?? false,
+      );
     } else if (settings.name == SettingsScreen.routeName) {
       return SettingsScreen.route();
     } else if (settings.name == AboutScreen.routeName) {

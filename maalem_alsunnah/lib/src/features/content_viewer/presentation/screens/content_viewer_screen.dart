@@ -8,25 +8,32 @@ import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens
 
 class ContentViewerScreen extends StatelessWidget {
   final int titleId;
+  final bool viewAsContent;
 
   static const String routeName = "/viewer";
 
-  static Route route(int title) {
+  static Route route({required int titleId, required bool viewAsContent}) {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName, arguments: title),
-      builder: (_) => ContentViewerScreen(titleId: title),
+      settings: RouteSettings(
+        name: routeName,
+        arguments: {"titleId": titleId, "viewAsContent": viewAsContent},
+      ),
+      builder: (_) =>
+          ContentViewerScreen(titleId: titleId, viewAsContent: viewAsContent),
     );
   }
 
   const ContentViewerScreen({
     super.key,
     required this.titleId,
+    required this.viewAsContent,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ContentViewerCubit>()..start(titleId),
+      create: (context) =>
+          sl<ContentViewerCubit>()..start(titleId, isContent: viewAsContent),
       child: BlocBuilder<ContentViewerCubit, ContentViewerState>(
         builder: (context, state) {
           if (state is ContentSubListViewerLoadedState) {
