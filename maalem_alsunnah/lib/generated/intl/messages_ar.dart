@@ -94,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جميع الكلمات"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("أي كلمة"),
         "seconds": MessageLookupByLibrary.simpleMessage("ث"),
+        "select": MessageLookupByLibrary.simpleMessage("تحديد"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
@@ -101,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("المصدر"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
         "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
+        "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
         "titles": MessageLookupByLibrary.simpleMessage("العناوين")
       };
 }

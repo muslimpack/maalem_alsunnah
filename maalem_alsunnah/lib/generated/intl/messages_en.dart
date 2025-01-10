@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchTypeAllWords": MessageLookupByLibrary.simpleMessage("All words"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("Any words"),
         "seconds": MessageLookupByLibrary.simpleMessage("sec"),
+        "select": MessageLookupByLibrary.simpleMessage("Select"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("Share as image"),
@@ -99,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "themeAppColor": MessageLookupByLibrary.simpleMessage("App color"),
         "titles": MessageLookupByLibrary.simpleMessage("Titles")
       };
 }

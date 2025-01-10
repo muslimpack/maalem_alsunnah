@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/shared/color_dialog.dart';
 import 'package:maalem_alsunnah/src/features/themes/presentation/controller/cubit/theme_cubit.dart';
 
 class ThemeManagerScreen extends StatelessWidget {
@@ -24,6 +25,19 @@ class ThemeManagerScreen extends StatelessWidget {
           body: ListView(
             physics: const BouncingScrollPhysics(),
             children: [
+              ListTile(
+                title: Text(S.of(context).themeAppColor),
+                trailing: CircleAvatar(
+                  backgroundColor: state.color,
+                ),
+                onTap: () async {
+                  final selectedColor =
+                      await showColorSelectionDialog(context, state.color);
+                  if (selectedColor == null) return;
+                  if (!context.mounted) return;
+                  context.read<ThemeCubit>().changeColor(selectedColor);
+                },
+              ),
               SwitchListTile(
                 value: state.brightness == Brightness.dark,
                 title: Text(S.of(context).prefThemeDarkMode),

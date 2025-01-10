@@ -53,6 +53,7 @@
   "searchTypeAnyWords": "أي كلمة",
   "SearchTypeTypical": "بحث مطابق",
   "seconds": "ث",
+  "select": "تحديد",
   "settings": "الإعدادات",
   "share": "مشاركة",
   "shareAsImage": "مشاركة كصورة",
@@ -60,5 +61,6 @@
   "source": "المصدر",
   "sourceBookAuthor": "مؤلف الكتاب",
   "theme": "مظهر التطبيق",
+  "themeAppColor": "لون التطبيق",
   "titles": "العناوين"
 }

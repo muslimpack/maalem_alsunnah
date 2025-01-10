@@ -53,6 +53,7 @@
   "searchTypeAnyWords": "Any words",
   "SearchTypeTypical": "Typical",
   "seconds": "sec",
+  "select": "Select",
   "settings": "Settings",
   "share": "Share",
   "shareAsImage": "Share as image",
@@ -60,5 +61,6 @@
   "source": "Source",
   "sourceBookAuthor": "Book Author",
   "theme": "Theme",
+  "themeAppColor": "App color",
   "titles": "Titles"
 }
