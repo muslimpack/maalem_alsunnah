@@ -18,7 +18,9 @@ class IndexScreen extends StatelessWidget {
       itemCount: maqassedList.length,
       itemBuilder: (context, index) {
         final title = maqassedList[index];
-        return TitleCard(title: title);
+        return TitleCard(
+          title: title,
+        );
       },
     );
   }

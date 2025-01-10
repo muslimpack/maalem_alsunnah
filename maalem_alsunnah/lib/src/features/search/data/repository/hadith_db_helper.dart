@@ -13,7 +13,7 @@ class HadithDbHelper {
   /* ************* Variables ************* */
 
   static const String dbName = "book.db";
-  static const int dbVersion = 1;
+  static const int dbVersion = 2;
 
   /* ************* Singleton Constructor ************* */
 

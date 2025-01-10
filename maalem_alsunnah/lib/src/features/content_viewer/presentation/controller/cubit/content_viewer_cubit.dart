@@ -100,7 +100,11 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
   }
 
   Future _startTitle(TitleModel title) async {
+    final titleSelfContent = await hadithDbHelper.getContentByTitleId(title.id);
     final titles = await hadithDbHelper.getSubTitlesByTitleId(title.id);
+    if (titleSelfContent.text != title.name) {
+      titles.insert(0, title.copyWith(subTitlesCount: 0));
+    }
     emit(
       ContentSubListViewerLoadedState(
         title: title,

@@ -54,7 +54,8 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
   void onPressed(BuildContext context, int index, TitleModel title) {
     bool titleFoundInStack = false;
     for (var route in routeStack) {
-      final int? routeTitleId = route.settings.arguments as int?;
+      final Map? args = route.settings.arguments as Map?;
+      final int? routeTitleId = args?["titleId"] as int?;
       if (routeTitleId != null && title.id == routeTitleId) {
         titleFoundInStack = true;
         break;
@@ -62,17 +63,19 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
     }
     if (titleFoundInStack) {
       Navigator.popUntil(
-          context, (r) => (r.settings.arguments as int) == title.id);
+        context,
+        (r) => (r.settings.arguments as Map)["titleId"] == title.id,
+      );
     } else {
       if (routeStack.length <= 1) {
         context.pushNamed(
           ContentViewerScreen.routeName,
-          arguments: title.id,
+          arguments: {"titleId": title.id},
         );
       } else {
         Navigator.of(context).pushReplacementNamed(
           ContentViewerScreen.routeName,
-          arguments: title.id,
+          arguments: {"titleId": title.id},
         );
       }
     }
