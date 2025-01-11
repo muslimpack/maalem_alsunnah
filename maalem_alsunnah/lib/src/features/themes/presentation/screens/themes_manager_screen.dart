@@ -21,7 +21,10 @@ class ThemeManagerScreen extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: Text(S.of(context).theme)),
+          appBar: AppBar(
+            title: Text(S.of(context).theme),
+            centerTitle: true,
+          ),
           body: ListView(
             physics: const BouncingScrollPhysics(),
             children: [
