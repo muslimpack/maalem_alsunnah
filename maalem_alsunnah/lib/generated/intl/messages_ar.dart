@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كتاب معالم السنة النبوية"),
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة"),
+        "hadithTextColor":
+            MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
         "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
         "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
         "markAsUnread":
@@ -67,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("د"),
         "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "no": MessageLookupByLibrary.simpleMessage("لا"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "هذا كل شيء لا مزيد من النتائج."),
         "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
@@ -77,12 +80,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "prefThemeDarkMode":
             MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "previous": MessageLookupByLibrary.simpleMessage("السابق"),
+        "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
         "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "removeBookmark":
             MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
         "reportMisspelled":
             MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
+        "reset": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
+        "roundBracketsColor":
+            MessageLookupByLibrary.simpleMessage("لون الأقواس المستديرة"),
         "search": MessageLookupByLibrary.simpleMessage("بحث"),
         "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
         "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
@@ -94,12 +101,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جميع الكلمات"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("أي كلمة"),
         "seconds": MessageLookupByLibrary.simpleMessage("ث"),
+        "select": MessageLookupByLibrary.simpleMessage("تحديد"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
         "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
         "source": MessageLookupByLibrary.simpleMessage("المصدر"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
-        "titles": MessageLookupByLibrary.simpleMessage("العناوين")
+        "squareBracketsColor":
+            MessageLookupByLibrary.simpleMessage("لون الأقواس المربعة"),
+        "startingNumberColor":
+            MessageLookupByLibrary.simpleMessage("لون رقم البداية"),
+        "textFormatterColorSettings":
+            MessageLookupByLibrary.simpleMessage("إعدادات ألوان تنسيق النص"),
+        "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
+        "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
+        "titles": MessageLookupByLibrary.simpleMessage("العناوين"),
+        "yes": MessageLookupByLibrary.simpleMessage("نعم")
       };
 }

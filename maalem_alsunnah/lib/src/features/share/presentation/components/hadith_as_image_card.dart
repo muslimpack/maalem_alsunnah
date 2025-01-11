@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_format_text_style.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_rich_text_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
@@ -71,31 +72,13 @@ class HadithAsImageCard extends StatelessWidget {
       height: 1.5,
     );
 
+    final TextFormatterSettings textFormatterSettings =
+        hadithTextFormatterSettingsByDefault(context, defaultStyle);
+
     final textSpan = FormattedText(
       text: hadith.text,
       textRange: matnRange,
-      settings: TextFormatterSettings(
-        deafaultStyle: defaultStyle,
-        hadithTextStyle: defaultStyle.copyWith(
-          fontWeight: FontWeight.bold,
-          color: Colors.yellow[700],
-        ),
-        quranTextStyle: defaultStyle.copyWith(
-          // fontFamily: "hafs",
-          color: Colors.lightGreen[300],
-          fontWeight: FontWeight.bold,
-        ),
-        squareBracketsStyle: defaultStyle.copyWith(
-          color: Colors.cyan[300],
-        ),
-        roundBracketsStyle: defaultStyle.copyWith(
-          color: Colors.red[300],
-        ),
-        startingNumberStyle: defaultStyle.copyWith(
-          color: Colors.purple[300],
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      settings: textFormatterSettings,
     ).textSpan();
     return Container(
       color: imageBackgroundColor,

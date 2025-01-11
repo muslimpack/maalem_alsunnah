@@ -11,6 +11,7 @@ class ThemeCubit extends Cubit<ThemeState> {
       : super(
           ThemeState(
             brightness: themeRepo.brightness,
+            color: themeRepo.color,
             fontFamily: themeRepo.fontFamily,
             locale: themeRepo.appLocale,
           ),
@@ -38,5 +39,11 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> changeAppLocale(String locale) async {
     await themeRepo.changAppLocale(locale);
     emit(state.copyWith(locale: Locale(locale)));
+  }
+
+  ///MARK: App Color
+  Future<void> changeColor(Color color) async {
+    await themeRepo.setColor(color);
+    emit(state.copyWith(color: color));
   }
 }

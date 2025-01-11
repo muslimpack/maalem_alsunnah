@@ -59,12 +59,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Maalem Al-sunnah"),
         "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
             "The Prophetic Sunnah from the most authentic to the weakest"),
+        "hadithTextColor":
+            MessageLookupByLibrary.simpleMessage("Hadith text color"),
         "index": MessageLookupByLibrary.simpleMessage("Index"),
         "markAsRead": MessageLookupByLibrary.simpleMessage("Mark as read"),
         "markAsUnread": MessageLookupByLibrary.simpleMessage("Mark as unread"),
         "minutes": MessageLookupByLibrary.simpleMessage("min"),
         "misspelled": MessageLookupByLibrary.simpleMessage("Misspelled"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
             "That\'s it, there are no more results."),
         "noResultsFound":
@@ -75,12 +78,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "prefAppLanguage": MessageLookupByLibrary.simpleMessage("App language"),
         "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "previous": MessageLookupByLibrary.simpleMessage("Previous"),
+        "quranTextColor":
+            MessageLookupByLibrary.simpleMessage("Quran text color"),
         "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
         "removeBookmark":
             MessageLookupByLibrary.simpleMessage("Remove bookmark"),
         "reportMisspelled":
             MessageLookupByLibrary.simpleMessage("Report misspelled"),
+        "reset": MessageLookupByLibrary.simpleMessage("Reset"),
+        "roundBracketsColor":
+            MessageLookupByLibrary.simpleMessage("Round brackets color"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchFilters": MessageLookupByLibrary.simpleMessage("Search filters"),
         "searchForContent": MessageLookupByLibrary.simpleMessage("Content"),
@@ -91,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchTypeAllWords": MessageLookupByLibrary.simpleMessage("All words"),
         "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("Any words"),
         "seconds": MessageLookupByLibrary.simpleMessage("sec"),
+        "select": MessageLookupByLibrary.simpleMessage("Select"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "shareAsImage": MessageLookupByLibrary.simpleMessage("Share as image"),
@@ -98,6 +107,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Show diacritics"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author"),
-        "titles": MessageLookupByLibrary.simpleMessage("Titles")
+        "squareBracketsColor":
+            MessageLookupByLibrary.simpleMessage("Square brackets color"),
+        "startingNumberColor":
+            MessageLookupByLibrary.simpleMessage("Starting number color"),
+        "textFormatterColorSettings": MessageLookupByLibrary.simpleMessage(
+            "Text formatter color settings"),
+        "theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "themeAppColor": MessageLookupByLibrary.simpleMessage("App color"),
+        "titles": MessageLookupByLibrary.simpleMessage("Titles"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

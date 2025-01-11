@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
-import 'package:maalem_alsunnah/src/features/home/presentation/screens/index_screen.dart';
+import 'package:maalem_alsunnah/src/features/home/presentation/components/title_card.dart';
 
 class SubListScreen extends StatelessWidget {
   final ContentSubListViewerLoadedState state;
@@ -19,15 +19,30 @@ class SubListScreen extends StatelessWidget {
         title: Text(state.title.name),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TitlesChainBreadCrumb(titleId: state.title.id),
-          Expanded(
-            child: IndexScreen(
-              maqassedList: state.titles,
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: EdgeInsets.all(15),
+            sliver: SliverFloatingHeader(
+              snapMode: FloatingHeaderSnapMode.overlay,
+              child: Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: TitlesChainBreadCrumb(titleId: state.title.id),
+              ),
             ),
           ),
+          SliverPadding(
+            padding: EdgeInsets.all(15).copyWith(top: 0),
+            sliver: SliverList.builder(
+              itemCount: state.titles.length,
+              itemBuilder: (context, index) {
+                final title = state.titles[index];
+                return TitleCard(
+                  title: title,
+                );
+              },
+            ),
+          )
         ],
       ),
     );

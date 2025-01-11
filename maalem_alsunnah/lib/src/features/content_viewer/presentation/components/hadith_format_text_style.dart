@@ -9,24 +9,33 @@ TextFormatterSettings hadithTextFormatterSettings(BuildContext context) {
     fontFamily: 'adwaa',
     height: 1.5,
   );
+
+  return hadithTextFormatterSettingsByDefault(context, defaultStyle);
+}
+
+TextFormatterSettings hadithTextFormatterSettingsByDefault(
+    BuildContext context, TextStyle defaultStyle) {
+  final formatterColorSettings =
+      context.watch<SettingsCubit>().state.formatterColorSettings;
+
   final TextFormatterSettings textFormatterSettings = TextFormatterSettings(
     deafaultStyle: defaultStyle,
     hadithTextStyle: defaultStyle.copyWith(
       // fontWeight: FontWeight.bold,
-      color: Colors.yellow[700],
+      color: formatterColorSettings.hadithTextColor,
     ),
     quranTextStyle: defaultStyle.copyWith(
-      color: Colors.lightGreen[300],
+      color: formatterColorSettings.quranTextColor,
       fontWeight: FontWeight.bold,
     ),
     squareBracketsStyle: defaultStyle.copyWith(
-      color: Colors.cyan[300],
+      color: formatterColorSettings.squareBracketsColor,
     ),
     roundBracketsStyle: defaultStyle.copyWith(
-      color: Colors.red[300],
+      color: formatterColorSettings.roundBracketsColor,
     ),
     startingNumberStyle: defaultStyle.copyWith(
-      color: Colors.purple[300],
+      color: formatterColorSettings.startingNumberColor,
       fontWeight: FontWeight.bold,
     ),
   );

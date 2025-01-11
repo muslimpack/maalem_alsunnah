@@ -310,6 +310,16 @@ class S {
     );
   }
 
+  /// `Hadith text color`
+  String get hadithTextColor {
+    return Intl.message(
+      'Hadith text color',
+      name: 'hadithTextColor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Index`
   String get index {
     return Intl.message(
@@ -365,6 +375,16 @@ class S {
     return Intl.message(
       'Next',
       name: 'next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
       desc: '',
       args: [],
     );
@@ -440,6 +460,16 @@ class S {
     );
   }
 
+  /// `Quran text color`
+  String get quranTextColor {
+    return Intl.message(
+      'Quran text color',
+      name: 'quranTextColor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Reading time`
   String get readingTime {
     return Intl.message(
@@ -475,6 +505,26 @@ class S {
     return Intl.message(
       'Report misspelled',
       name: 'reportMisspelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get reset {
+    return Intl.message(
+      'Reset',
+      name: 'reset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Round brackets color`
+  String get roundBracketsColor {
+    return Intl.message(
+      'Round brackets color',
+      name: 'roundBracketsColor',
       desc: '',
       args: [],
     );
@@ -580,6 +630,16 @@ class S {
     );
   }
 
+  /// `Select`
+  String get select {
+    return Intl.message(
+      'Select',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -640,11 +700,71 @@ class S {
     );
   }
 
+  /// `Square brackets color`
+  String get squareBracketsColor {
+    return Intl.message(
+      'Square brackets color',
+      name: 'squareBracketsColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starting number color`
+  String get startingNumberColor {
+    return Intl.message(
+      'Starting number color',
+      name: 'startingNumberColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text formatter color settings`
+  String get textFormatterColorSettings {
+    return Intl.message(
+      'Text formatter color settings',
+      name: 'textFormatterColorSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App color`
+  String get themeAppColor {
+    return Intl.message(
+      'App color',
+      name: 'themeAppColor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Titles`
   String get titles {
     return Intl.message(
       'Titles',
       name: 'titles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
       desc: '',
       args: [],
     );
