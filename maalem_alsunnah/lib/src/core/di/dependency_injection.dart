@@ -4,6 +4,7 @@ import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark_repository.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/domain/repository/bookmark_repo.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/repository/formatter_color_settings_repo.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/controller/cubit/content_viewer_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/domain/repository/home_repo.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
@@ -28,6 +29,7 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => SearchRepo(sl()));
   sl.registerLazySingleton(() => HomeRepo(sl()));
   sl.registerLazySingleton(() => BookmarkRepo(sl()));
+  sl.registerLazySingleton(() => FormatterColorSettingsRepo(sl()));
 
   ///MARK: Init Repo
   sl.registerLazySingleton(() => HadithDbHelper());
@@ -38,7 +40,7 @@ Future<void> initSL() async {
   ///MARK: Init BLOC
 
   /// Singleton BLoC
-  sl.registerLazySingleton(() => SettingsCubit(sl()));
+  sl.registerLazySingleton(() => SettingsCubit(sl(), sl()));
   sl.registerLazySingleton(() => ThemeCubit(sl()));
   sl.registerLazySingleton(() => SearchCubit(sl(), sl()));
   sl.registerLazySingleton(() => HomeCubit(sl(), sl()));
