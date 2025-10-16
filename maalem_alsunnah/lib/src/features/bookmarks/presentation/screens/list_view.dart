@@ -24,12 +24,11 @@ class BookmarkListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double padding = 15;
-    final TextFormatterSettings textFormatterSettings =
-        hadithTextFormatterSettings(context);
+    final TextFormatterSettings textFormatterSettings = hadithTextFormatterSettings(context);
 
     return CustomScrollView(
       slivers: [
-        SliverPadding(
+        const SliverPadding(
           padding: EdgeInsets.only(top: padding),
           sliver: SliverToBoxAdapter(
             child: BookmarkViewBar(),
@@ -46,13 +45,13 @@ class BookmarkListView extends StatelessWidget {
                     Text(
                       S.of(context).titles,
                     ),
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
                   ],
                 ),
               ),
             ),
           SliverPadding(
-            padding: EdgeInsets.all(padding),
+            padding: const EdgeInsets.all(padding),
             sliver: SliverList.builder(
               itemCount: titles.length,
               itemBuilder: (context, index) {
@@ -73,13 +72,13 @@ class BookmarkListView extends StatelessWidget {
                     Text(
                       S.of(context).hadith,
                     ),
-                    Expanded(child: Divider()),
+                    const Expanded(child: Divider()),
                   ],
                 ),
               ),
             ),
           SliverPadding(
-            padding: EdgeInsets.all(padding),
+            padding: const EdgeInsets.all(padding),
             sliver: SliverList.builder(
               itemCount: hadithList.length,
               itemBuilder: (context, index) {

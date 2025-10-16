@@ -24,10 +24,8 @@ class BookmarkViewBar extends StatelessWidget {
               ),
               showCheckmark: false,
               selected: state.bookmarkView == e,
-              onSelected: (value) async {
-                context
-                    .read<BookmarksBloc>()
-                    .add(BookmarksChangeViewEvent(bookmarkView: e));
+              onSelected: (value) {
+                context.read<BookmarksBloc>().add(BookmarksChangeViewEvent(bookmarkView: e));
               },
             );
           }).toList(),

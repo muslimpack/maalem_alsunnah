@@ -22,101 +22,105 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
-        "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
-        "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
-        "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
-        "all": MessageLookupByLibrary.simpleMessage("الجميع"),
-        "appHashtag":
-            MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
-        "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
-        "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
-        "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
-        "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
-        "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
-        "close": MessageLookupByLibrary.simpleMessage("أغلق"),
-        "continueReading":
-            MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
-        "copiedToClipboard":
-            MessageLookupByLibrary.simpleMessage("تم النسخ إلى الحافظة"),
-        "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
-        "displayedResultsCount":
-            MessageLookupByLibrary.simpleMessage("عدد النتائج المعروضة"),
-        "done": MessageLookupByLibrary.simpleMessage("تم"),
-        "fontDecreaseSize":
-            MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
-        "fontIncreaseSize":
-            MessageLookupByLibrary.simpleMessage("تكبير حجم الخط"),
-        "fontResetSize":
-            MessageLookupByLibrary.simpleMessage("إعادة تعيين حجم الخط"),
-        "fontSettings": MessageLookupByLibrary.simpleMessage("إعدادات الخط"),
-        "freeAdFreeAndOpenSourceApp": MessageLookupByLibrary.simpleMessage(
-            "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر"),
-        "github": MessageLookupByLibrary.simpleMessage("الكود المصدري للمشروع"),
-        "hadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
-        "hadithBookAuthor":
-            MessageLookupByLibrary.simpleMessage("الشيخ صالح أحمد الشامي"),
-        "hadithBookSource":
-            MessageLookupByLibrary.simpleMessage("كتاب معالم السنة النبوية"),
-        "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
-            "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة"),
-        "hadithTextColor":
-            MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
-        "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
-        "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
-        "markAsUnread":
-            MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
-        "minutes": MessageLookupByLibrary.simpleMessage("د"),
-        "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
-        "next": MessageLookupByLibrary.simpleMessage("التالي"),
-        "no": MessageLookupByLibrary.simpleMessage("لا"),
-        "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
-            "هذا كل شيء لا مزيد من النتائج."),
-        "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
-        "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
-        "prayForUsAndParents":
-            MessageLookupByLibrary.simpleMessage("نسألكم الدعاء لنا ولوالدينا"),
-        "prefAppLanguage": MessageLookupByLibrary.simpleMessage("لغة التطبيق"),
-        "prefThemeDarkMode":
-            MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
-        "previous": MessageLookupByLibrary.simpleMessage("السابق"),
-        "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
-        "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
-        "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
-        "removeBookmark":
-            MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
-        "reportMisspelled":
-            MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
-        "reset": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
-        "roundBracketsColor":
-            MessageLookupByLibrary.simpleMessage("لون الأقواس المستديرة"),
-        "search": MessageLookupByLibrary.simpleMessage("بحث"),
-        "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
-        "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
-        "searchForHadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
-        "searchForTitle": MessageLookupByLibrary.simpleMessage("فهرس"),
-        "searchResultCount":
-            MessageLookupByLibrary.simpleMessage("عدد نتائج البحث"),
-        "searchTypeAllWords":
-            MessageLookupByLibrary.simpleMessage("جميع الكلمات"),
-        "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("أي كلمة"),
-        "seconds": MessageLookupByLibrary.simpleMessage("ث"),
-        "select": MessageLookupByLibrary.simpleMessage("تحديد"),
-        "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
-        "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
-        "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
-        "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
-        "source": MessageLookupByLibrary.simpleMessage("المصدر"),
-        "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
-        "squareBracketsColor":
-            MessageLookupByLibrary.simpleMessage("لون الأقواس المربعة"),
-        "startingNumberColor":
-            MessageLookupByLibrary.simpleMessage("لون رقم البداية"),
-        "textFormatterColorSettings":
-            MessageLookupByLibrary.simpleMessage("إعدادات ألوان تنسيق النص"),
-        "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
-        "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
-        "titles": MessageLookupByLibrary.simpleMessage("العناوين"),
-        "yes": MessageLookupByLibrary.simpleMessage("نعم")
-      };
+    "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
+    "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
+    "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
+    "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
+    "all": MessageLookupByLibrary.simpleMessage("الجميع"),
+    "appHashtag": MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
+    "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
+    "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+    "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
+    "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
+    "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
+    "close": MessageLookupByLibrary.simpleMessage("أغلق"),
+    "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
+    "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
+      "تم النسخ إلى الحافظة",
+    ),
+    "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
+    "displayedResultsCount": MessageLookupByLibrary.simpleMessage(
+      "عدد النتائج المعروضة",
+    ),
+    "done": MessageLookupByLibrary.simpleMessage("تم"),
+    "fontDecreaseSize": MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
+    "fontIncreaseSize": MessageLookupByLibrary.simpleMessage("تكبير حجم الخط"),
+    "fontResetSize": MessageLookupByLibrary.simpleMessage(
+      "إعادة تعيين حجم الخط",
+    ),
+    "fontSettings": MessageLookupByLibrary.simpleMessage("إعدادات الخط"),
+    "freeAdFreeAndOpenSourceApp": MessageLookupByLibrary.simpleMessage(
+      "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر",
+    ),
+    "github": MessageLookupByLibrary.simpleMessage("الكود المصدري للمشروع"),
+    "hadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
+    "hadithBookAuthor": MessageLookupByLibrary.simpleMessage(
+      "الشيخ صالح أحمد الشامي",
+    ),
+    "hadithBookSource": MessageLookupByLibrary.simpleMessage(
+      "كتاب معالم السنة النبوية",
+    ),
+    "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
+      "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
+    ),
+    "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
+    "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
+    "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
+    "markAsUnread": MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
+    "minutes": MessageLookupByLibrary.simpleMessage("د"),
+    "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
+    "next": MessageLookupByLibrary.simpleMessage("التالي"),
+    "no": MessageLookupByLibrary.simpleMessage("لا"),
+    "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
+      "هذا كل شيء لا مزيد من النتائج.",
+    ),
+    "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
+    "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+    "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
+      "نسألكم الدعاء لنا ولوالدينا",
+    ),
+    "prefAppLanguage": MessageLookupByLibrary.simpleMessage("لغة التطبيق"),
+    "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
+    "previous": MessageLookupByLibrary.simpleMessage("السابق"),
+    "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
+    "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
+    "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
+    "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
+    "reportMisspelled": MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
+    "reset": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
+    "roundBracketsColor": MessageLookupByLibrary.simpleMessage(
+      "لون الأقواس المستديرة",
+    ),
+    "search": MessageLookupByLibrary.simpleMessage("بحث"),
+    "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
+    "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
+    "searchForHadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
+    "searchForTitle": MessageLookupByLibrary.simpleMessage("فهرس"),
+    "searchResultCount": MessageLookupByLibrary.simpleMessage(
+      "عدد نتائج البحث",
+    ),
+    "searchTypeAllWords": MessageLookupByLibrary.simpleMessage("جميع الكلمات"),
+    "searchTypeAnyWords": MessageLookupByLibrary.simpleMessage("أي كلمة"),
+    "seconds": MessageLookupByLibrary.simpleMessage("ث"),
+    "select": MessageLookupByLibrary.simpleMessage("تحديد"),
+    "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
+    "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
+    "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
+    "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
+    "source": MessageLookupByLibrary.simpleMessage("المصدر"),
+    "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
+    "squareBracketsColor": MessageLookupByLibrary.simpleMessage(
+      "لون الأقواس المربعة",
+    ),
+    "startingNumberColor": MessageLookupByLibrary.simpleMessage(
+      "لون رقم البداية",
+    ),
+    "textFormatterColorSettings": MessageLookupByLibrary.simpleMessage(
+      "إعدادات ألوان تنسيق النص",
+    ),
+    "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
+    "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
+    "titles": MessageLookupByLibrary.simpleMessage("العناوين"),
+    "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+  };
 }

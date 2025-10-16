@@ -19,12 +19,10 @@ class BookmarkButton extends StatelessWidget {
     return BlocBuilder<BookmarksBloc, BookmarksState>(
       builder: (context, state) {
         if (state is! BookmarksLoadedState) {
-          return SizedBox();
+          return const SizedBox();
         }
         final isBookmarked = state.bookmarks.any((element) {
-          return element.itemId == itemId &&
-              element.type == type &&
-              element.isBookmarked;
+          return element.itemId == itemId && element.type == type && element.isBookmarked;
         });
         if (isBookmarked) {
           return IconButton(
@@ -38,7 +36,7 @@ class BookmarkButton extends StatelessWidget {
                     ),
                   );
             },
-            icon: Icon(Icons.bookmark_outlined),
+            icon: const Icon(Icons.bookmark_outlined),
           );
         }
         return IconButton(
@@ -52,7 +50,7 @@ class BookmarkButton extends StatelessWidget {
                   ),
                 );
           },
-          icon: Icon(Icons.bookmark_border_outlined),
+          icon: const Icon(Icons.bookmark_border_outlined),
         );
       },
     );

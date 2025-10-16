@@ -9,8 +9,8 @@ class ThemeManagerScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => ThemeManagerScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const ThemeManagerScreen(),
     );
   }
 
@@ -34,8 +34,7 @@ class ThemeManagerScreen extends StatelessWidget {
                   backgroundColor: state.color,
                 ),
                 onTap: () async {
-                  final selectedColor =
-                      await showColorSelectionDialog(context, state.color);
+                  final selectedColor = await showColorSelectionDialog(context, state.color);
                   if (selectedColor == null) return;
                   if (!context.mounted) return;
                   context.read<ThemeCubit>().changeColor(selectedColor);
@@ -46,13 +45,9 @@ class ThemeManagerScreen extends StatelessWidget {
                 title: Text(S.of(context).prefThemeDarkMode),
                 onChanged: (value) {
                   if (state.brightness == Brightness.dark) {
-                    context
-                        .read<ThemeCubit>()
-                        .changeBrightness(Brightness.light);
+                    context.read<ThemeCubit>().changeBrightness(Brightness.light);
                   } else {
-                    context
-                        .read<ThemeCubit>()
-                        .changeBrightness(Brightness.dark);
+                    context.read<ThemeCubit>().changeBrightness(Brightness.dark);
                   }
                 },
               ),

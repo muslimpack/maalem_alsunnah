@@ -14,7 +14,7 @@ class BookmarkRepo {
     return BookmarkViewEnum.fromString(data);
   }
 
-  Future setBookmarkView(BookmarkViewEnum bookmarkView) async {
+  Future setBookmarkView(BookmarkViewEnum bookmarkView) {
     return box.put(bookmarkViewTypeKey, bookmarkView.name);
   }
 }

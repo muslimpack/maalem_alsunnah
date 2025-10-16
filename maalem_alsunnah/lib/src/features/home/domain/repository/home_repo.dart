@@ -13,7 +13,7 @@ class HomeRepo {
     return data;
   }
 
-  Future setLastReadTitleId(int lastReadTitle) async {
+  Future setLastReadTitleId(int lastReadTitle) {
     return box.put(lastReadTitleIdKey, lastReadTitle);
   }
 }

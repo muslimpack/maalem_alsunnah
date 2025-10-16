@@ -26,7 +26,7 @@ class SearchField extends StatelessWidget {
                 icon: Icon(MdiIcons.eraser),
               ),
             ),
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'adwaa',
               fontWeight: FontWeight.bold,
               fontSize: 18,

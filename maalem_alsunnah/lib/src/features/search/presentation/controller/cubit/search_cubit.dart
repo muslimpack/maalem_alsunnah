@@ -15,8 +15,7 @@ part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   final TextEditingController searchController = TextEditingController();
-  final PagingController<int, TitleModel> titlePagingController =
-      PagingController(firstPageKey: 0);
+  final PagingController<int, TitleModel> titlePagingController = PagingController(firstPageKey: 0);
   final PagingController<int, ContentModel> contentPagingController =
       PagingController(firstPageKey: 0);
   final PagingController<int, HadithModel> hadithPagingController =
@@ -118,13 +117,10 @@ class SearchCubit extends Cubit<SearchState> {
     switch (state.searchFor) {
       case SearchFor.title:
         _fetchTitlePage(pageKey, state);
-        break;
       case SearchFor.content:
         _fetchContentPage(pageKey, state);
-        break;
       case SearchFor.hadith:
         _fetchHadithPage(pageKey, state);
-        break;
     }
   }
 

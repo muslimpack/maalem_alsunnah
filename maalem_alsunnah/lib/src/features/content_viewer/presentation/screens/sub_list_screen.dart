@@ -22,17 +22,17 @@ class SubListScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverPadding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             sliver: SliverFloatingHeader(
               snapMode: FloatingHeaderSnapMode.overlay,
-              child: Container(
+              child: ColoredBox(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: TitlesChainBreadCrumb(titleId: state.title.id),
               ),
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.all(15).copyWith(top: 0),
+            padding: const EdgeInsets.all(15).copyWith(top: 0),
             sliver: SliverList.builder(
               itemCount: state.titles.length,
               itemBuilder: (context, index) {

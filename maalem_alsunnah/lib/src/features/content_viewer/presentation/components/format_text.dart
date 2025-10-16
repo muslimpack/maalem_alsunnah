@@ -103,14 +103,12 @@ class FormattedText extends StatelessWidget {
 
       final String matchedText = match.group(0) ?? "";
 
-      for (var item in items) {
+      for (final item in items) {
         if (item.predicate.call(matchedText)) {
           if (item.formatType == FormatTypeEnum.roundBrackets) {
             if (matchedText.length > 3) {
-              final lastWord =
-                  textSpans.isNotEmpty ? textSpans.last.text ?? "" : "";
-              if (lastWord.contains("قال تعالى") ||
-                  lastWord.contains("عزوجل")) {
+              final lastWord = textSpans.isNotEmpty ? textSpans.last.text ?? "" : "";
+              if (lastWord.contains("قال تعالى") || lastWord.contains("عزوجل")) {
                 textSpans.add(
                   TextSpan(
                     text: matchedText,

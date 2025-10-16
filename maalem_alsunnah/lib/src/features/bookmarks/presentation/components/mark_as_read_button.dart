@@ -20,17 +20,15 @@ class MarkAsReadButton extends StatelessWidget {
     return BlocBuilder<BookmarksBloc, BookmarksState>(
       builder: (context, state) {
         if (state is! BookmarksLoadedState) {
-          return SizedBox();
+          return const SizedBox();
         }
         final bookmark = state.bookmarks
-            .where(
-                (element) => element.itemId == itemId && element.type == type)
+            .where((element) => element.itemId == itemId && element.type == type)
             .firstOrNull;
 
         final isRead = bookmark?.isRead ?? false;
         return IconButton(
-          tooltip:
-              isRead ? S.of(context).markAsUnread : S.of(context).markAsRead,
+          tooltip: isRead ? S.of(context).markAsUnread : S.of(context).markAsRead,
           onPressed: () {
             sl<BookmarksBloc>().add(BookmarksMarkItemAsReadEvent(
               itemId: itemId,
@@ -38,7 +36,7 @@ class MarkAsReadButton extends StatelessWidget {
               isRead: !isRead,
             ));
           },
-          icon: isRead ? Icon(Icons.done_all) : Icon(Icons.done),
+          icon: isRead ? const Icon(Icons.done_all) : const Icon(Icons.done),
         );
       },
     );

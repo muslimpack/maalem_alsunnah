@@ -1,5 +1,5 @@
-import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
 
 class DotBar extends StatelessWidget {
   final int length;

@@ -35,7 +35,7 @@ class ContentImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const imageBackgroundColor = Color(0xff1a110e);
     const secondaryColor = Color(0xfffeb99c);
-    final secondaryElementsColor = Color(0xff451b1b).withValues(alpha: 1);
+    final secondaryElementsColor = const Color(0xff451b1b).withValues(alpha: 1);
 
     final mainTextStyle = TextStyle(
       fontSize: 150,
@@ -49,7 +49,7 @@ class ContentImageCard extends StatelessWidget {
       fontFamily: settings.secondaryFontFamily,
     );
 
-    final defaultStyle = TextStyle(
+    const defaultStyle = TextStyle(
       fontFamily: 'adwaa',
       height: 1.5,
     );
@@ -66,7 +66,7 @@ class ContentImageCard extends StatelessWidget {
     return Container(
       width: settings.imageSize.width,
       height: settings.imageSize.height,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: imageBackgroundColor,
         image: DecorationImage(
           repeat: ImageRepeat.repeat,
@@ -127,7 +127,7 @@ class ContentImageCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.timer_outlined,
                     size: 60,
                     color: secondaryColor,
@@ -156,7 +156,7 @@ class ContentImageCard extends StatelessWidget {
               ),
             ),
           Padding(
-            padding: const EdgeInsets.only(left: 0, bottom: 5),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Image.asset(

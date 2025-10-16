@@ -26,7 +26,7 @@ class HomeAppBar extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         child: Image.asset('assets/images/app_icon2.png'),
       ),
-      title: !state.search ? Text(S.of(context).appTitle) : SearchField(),
+      title: !state.search ? Text(S.of(context).appTitle) : const SearchField(),
       centerTitle: true,
       actions: [
         if (!state.search)
@@ -59,19 +59,19 @@ class HomeAppBar extends StatelessWidget {
         tabs: [
           Tab(
             text: S.of(context).index,
-            icon: Icon(Icons.list),
+            icon: const Icon(Icons.list),
           ),
           Tab(
             text: S.of(context).search,
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
           Tab(
             text: S.of(context).bookmarks,
-            icon: Icon(Icons.bookmark_border_outlined),
+            icon: const Icon(Icons.bookmark_border_outlined),
           ),
           Tab(
             text: S.of(context).notes,
-            icon: Icon(Icons.library_books_outlined),
+            icon: const Icon(Icons.library_books_outlined),
           ),
         ],
       ),

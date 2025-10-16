@@ -1,5 +1,5 @@
-import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:hive/hive.dart';
+import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 
 class TextFontRepo {
   final Box box;
@@ -20,6 +20,5 @@ class TextFontRepo {
   static const String _showDiacriticsKey = "prefShowDiacritics";
   bool get showDiacritics => box.get(_showDiacriticsKey) as bool? ?? true;
 
-  Future<void> changDiacriticsStatus({required bool value}) async =>
-      box.put(_showDiacriticsKey, value);
+  Future<void> changDiacriticsStatus({required bool value}) => box.put(_showDiacriticsKey, value);
 }

@@ -9,8 +9,8 @@ class FormatterColorSettingsScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => FormatterColorSettingsScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const FormatterColorSettingsScreen(),
     );
   }
 
@@ -21,10 +21,10 @@ class FormatterColorSettingsScreen extends StatelessWidget {
         title: Text(S.of(context).textFormatterColorSettings),
         centerTitle: true,
       ),
-      body: Column(
+      body: const Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: EdgeInsets.all(15),
             child: FormatterColorSettingsTextSample(),
           ),
           Divider(),

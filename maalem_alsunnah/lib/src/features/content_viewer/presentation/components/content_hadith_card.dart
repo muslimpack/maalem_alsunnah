@@ -26,9 +26,8 @@ class ContentHadithCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isTitle = hadith.text.startsWith('باب') || hadith.id.isEmpty;
-    final String text = context.watch<SettingsCubit>().state.showDiacritics
-        ? hadith.text
-        : hadith.searchText;
+    final String text =
+        context.watch<SettingsCubit>().state.showDiacritics ? hadith.text : hadith.searchText;
     final String formattedText = text;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -54,11 +53,10 @@ class ContentHadithCard extends StatelessWidget {
             FormattedText(
               text: formattedText,
               settings: textFormatterSettings,
-              textLeadingWidget:
-                  isTitle ? null : HadithCardPopupMenu(hadith: hadith),
+              textLeadingWidget: isTitle ? null : HadithCardPopupMenu(hadith: hadith),
             ),
             if (!isTitle) ...[
-              Divider(),
+              const Divider(),
               BookmarkActionBar(
                 itemId: hadith.id,
                 bookmarkType: BookmarkType.hadith,

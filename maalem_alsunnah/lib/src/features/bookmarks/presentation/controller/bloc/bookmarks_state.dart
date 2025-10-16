@@ -42,9 +42,8 @@ class BookmarksLoadedState extends BookmarksState {
         .toList();
     return notes
         .map(
-          (e) => bookmarkedTitle.firstWhere((element) =>
-              element.id.toString() == e.itemId &&
-              e.type == BookmarkType.title),
+          (e) => bookmarkedTitle.firstWhere(
+              (element) => element.id.toString() == e.itemId && e.type == BookmarkType.title),
         )
         .toList();
   }
@@ -60,7 +59,7 @@ class BookmarksLoadedState extends BookmarksState {
         .map(
           (e) => bookmarkedHadithList.firstWhere(
             (element) {
-              return element.id.toString() == e.itemId;
+              return element.id == e.itemId;
             },
           ),
         )
@@ -75,9 +74,8 @@ class BookmarksLoadedState extends BookmarksState {
         .toList();
     return notes
         .map(
-          (e) => bookmarkedHadithList.firstWhere((element) =>
-              element.id.toString() == e.itemId &&
-              e.type == BookmarkType.hadith),
+          (e) => bookmarkedHadithList
+              .firstWhere((element) => element.id == e.itemId && e.type == BookmarkType.hadith),
         )
         .toList();
   }

@@ -25,7 +25,7 @@ class ContentNavBar extends StatelessWidget {
               : () {
                   context.read<ContentViewerCubit>().previousContent();
                 },
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
         Expanded(child: ContentSlider(state: state)),
         IconButton(
@@ -35,7 +35,7 @@ class ContentNavBar extends StatelessWidget {
               : () {
                   context.read<ContentViewerCubit>().nextContent();
                 },
-          icon: Icon(Icons.arrow_forward),
+          icon: const Icon(Icons.arrow_forward),
         ),
       ],
     );

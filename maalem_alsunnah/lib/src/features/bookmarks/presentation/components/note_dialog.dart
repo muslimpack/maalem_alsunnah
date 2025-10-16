@@ -9,8 +9,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-Future showNoteDialog(BuildContext context,
-    {required String itemId, required BookmarkType type}) {
+Future showNoteDialog(BuildContext context, {required String itemId, required BookmarkType type}) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -46,8 +45,7 @@ class _NoteDialogState extends State<NoteDialog> {
   }
 
   Future init() async {
-    bookmark = await sl<BookmarkRepository>()
-        .isExist(itemId: widget.itemId, type: widget.type);
+    bookmark = await sl<BookmarkRepository>().isExist(itemId: widget.itemId, type: widget.type);
 
     _noteController = TextEditingController(text: bookmark?.note);
 
@@ -75,7 +73,7 @@ class _NoteDialogState extends State<NoteDialog> {
   Future onDone() async {
     Navigator.of(context).pop();
     sl<BookmarksBloc>().add(BookmarksNoteEvent(
-      itemId: widget.itemId.toString(),
+      itemId: widget.itemId,
       type: widget.type,
       note: _noteController.text,
     ));

@@ -53,7 +53,7 @@ class _ContentSliderState extends State<ContentSlider> {
       },
       label: value.toInt().toString(),
       onChangeEnd: (value) async {
-        context.read<ContentViewerCubit>().goToContent(
+        await context.read<ContentViewerCubit>().goToContent(
               value.toInt(),
             );
         setState(() {

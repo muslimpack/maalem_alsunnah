@@ -28,7 +28,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => sl<HomeCubit>()..start()),
         BlocProvider(create: (_) => sl<SearchCubit>()..start()),
         BlocProvider(
-          create: (_) => sl<BookmarksBloc>()..add(BookmarksStartEvent()),
+          create: (_) => sl<BookmarksBloc>()..add(const BookmarksStartEvent()),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

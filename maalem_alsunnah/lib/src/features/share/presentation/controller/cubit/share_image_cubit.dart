@@ -44,7 +44,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
     final List imageCardArgs = [];
     switch (shareType) {
       case ShareType.content:
-        int contentId = int.parse(itemId);
+        final int contentId = int.parse(itemId);
         final content = await hadithDbHelper.getContentById(contentId);
         final title = await hadithDbHelper.getTitleById(content.titleId);
         final titleChain = await hadithDbHelper.getTitleChain(content.titleId);
@@ -53,8 +53,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
         imageCardArgs.add(titleChain);
         text = content.text;
         wordsCountPerSize = 200;
-        imageSize = Size(1500, 1920);
-        break;
+        imageSize = const Size(1500, 1920);
       case ShareType.hadith:
         final hadith = (await hadithDbHelper.getHadithById(itemId))!;
         final title = await hadithDbHelper.getTitleById(hadith.titleId);
@@ -64,7 +63,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
         imageCardArgs.add(titleChain);
         text = hadith.text;
         wordsCountPerSize = 120;
-        imageSize = Size(1080, 1080);
+        imageSize = const Size(1080, 1080);
     }
 
     final settings = const HadithImageCardSettings.defaultSettings().copyWith(
@@ -81,8 +80,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
       charsPerChunk,
     );
 
-    imageKeys =
-        List.generate(splittedMatnRanges.length, (index) => GlobalKey());
+    imageKeys = List.generate(splittedMatnRanges.length, (index) => GlobalKey());
 
     emit(
       ShareImageLoadedState(
@@ -168,8 +166,7 @@ class ShareImageCubit extends Cubit<ShareImageState> {
 
       if (shareAll) {
         for (var i = 0; i < state.splittedMatn.length; i++) {
-          final captureWidgetController =
-              CaptureWidgetController(imageKey: imageKeys[i]);
+          final captureWidgetController = CaptureWidgetController(imageKey: imageKeys[i]);
           final image = await captureWidgetController.getImage(pixelRatio);
           final byteData = await image?.toByteData(format: ImageByteFormat.png);
 
@@ -255,13 +252,12 @@ class ShareImageCubit extends Cubit<ShareImageState> {
 
     final List<XFile> xFiles = [];
     for (int i = 0; i < filesData.length; i++) {
-      final File file =
-          await File('${tempDir.path}/SharedImage$i.png').create();
+      final File file = await File('${tempDir.path}/SharedImage$i.png').create();
       await file.writeAsBytes(filesData[i].buffer.asUint8List());
       xFiles.add(XFile(file.path));
     }
 
-    await Share.shareXFiles(xFiles);
+    await SharePlus.instance.share(ShareParams(files: xFiles));
 
     for (final file in xFiles) {
       await File(file.path).delete();

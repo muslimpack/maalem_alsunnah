@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
 import 'package:maalem_alsunnah/src/core/models/wrapped.dart';
 
 class TextFormatterColorSettings {
@@ -47,32 +46,22 @@ class TextFormatterColorSettings {
 
   factory TextFormatterColorSettings.fromMap(Map<String, dynamic> map) {
     return TextFormatterColorSettings(
-      defaultColor: map['deafaultColor'] == null
-          ? null
-          : Color(map['deafaultColor'] as int),
-      hadithTextColor: map['hadithTextColor'] == null
-          ? null
-          : Color(map['hadithTextColor'] as int),
-      quranTextColor: map['quranTextColor'] == null
-          ? null
-          : Color(map['quranTextColor'] as int),
-      squareBracketsColor: map['squareBracketsColor'] == null
-          ? null
-          : Color(map['squareBracketsColor'] as int),
-      roundBracketsColor: map['roundBracketsColor'] == null
-          ? null
-          : Color(map['roundBracketsColor'] as int),
-      startingNumberColor: map['startingNumberColor'] == null
-          ? null
-          : Color(map['startingNumberColor'] as int),
+      defaultColor: map['deafaultColor'] == null ? null : Color(map['deafaultColor'] as int),
+      hadithTextColor: map['hadithTextColor'] == null ? null : Color(map['hadithTextColor'] as int),
+      quranTextColor: map['quranTextColor'] == null ? null : Color(map['quranTextColor'] as int),
+      squareBracketsColor:
+          map['squareBracketsColor'] == null ? null : Color(map['squareBracketsColor'] as int),
+      roundBracketsColor:
+          map['roundBracketsColor'] == null ? null : Color(map['roundBracketsColor'] as int),
+      startingNumberColor:
+          map['startingNumberColor'] == null ? null : Color(map['startingNumberColor'] as int),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory TextFormatterColorSettings.fromJson(String source) =>
-      TextFormatterColorSettings.fromMap(
-          json.decode(source) as Map<String, dynamic>);
+      TextFormatterColorSettings.fromMap(json.decode(source) as Map<String, dynamic>);
 
   TextFormatterColorSettings copyWith({
     Wrapped<Color?>? defaultColor,
@@ -83,22 +72,15 @@ class TextFormatterColorSettings {
     Wrapped<Color?>? startingNumberColor,
   }) {
     return TextFormatterColorSettings(
-      defaultColor:
-          defaultColor != null ? defaultColor.value : this.defaultColor,
-      hadithTextColor: hadithTextColor != null
-          ? hadithTextColor.value
-          : this.hadithTextColor,
-      quranTextColor:
-          quranTextColor != null ? quranTextColor.value : this.quranTextColor,
-      squareBracketsColor: squareBracketsColor != null
-          ? squareBracketsColor.value
-          : this.squareBracketsColor,
-      roundBracketsColor: roundBracketsColor != null
-          ? roundBracketsColor.value
-          : this.roundBracketsColor,
-      startingNumberColor: startingNumberColor != null
-          ? startingNumberColor.value
-          : this.startingNumberColor,
+      defaultColor: defaultColor != null ? defaultColor.value : this.defaultColor,
+      hadithTextColor: hadithTextColor != null ? hadithTextColor.value : this.hadithTextColor,
+      quranTextColor: quranTextColor != null ? quranTextColor.value : this.quranTextColor,
+      squareBracketsColor:
+          squareBracketsColor != null ? squareBracketsColor.value : this.squareBracketsColor,
+      roundBracketsColor:
+          roundBracketsColor != null ? roundBracketsColor.value : this.roundBracketsColor,
+      startingNumberColor:
+          startingNumberColor != null ? startingNumberColor.value : this.startingNumberColor,
     );
   }
 }

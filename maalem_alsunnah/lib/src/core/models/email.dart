@@ -1,5 +1,5 @@
-import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 import 'package:equatable/equatable.dart';
+import 'package:maalem_alsunnah/src/core/constants/constant.dart';
 
 class Email extends Equatable {
   final String mailTo;

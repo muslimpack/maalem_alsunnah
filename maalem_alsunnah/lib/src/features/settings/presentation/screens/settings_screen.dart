@@ -15,8 +15,8 @@ class SettingsScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => SettingsScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const SettingsScreen(),
     );
   }
 
@@ -34,14 +34,13 @@ class SettingsScreen extends StatelessWidget {
             children: [
               ListTile(
                 title: Text(S.of(context).theme),
-                leading: Icon(Icons.color_lens),
+                leading: const Icon(Icons.color_lens),
                 onTap: () => context.pushNamed(ThemeManagerScreen.routeName),
               ),
               ListTile(
                 title: Text(S.of(context).textFormatterColorSettings),
-                leading: Icon(Icons.brush_outlined),
-                onTap: () =>
-                    context.pushNamed(FormatterColorSettingsScreen.routeName),
+                leading: const Icon(Icons.brush_outlined),
+                onTap: () => context.pushNamed(FormatterColorSettingsScreen.routeName),
               ),
 
               ///TODO(001) uncomment when add translation for whole app

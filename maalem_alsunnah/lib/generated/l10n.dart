@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'intl/messages_all.dart';
+import 'package:maalem_alsunnah/generated/intl/messages_all.dart';
 
 // **************************************************************************
 // Generator: Flutter Intl IDE plugin
@@ -18,17 +18,17 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -41,8 +41,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,12 +54,7 @@ class S {
 
   /// `About app`
   String get aboutApp {
-    return Intl.message(
-      'About app',
-      name: 'aboutApp',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('About app', name: 'aboutApp', desc: '', args: []);
   }
 
   /// `Add bookmark`
@@ -72,22 +69,12 @@ class S {
 
   /// `Add notes`
   String get addNotes {
-    return Intl.message(
-      'Add notes',
-      name: 'addNotes',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Add notes', name: 'addNotes', desc: '', args: []);
   }
 
   /// `All`
   String get all {
-    return Intl.message(
-      'All',
-      name: 'all',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('All', name: 'all', desc: '', args: []);
   }
 
   /// `#maalem_alsunnah`
@@ -102,12 +89,7 @@ class S {
 
   /// `Apply`
   String get apply {
-    return Intl.message(
-      'Apply',
-      name: 'apply',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Apply', name: 'apply', desc: '', args: []);
   }
 
   /// `Maalem Al-Sunnah`
@@ -122,42 +104,22 @@ class S {
 
   /// `Bookamarks`
   String get bookmarks {
-    return Intl.message(
-      'Bookamarks',
-      name: 'bookmarks',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Bookamarks', name: 'bookmarks', desc: '', args: []);
   }
 
   /// `Chat`
   String get chat {
-    return Intl.message(
-      'Chat',
-      name: 'chat',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Chat', name: 'chat', desc: '', args: []);
   }
 
   /// `Clear`
   String get clear {
-    return Intl.message(
-      'Clear',
-      name: 'clear',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Clear', name: 'clear', desc: '', args: []);
   }
 
   /// `Close`
   String get close {
-    return Intl.message(
-      'Close',
-      name: 'close',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Close', name: 'close', desc: '', args: []);
   }
 
   /// `Continue reading`
@@ -182,12 +144,7 @@ class S {
 
   /// `Copy`
   String get copy {
-    return Intl.message(
-      'Copy',
-      name: 'copy',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Copy', name: 'copy', desc: '', args: []);
   }
 
   /// `Displayed results count`
@@ -202,12 +159,7 @@ class S {
 
   /// `Done`
   String get done {
-    return Intl.message(
-      'Done',
-      name: 'done',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Done', name: 'done', desc: '', args: []);
   }
 
   /// `Decrease font size`
@@ -272,12 +224,7 @@ class S {
 
   /// `Hadith`
   String get hadith {
-    return Intl.message(
-      'Hadith',
-      name: 'hadith',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Hadith', name: 'hadith', desc: '', args: []);
   }
 
   /// `Sheikh Saleh Ahmed Al Shami`
@@ -322,22 +269,12 @@ class S {
 
   /// `Index`
   String get index {
-    return Intl.message(
-      'Index',
-      name: 'index',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Index', name: 'index', desc: '', args: []);
   }
 
   /// `Mark as read`
   String get markAsRead {
-    return Intl.message(
-      'Mark as read',
-      name: 'markAsRead',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Mark as read', name: 'markAsRead', desc: '', args: []);
   }
 
   /// `Mark as unread`
@@ -352,42 +289,22 @@ class S {
 
   /// `min`
   String get minutes {
-    return Intl.message(
-      'min',
-      name: 'minutes',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('min', name: 'minutes', desc: '', args: []);
   }
 
   /// `Misspelled`
   String get misspelled {
-    return Intl.message(
-      'Misspelled',
-      name: 'misspelled',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Misspelled', name: 'misspelled', desc: '', args: []);
   }
 
   /// `Next`
   String get next {
-    return Intl.message(
-      'Next',
-      name: 'next',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Next', name: 'next', desc: '', args: []);
   }
 
   /// `No`
   String get no {
-    return Intl.message(
-      'No',
-      name: 'no',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('No', name: 'no', desc: '', args: []);
   }
 
   /// `That's it, there are no more results.`
@@ -412,12 +329,7 @@ class S {
 
   /// `Notes`
   String get notes {
-    return Intl.message(
-      'Notes',
-      name: 'notes',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Notes', name: 'notes', desc: '', args: []);
   }
 
   /// `Pray for us and our parents.`
@@ -452,12 +364,7 @@ class S {
 
   /// `Previous`
   String get previous {
-    return Intl.message(
-      'Previous',
-      name: 'previous',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Previous', name: 'previous', desc: '', args: []);
   }
 
   /// `Quran text color`
@@ -482,12 +389,7 @@ class S {
 
   /// `Refresh`
   String get refresh {
-    return Intl.message(
-      'Refresh',
-      name: 'refresh',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Refresh', name: 'refresh', desc: '', args: []);
   }
 
   /// `Remove bookmark`
@@ -512,12 +414,7 @@ class S {
 
   /// `Reset`
   String get reset {
-    return Intl.message(
-      'Reset',
-      name: 'reset',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reset', name: 'reset', desc: '', args: []);
   }
 
   /// `Round brackets color`
@@ -532,12 +429,7 @@ class S {
 
   /// `Search`
   String get search {
-    return Intl.message(
-      'Search',
-      name: 'search',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Search', name: 'search', desc: '', args: []);
   }
 
   /// `Search filters`
@@ -562,22 +454,12 @@ class S {
 
   /// `Hadith`
   String get searchForHadith {
-    return Intl.message(
-      'Hadith',
-      name: 'searchForHadith',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Hadith', name: 'searchForHadith', desc: '', args: []);
   }
 
   /// `Title`
   String get searchForTitle {
-    return Intl.message(
-      'Title',
-      name: 'searchForTitle',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Title', name: 'searchForTitle', desc: '', args: []);
   }
 
   /// `Search result count`
@@ -622,42 +504,22 @@ class S {
 
   /// `sec`
   String get seconds {
-    return Intl.message(
-      'sec',
-      name: 'seconds',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('sec', name: 'seconds', desc: '', args: []);
   }
 
   /// `Select`
   String get select {
-    return Intl.message(
-      'Select',
-      name: 'select',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Select', name: 'select', desc: '', args: []);
   }
 
   /// `Settings`
   String get settings {
-    return Intl.message(
-      'Settings',
-      name: 'settings',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
   }
 
   /// `Share`
   String get share {
-    return Intl.message(
-      'Share',
-      name: 'share',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Share', name: 'share', desc: '', args: []);
   }
 
   /// `Share as image`
@@ -682,12 +544,7 @@ class S {
 
   /// `Source`
   String get source {
-    return Intl.message(
-      'Source',
-      name: 'source',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Source', name: 'source', desc: '', args: []);
   }
 
   /// `Book Author`
@@ -732,42 +589,22 @@ class S {
 
   /// `Theme`
   String get theme {
-    return Intl.message(
-      'Theme',
-      name: 'theme',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Theme', name: 'theme', desc: '', args: []);
   }
 
   /// `App color`
   String get themeAppColor {
-    return Intl.message(
-      'App color',
-      name: 'themeAppColor',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('App color', name: 'themeAppColor', desc: '', args: []);
   }
 
   /// `Titles`
   String get titles {
-    return Intl.message(
-      'Titles',
-      name: 'titles',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Titles', name: 'titles', desc: '', args: []);
   }
 
   /// `Yes`
   String get yes {
-    return Intl.message(
-      'Yes',
-      name: 'yes',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Yes', name: 'yes', desc: '', args: []);
   }
 }
 

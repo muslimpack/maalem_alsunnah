@@ -69,7 +69,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     final content = await hadithDbHelper.getContentByTitleId(titleId);
     final contentCount = await hadithDbHelper.getContentCount();
-    double readProgress = content.id / contentCount;
+    final double readProgress = content.id / contentCount;
 
     emit(state.copyWith(
       lastReadTitle: Wrapped.value(lastReadTitle),

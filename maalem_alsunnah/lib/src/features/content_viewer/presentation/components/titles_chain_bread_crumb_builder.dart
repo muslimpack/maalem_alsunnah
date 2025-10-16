@@ -30,7 +30,7 @@ class TitlesChainBreadCrumbBuilder extends StatelessWidget {
             ),
           );
         },
-        divider: Text(
+        divider: const Text(
           '/',
           style: TextStyle(
             fontSize: 18,

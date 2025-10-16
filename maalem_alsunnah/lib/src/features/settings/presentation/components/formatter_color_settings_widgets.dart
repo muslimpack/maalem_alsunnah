@@ -14,8 +14,7 @@ class FormatterColorSettingsToolbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void updateColor(Color? newColor, String colorType,
-        TextFormatterColorSettings settings) {
+    void updateColor(Color? newColor, String colorType, TextFormatterColorSettings settings) {
       switch (colorType) {
         case 'defaultColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
@@ -23,49 +22,43 @@ class FormatterColorSettingsToolbox extends StatelessWidget {
                   defaultColor: Wrapped.value(newColor),
                 ),
               );
-          break;
         case 'hadithTextColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
                 settings: settings.copyWith(
                   hadithTextColor: Wrapped.value(newColor),
                 ),
               );
-          break;
         case 'quranTextColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
                 settings: settings.copyWith(
                   quranTextColor: Wrapped.value(newColor),
                 ),
               );
-          break;
         case 'squareBracketsColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
                 settings: settings.copyWith(
                   squareBracketsColor: Wrapped.value(newColor),
                 ),
               );
-          break;
         case 'roundBracketsColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
                 settings: settings.copyWith(
                   roundBracketsColor: Wrapped.value(newColor),
                 ),
               );
-          break;
         case 'startingNumberColor':
           context.read<SettingsCubit>().changFormatterColorSettings(
                 settings: settings.copyWith(
                   startingNumberColor: Wrapped.value(newColor),
                 ),
               );
-          break;
       }
     }
 
-    Widget buildColorPicker(String label, String subTitle, Color? currentColor,
-        ValueChanged<Color?> onColorChanged) {
+    Widget buildColorPicker(
+        String label, String subTitle, Color? currentColor, ValueChanged<Color?> onColorChanged) {
       return ListTile(
-        leading: Icon(Icons.brush_outlined),
+        leading: const Icon(Icons.brush_outlined),
         title: Text(label),
         subtitle: Text(subTitle),
         trailing: CircleAvatar(
@@ -88,14 +81,13 @@ class FormatterColorSettingsToolbox extends StatelessWidget {
       builder: (context, state) {
         final currentSettings = state.formatterColorSettings;
         return ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             ListTile(
-              leading: Icon(Icons.refresh),
+              leading: const Icon(Icons.refresh),
               title: Text(S.of(context).reset),
               onTap: () async {
-                final confirm =
-                    await showYesOrNoDialog(context, S.of(context).reset);
+                final confirm = await showYesOrNoDialog(context, S.of(context).reset);
                 if (confirm != true) return;
                 if (!context.mounted) return;
                 context.read<SettingsCubit>().resetFormatterColorSettings();
@@ -123,22 +115,19 @@ class FormatterColorSettingsToolbox extends StatelessWidget {
               S.of(context).squareBracketsColor,
               '[  ]',
               currentSettings.squareBracketsColor,
-              (color) =>
-                  updateColor(color, 'squareBracketsColor', currentSettings),
+              (color) => updateColor(color, 'squareBracketsColor', currentSettings),
             ),
             buildColorPicker(
               S.of(context).roundBracketsColor,
               '(  )',
               currentSettings.roundBracketsColor,
-              (color) =>
-                  updateColor(color, 'roundBracketsColor', currentSettings),
+              (color) => updateColor(color, 'roundBracketsColor', currentSettings),
             ),
             buildColorPicker(
               S.of(context).startingNumberColor,
               '123456789',
               currentSettings.startingNumberColor,
-              (color) =>
-                  updateColor(color, 'startingNumberColor', currentSettings),
+              (color) => updateColor(color, 'startingNumberColor', currentSettings),
             ),
           ],
         );
@@ -154,7 +143,7 @@ class FormatterColorSettingsTextSample extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
       final settings = hadithTextFormatterSettings(context);
-      final formattedText = """
+      const formattedText = """
 قال تعالى: ﴿وَإِنْ كُنْتُمْ جُنُبًا فَاطَّهَّرُوا﴾. [المائدة:6]
 
 988 - (ق)عَنْ ‌أَبِي هُرَيْرَةَ، عن النبي صلى الله عليه وسلم قَالَ: «حَقٌّ عَلَى كُلِّ مُسْلِمٍ، أَنْ يَغْتَسِلَ فِي كُلِّ سَبْعَةِ أَيَّامٍ يَوْمًا، يَغْسِلُ فِيهِ رَأْسَهُ وَجَسَدَهُ». [خ897/م849]
@@ -162,7 +151,7 @@ class FormatterColorSettingsTextSample extends StatelessWidget {
 
       return Card(
         child: Container(
-          constraints: BoxConstraints(minHeight: 200),
+          constraints: const BoxConstraints(minHeight: 200),
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Center(

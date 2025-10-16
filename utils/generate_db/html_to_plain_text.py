@@ -1,8 +1,11 @@
-import sqlite3
-import html2text
 import re
-from fix_mismatched_brackets import process_fix_mismatched_brackets
+import sqlite3
+
+import html2text
 from tqdm import tqdm
+
+from fix_mismatched_brackets import process_fix_mismatched_brackets
+
 
 def recreate_contents_table(cursor):
     cursor.execute( "DROP TABLE IF EXISTS contents" )
@@ -56,9 +59,10 @@ def process_html_to_plain_text(cursor):
     for row in tqdm(rows, desc="BUILDING CONTENTS", unit="row"):
         record_id, orderId, titleId, html_content = row
         rendered_text = render_html_as_text(html_content, html_converter)
+        text = re.sub(r'\n{3,}', '\n\n', rendered_text)
         cursor.execute("""
             INSERT INTO contents (id, orderId, titleId, text, searchText)
             VALUES (?, ?, ?, ?, ?)
-        """, (record_id, orderId, titleId, rendered_text, None))
+        """, (record_id, orderId, titleId, text, None))
     
 

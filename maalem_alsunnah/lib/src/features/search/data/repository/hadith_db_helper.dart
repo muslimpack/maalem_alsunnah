@@ -44,8 +44,7 @@ class HadithDbHelper {
   Future<List<HadithModel>> getAll() async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps =
-        await db.rawQuery('SELECT * FROM hadith');
+    final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT * FROM hadith');
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
@@ -63,13 +62,11 @@ class HadithDbHelper {
     }).firstOrNull;
   }
 
-  Future<HadithModel?> getHadithByIdAndTitleId(
-      {required int hadithId, required int titled}) async {
+  Future<HadithModel?> getHadithByIdAndTitleId({required int hadithId, required int titled}) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-        'SELECT * FROM hadith where id = ? and titleId = ?',
-        [hadithId, titled]);
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('SELECT * FROM hadith where id = ? and titleId = ?', [hadithId, titled]);
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
@@ -79,9 +76,8 @@ class HadithDbHelper {
   Future<List<HadithModel>> getHadithListByContentId(int contentId) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db.rawQuery(
-        'SELECT * FROM hadith where contentId = ? order by orderId ASC',
-        [contentId]);
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery('SELECT * FROM hadith where contentId = ? order by orderId ASC', [contentId]);
 
     return List.generate(maps.length, (i) {
       return HadithModel.fromMap(maps[i]);
@@ -241,16 +237,14 @@ GROUP BY
       case SearchType.allWords:
         final String allWordsQuery =
             splittedSearchWords.map((word) => '$property LIKE ?').join(' AND ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
+        final List<String> params = splittedSearchWords.map((word) => '%$word%').toList();
         sqlQuery.query = 'WHERE ($allWordsQuery)';
         sqlQuery.args.addAll([...params]);
 
       case SearchType.anyWords:
         final String allWordsQuery =
             splittedSearchWords.map((word) => '$property LIKE ?').join(' OR ');
-        final List<String> params =
-            splittedSearchWords.map((word) => '%$word%').toList();
+        final List<String> params = splittedSearchWords.map((word) => '%$word%').toList();
         sqlQuery.query = 'WHERE ($allWordsQuery)';
         sqlQuery.args.addAll([...params]);
     }
@@ -324,8 +318,7 @@ LIMIT ? OFFSET ?
   }
 
   Future<RangeValues> getContentTitleIdRange() async {
-    final Database db =
-        await database; // Assuming `database` is your db connection.
+    final Database db = await database; // Assuming `database` is your db connection.
 
     // Query to get the min and max titleId.
     final List<Map<String, dynamic>> results = await db.rawQuery('''
@@ -334,18 +327,17 @@ LIMIT ? OFFSET ?
 
     if (results.isNotEmpty) {
       final row = results.first;
-      int minTitleId = row['minTitleId'];
-      int maxTitleId = row['maxTitleId'];
+      final int minTitleId = row['minTitleId'] as int;
+      final int maxTitleId = row['maxTitleId'] as int;
 
       return RangeValues(minTitleId.toDouble(), maxTitleId.toDouble());
     }
 
-    return RangeValues(0, 0); // Default if no results.
+    return const RangeValues(0, 0); // Default if no results.
   }
 
   Future<RangeValues> getContentRange() async {
-    final Database db =
-        await database; // Assuming `database` is your db connection.
+    final Database db = await database; // Assuming `database` is your db connection.
 
     // Query to get the min and max titleId.
     final List<Map<String, dynamic>> results = await db.rawQuery('''
@@ -354,20 +346,20 @@ LIMIT ? OFFSET ?
 
     if (results.isNotEmpty) {
       final row = results.first;
-      int minTitleId = row['min'];
-      int maxTitleId = row['max'];
+      final int minTitleId = row['min'] as int;
+      final int maxTitleId = row['max'] as int;
 
       return RangeValues(minTitleId.toDouble(), maxTitleId.toDouble());
     }
 
-    return RangeValues(0, 0); // Default if no results.
+    return const RangeValues(0, 0); // Default if no results.
   }
 
   Future<ContentModel> getContentByTitleId(int titleId) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db
-        .rawQuery('''SELECT * from contents where titleId = ?''', [titleId]);
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('''SELECT * from contents where titleId = ?''', [titleId]);
 
     return List.generate(maps.length, (i) {
       return ContentModel.fromMap(maps[i]);
@@ -377,8 +369,8 @@ LIMIT ? OFFSET ?
   Future<ContentModel> getContentById(int contentId) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db
-        .rawQuery('''SELECT * from contents where id = ?''', [contentId]);
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('''SELECT * from contents where id = ?''', [contentId]);
 
     return List.generate(maps.length, (i) {
       return ContentModel.fromMap(maps[i]);
@@ -388,8 +380,8 @@ LIMIT ? OFFSET ?
   Future<ContentModel> getContentByOrderId(int orderId) async {
     final Database db = await database;
 
-    final List<Map<String, dynamic>> maps = await db
-        .rawQuery('''SELECT * from contents where orderId = ?''', [orderId]);
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery('''SELECT * from contents where orderId = ?''', [orderId]);
 
     return List.generate(maps.length, (i) {
       return ContentModel.fromMap(maps[i]);
@@ -413,8 +405,7 @@ LIMIT ? OFFSET ?
       useFilters: true,
     );
 
-    final String qurey =
-        '''SELECT * FROM contents ${whereFilters.query} LIMIT ? OFFSET ?''';
+    final String qurey = '''SELECT * FROM contents ${whereFilters.query} LIMIT ? OFFSET ?''';
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
       qurey,

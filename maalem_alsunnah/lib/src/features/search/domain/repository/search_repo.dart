@@ -15,7 +15,7 @@ class SearchRepo {
     return SearchType.fromString(data);
   }
 
-  Future setSearchType(SearchType searchType) async {
+  Future setSearchType(SearchType searchType) {
     return box.put(searchTypeKey, searchType.name);
   }
 
@@ -27,7 +27,7 @@ class SearchRepo {
     return SearchFor.fromString(data);
   }
 
-  Future setSearchFor(SearchFor searchFor) async {
+  Future setSearchFor(SearchFor searchFor) {
     return box.put(searchForKey, searchFor.name);
   }
 }

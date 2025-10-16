@@ -42,10 +42,8 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
   }
 
   Future<(ContentModel, List<HadithModel>)> _updateAndGetList() async {
-    final content =
-        await sl<HadithDbHelper>().getContentByOrderId(widget.contentOrderId);
-    final hadithList =
-        await sl<HadithDbHelper>().getHadithListByContentId(content.id);
+    final content = await sl<HadithDbHelper>().getContentByOrderId(widget.contentOrderId);
+    final hadithList = await sl<HadithDbHelper>().getHadithListByContentId(content.id);
     return (content, hadithList);
   }
 
@@ -64,7 +62,6 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Skeletonizer(
-            enabled: true,
             child: _ContentViewerBuilderBody(
               hadithList: hadithModelDummyData,
               content: contentModelDummyData[1],
@@ -75,8 +72,7 @@ class _ContentViewerBuilderState extends State<ContentViewerBuilder> {
         } else {
           final List<HadithModel> hadithList = snapshot.data!.$2;
           final ContentModel content = snapshot.data!.$1;
-          return _ContentViewerBuilderBody(
-              hadithList: hadithList, content: content);
+          return _ContentViewerBuilderBody(hadithList: hadithList, content: content);
         }
       },
     );
@@ -93,8 +89,7 @@ class _ContentViewerBuilderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextFormatterSettings textFormatterSettings =
-        hadithTextFormatterSettings(context);
+    final TextFormatterSettings textFormatterSettings = hadithTextFormatterSettings(context);
 
     final Widget contentViewer;
     if (hadithList.isEmpty) {
@@ -123,10 +118,10 @@ class _ContentViewerBuilderBody extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           sliver: SliverFloatingHeader(
               snapMode: FloatingHeaderSnapMode.overlay,
-              child: Container(
+              child: ColoredBox(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -134,16 +129,15 @@ class _ContentViewerBuilderBody extends StatelessWidget {
                   children: [
                     TitlesChainBreadCrumb(titleId: content.titleId),
                     ListTile(
-                      leading: Icon(Icons.timer_outlined),
-                      title: Text(content.text
-                          .getArabicTextReadingTimeAsString(context)),
+                      leading: const Icon(Icons.timer_outlined),
+                      title: Text(content.text.getArabicTextReadingTimeAsString(context)),
                     ),
                   ],
                 ),
               )),
         ),
         SliverPadding(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           sliver: contentViewer,
         )
       ],

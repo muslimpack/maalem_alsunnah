@@ -4,13 +4,14 @@ import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_scre
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/formatter_text_settings_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/settings_screen.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/screens/share_as_image_screen.dart';
 import 'package:maalem_alsunnah/src/features/themes/presentation/screens/themes_manager_screen.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
     if (settings.name == ContentViewerScreen.routeName) {
-      final Map args = settings.arguments as Map;
+      final Map args = settings.arguments! as Map;
       return ContentViewerScreen.route(
         titleId: args["titleId"] as int,
         viewAsContent: args["viewAsContent"] as bool? ?? false,
@@ -20,10 +21,10 @@ class AppRouter {
     } else if (settings.name == AboutScreen.routeName) {
       return AboutScreen.route();
     } else if (settings.name == ShareAsImageScreen.routeName) {
-      final Map args = settings.arguments as Map;
+      final Map args = settings.arguments! as Map;
       return ShareAsImageScreen.route(
-        itemId: args["itemId"],
-        shareType: args["shareType"],
+        itemId: args["itemId"] as String,
+        shareType: args["shareType"] as ShareType,
       );
     } else if (settings.name == ThemeManagerScreen.routeName) {
       return ThemeManagerScreen.route();

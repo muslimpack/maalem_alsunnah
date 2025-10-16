@@ -17,7 +17,7 @@ class FontSettingsIconButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       icon: Icon(MdiIcons.formatQuoteOpen),
       onPressed: () async {
-        showDialog(
+        await showDialog(
           context: context,
           builder: (context) {
             return const AlertDialog(
@@ -91,9 +91,7 @@ class FontSettingsBar extends StatelessWidget {
           IconButton(
             tooltip: S.of(context).showDiacritics,
             icon: Transform.rotate(
-              angle: context.watch<SettingsCubit>().state.showDiacritics
-                  ? 0
-                  : -math.pi / 8,
+              angle: context.watch<SettingsCubit>().state.showDiacritics ? 0 : -math.pi / 8,
               child: Icon(
                 MdiIcons.abjadArabic,
               ),
@@ -109,8 +107,7 @@ class FontSettingsBar extends StatelessWidget {
 
 class TextSample extends StatelessWidget {
   const TextSample({super.key});
-  static String text =
-      "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلَّ امْرِئٍ مَا نَوَى";
+  static String text = "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلَّ امْرِئٍ مَا نَوَى";
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +115,7 @@ class TextSample extends StatelessWidget {
       builder: (context, state) {
         return Card(
           child: Container(
-            constraints: BoxConstraints(minHeight: 200),
+            constraints: const BoxConstraints(minHeight: 200),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Center(

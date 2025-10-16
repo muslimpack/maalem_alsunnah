@@ -1,8 +1,8 @@
-import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
-import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
+import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 
 enum ToastType {
   info,

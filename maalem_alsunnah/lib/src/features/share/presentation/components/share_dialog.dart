@@ -50,11 +50,10 @@ class _ShareDialogState extends State<ShareDialog> {
   Future init() async {
     switch (widget.shareType) {
       case ShareType.content:
-        int contentId = int.parse(widget.itemId);
+        final int contentId = int.parse(widget.itemId);
         content = await sl<HadithDbHelper>().getContentById(contentId);
       case ShareType.hadith:
         hadith = (await sl<HadithDbHelper>().getHadithById(widget.itemId))!;
-        break;
     }
 
     await perpareSharedText();
@@ -69,7 +68,6 @@ class _ShareDialogState extends State<ShareDialog> {
         sb.write(content.text);
       case ShareType.hadith:
         sb.write(hadith.text);
-        break;
     }
 
     sb.write("\n\n");
@@ -107,10 +105,7 @@ class _ShareDialogState extends State<ShareDialog> {
             onPressed: () {
               context.pushNamed(
                 ShareAsImageScreen.routeName,
-                arguments: {
-                  "itemId": widget.itemId,
-                  "shareType": widget.shareType
-                },
+                arguments: {"itemId": widget.itemId, "shareType": widget.shareType},
               );
             },
           ),
@@ -130,7 +125,7 @@ class _ShareDialogState extends State<ShareDialog> {
             tooltip: S.of(context).share,
             icon: const Icon(Icons.share),
             onPressed: () async {
-              await Share.share(shareText);
+              await SharePlus.instance.share(ShareParams(text: shareText));
             },
           ),
         ],

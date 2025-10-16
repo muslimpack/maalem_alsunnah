@@ -39,7 +39,7 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
     });
   }
 
-  Future<List<TitleModel>> _updateAndGetList() async {
+  Future<List<TitleModel>> _updateAndGetList() {
     return sl<HadithDbHelper>().getTitleChain(widget.titleId);
   }
 
@@ -53,7 +53,7 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
 
   void onPressed(BuildContext context, int index, TitleModel title) {
     bool titleFoundInStack = false;
-    for (var route in routeStack) {
+    for (final route in routeStack) {
       final Map? args = route.settings.arguments as Map?;
       final int? routeTitleId = args?["titleId"] as int?;
       if (routeTitleId != null && title.id == routeTitleId) {
@@ -64,7 +64,7 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
     if (titleFoundInStack) {
       Navigator.popUntil(
         context,
-        (r) => (r.settings.arguments as Map)["titleId"] == title.id,
+        (r) => (r.settings.arguments! as Map)["titleId"] == title.id,
       );
     } else {
       if (routeStack.length <= 1) {
@@ -88,7 +88,6 @@ class _TitlesChainBreadCrumbState extends State<TitlesChainBreadCrumb> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Skeletonizer(
-            enabled: true,
             child: TitlesChainRichTextBuilder(
               titlesChains: titleModelDummyData,
               onPressed: (index, title) => onPressed(context, index, title),

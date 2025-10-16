@@ -29,10 +29,10 @@ class SearchScreen extends StatelessWidget {
           spacing: 15,
           children: [
             const SizedBox(height: 15),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SearchForBar(),
+                SearchForBar(),
                 SearchFiltersButton(),
               ],
             ),

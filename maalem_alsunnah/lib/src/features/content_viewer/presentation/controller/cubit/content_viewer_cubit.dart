@@ -24,7 +24,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     pageController.addListener(_onPageChanged);
   }
 
-  void _timePassed(Timer timer, int titleId) async {
+  Future<void> _timePassed(Timer timer, int titleId) async {
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
     await homeCubit.updateLastReadTitle(titleId);
@@ -74,8 +74,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
 
   Future _startContent(TitleModel title) async {
     _timer?.cancel();
-    _timer = Timer.periodic(
-        const Duration(seconds: 5), (t) => _timePassed(t, title.id));
+    _timer = Timer.periodic(const Duration(seconds: 5), (t) => _timePassed(t, title.id));
 
     final content = await hadithDbHelper.getContentByTitleId(title.id);
     final contentRange = await hadithDbHelper.getContentRange();
@@ -93,7 +92,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     if (pageController.hasClients) {
       await pageController.animateToPage(
         content.orderId - 1,
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
     }
@@ -115,14 +114,14 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
 
   Future<void> nextContent() async {
     pageController.nextPage(
-      duration: Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
     );
   }
 
   Future<void> previousContent() async {
     pageController.previousPage(
-      duration: Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
     );
   }
@@ -134,7 +133,7 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     if (pageController.hasClients) {
       pageController.animateToPage(
         orderId - 1,
-        duration: Duration(milliseconds: 350),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
     }

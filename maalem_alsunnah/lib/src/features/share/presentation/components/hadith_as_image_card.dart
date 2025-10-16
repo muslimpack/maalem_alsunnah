@@ -53,7 +53,7 @@ class HadithAsImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     const imageBackgroundColor = Color(0xff1a110e);
     const secondaryColor = Color(0xfffeb99c);
-    final secondaryElementsColor = Color(0xff451b1b).withValues(alpha: 1);
+    final secondaryElementsColor = const Color(0xff451b1b).withValues(alpha: 1);
 
     final mainTextStyle = TextStyle(
       fontSize: 150,
@@ -67,7 +67,7 @@ class HadithAsImageCard extends StatelessWidget {
       fontFamily: settings.secondaryFontFamily,
     );
 
-    final defaultStyle = TextStyle(
+    const defaultStyle = TextStyle(
       fontFamily: 'adwaa',
       height: 1.5,
     );

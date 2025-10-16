@@ -33,12 +33,9 @@ class SearchResultViewer<T> extends StatelessWidget {
               item,
               index,
             ),
-            newPageProgressIndicatorBuilder: (context) =>
-                NewPageProgressIndicatorBuilder(),
-            noMoreItemsIndicatorBuilder: (context) =>
-                NoMoreItemsIndicatorBuilder(),
-            noItemsFoundIndicatorBuilder: (context) =>
-                NoItemsFoundIndicatorBuilder(
+            newPageProgressIndicatorBuilder: (context) => const NewPageProgressIndicatorBuilder(),
+            noMoreItemsIndicatorBuilder: (context) => const NoMoreItemsIndicatorBuilder(),
+            noItemsFoundIndicatorBuilder: (context) => NoItemsFoundIndicatorBuilder(
               searchText: state.searchText,
             ),
           ),

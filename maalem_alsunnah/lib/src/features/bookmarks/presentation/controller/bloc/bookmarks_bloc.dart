@@ -33,36 +33,34 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     on<BookmarksChangeViewEvent>(_changeView);
   }
 
-  FutureOr<void> _start(
+  Future<void> _start(
     BookmarksStartEvent event,
     Emitter<BookmarksState> emit,
   ) async {
-    add(BookmarksLoadDataEvent());
+    add(const BookmarksLoadDataEvent());
   }
 
-  FutureOr<void> _loadData(
+  Future<void> _loadData(
     BookmarksLoadDataEvent event,
     Emitter<BookmarksState> emit,
   ) async {
     final bookmarks = await bookmarkRepository.getBookmarks();
     final List<TitleModel> titles = [];
     final List<HadithModel> hadithList = [];
-    for (var item in bookmarks) {
+    for (final item in bookmarks) {
       switch (item.type) {
         case BookmarkType.hadith:
           final hadith = await hadithDbHelper.getHadithById(item.itemId);
           if (hadith != null) {
             hadithList.add(hadith);
           }
-          break;
 
         case BookmarkType.title:
-          int titleId = int.parse(item.itemId);
+          final int titleId = int.parse(item.itemId);
           final title = await hadithDbHelper.getTitleById(titleId);
           if (title != null) {
             titles.add(title);
           }
-          break;
       }
     }
     emit(
@@ -75,7 +73,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     );
   }
 
-  FutureOr<void> _handleBookmarkEvent({
+  Future<void> _handleBookmarkEvent({
     required String itemId,
     required BookmarkType type,
     required Emitter<BookmarksState> emit,
@@ -120,10 +118,10 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     }
 
     // Emit updated state
-    add(BookmarksLoadDataEvent());
+    add(const BookmarksLoadDataEvent());
   }
 
-  FutureOr<void> _bookmarkItem(
+  Future<void> _bookmarkItem(
     BookmarksBookmarkItemEvent event,
     Emitter<BookmarksState> emit,
   ) async {
@@ -135,7 +133,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     );
   }
 
-  FutureOr<void> _markItemAsRead(
+  Future<void> _markItemAsRead(
     BookmarksMarkItemAsReadEvent event,
     Emitter<BookmarksState> emit,
   ) async {
@@ -147,7 +145,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     );
   }
 
-  FutureOr<void> _note(
+  Future<void> _note(
     BookmarksNoteEvent event,
     Emitter<BookmarksState> emit,
   ) async {
@@ -159,7 +157,7 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     );
   }
 
-  FutureOr<void> _changeView(
+  Future<void> _changeView(
     BookmarksChangeViewEvent event,
     Emitter<BookmarksState> emit,
   ) async {

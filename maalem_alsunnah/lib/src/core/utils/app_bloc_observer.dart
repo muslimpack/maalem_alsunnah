@@ -1,5 +1,5 @@
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
 
 class AppBlocObserver extends BlocObserver {
   bool detailed = false;

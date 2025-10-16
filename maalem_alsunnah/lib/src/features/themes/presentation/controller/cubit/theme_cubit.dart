@@ -1,7 +1,7 @@
-import 'package:maalem_alsunnah/src/features/themes/data/repository/theme_repo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/themes/data/repository/theme_repo.dart';
 
 part 'theme_state.dart';
 

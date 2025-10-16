@@ -10,8 +10,8 @@ class AboutScreen extends StatelessWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => AboutScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const AboutScreen(),
     );
   }
 

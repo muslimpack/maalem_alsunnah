@@ -26,10 +26,7 @@ class TitleCard extends StatelessWidget {
         onTap: () {
           context.pushNamed(
             ContentViewerScreen.routeName,
-            arguments: {
-              "titleId": title.id,
-              "viewAsContent": title.subTitlesCount == 0
-            },
+            arguments: {"titleId": title.id, "viewAsContent": title.subTitlesCount == 0},
           );
         },
         leading: Icon(
@@ -39,15 +36,12 @@ class TitleCard extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         title: Text(title.name),
-        subtitle: title.subTitlesCount < 1
-            ? null
-            : Text("عدد الفصول: ${title.subTitlesCount}"),
+        subtitle: title.subTitlesCount < 1 ? null : Text("عدد الفصول: ${title.subTitlesCount}"),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            BookmarkButton(
-                itemId: title.id.toString(), type: BookmarkType.title),
-            Icon(Icons.chevron_right_outlined),
+            BookmarkButton(itemId: title.id.toString(), type: BookmarkType.title),
+            const Icon(Icons.chevron_right_outlined),
           ],
         ),
       ),

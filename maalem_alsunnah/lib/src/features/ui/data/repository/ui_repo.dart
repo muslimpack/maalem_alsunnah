@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:maalem_alsunnah/src/core/functions/print.dart';
 
 class UIRepo {
   final Box box;
@@ -30,7 +30,7 @@ class UIRepo {
     return defaultSize;
   }
 
-  Future<void> changeDesktopWindowSize(Size value) async {
+  Future<void> changeDesktopWindowSize(Size value) {
     final screenSize = {
       'width': value.width,
       'height': value.height,

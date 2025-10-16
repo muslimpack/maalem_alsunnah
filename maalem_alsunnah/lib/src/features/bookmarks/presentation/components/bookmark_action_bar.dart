@@ -33,7 +33,7 @@ class BookmarkActionBar extends StatelessWidget {
               shareType: shareType,
             );
           },
-          icon: Icon(Icons.share),
+          icon: const Icon(Icons.share),
         ),
         BookmarkButton(
           itemId: itemId,

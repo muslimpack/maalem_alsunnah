@@ -13,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
-      builder: (_) => HomeScreen(),
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => const HomeScreen(),
     );
   }
 
@@ -63,8 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           body: NestedScrollView(
             controller: ScrollController(),
             floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 HomeAppBar(
                   tabController: tabController,
@@ -77,19 +76,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               controller: tabController,
               children: [
                 IndexScreen(maqassedList: state.maqassedList),
-                SearchScreen(),
-                BookmarksScreen(),
-                NotesScreen(),
+                const SearchScreen(),
+                const BookmarksScreen(),
+                const NotesScreen(),
               ],
             ),
           ),
-          bottomNavigationBar:
-              (tabController.index != 1) && (state.lastReadTitle != null)
-                  ? ContinueReadingCard(
-                      title: state.lastReadTitle!,
-                      progress: state.readProgress,
-                    )
-                  : null,
+          bottomNavigationBar: (tabController.index != 1) && (state.lastReadTitle != null)
+              ? ContinueReadingCard(
+                  title: state.lastReadTitle!,
+                  progress: state.readProgress,
+                )
+              : null,
         );
       },
     );

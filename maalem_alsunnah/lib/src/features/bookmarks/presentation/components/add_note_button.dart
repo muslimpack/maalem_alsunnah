@@ -20,13 +20,11 @@ class AddNoteButton extends StatelessWidget {
     return BlocBuilder<BookmarksBloc, BookmarksState>(
       builder: (context, state) {
         if (state is! BookmarksLoadedState) {
-          return SizedBox();
+          return const SizedBox();
         }
         final bookmark = state.bookmarks
             .where((element) =>
-                element.itemId == itemId &&
-                element.type == type &&
-                element.note.isNotEmpty)
+                element.itemId == itemId && element.type == type && element.note.isNotEmpty)
             .firstOrNull;
 
         return IconButton(
@@ -35,11 +33,11 @@ class AddNoteButton extends StatelessWidget {
             showNoteDialog(context, itemId: itemId, type: type);
           },
           icon: bookmark != null
-              ? Badge(
+              ? const Badge(
                   label: Text(""),
                   child: Icon(Icons.library_books_outlined),
                 )
-              : Icon(Icons.library_books_outlined),
+              : const Icon(Icons.library_books_outlined),
         );
       },
     );

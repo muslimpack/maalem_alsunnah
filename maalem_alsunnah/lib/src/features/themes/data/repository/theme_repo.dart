@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:maalem_alsunnah/src/core/extensions/extension_color.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 
 class ThemeRepo {
@@ -12,9 +11,7 @@ class ThemeRepo {
 
   Brightness get brightness {
     final String? brightness = box.get(_brightnessKey) as String?;
-    return brightness == Brightness.light.toString()
-        ? Brightness.light
-        : Brightness.dark;
+    return brightness == Brightness.light.toString() ? Brightness.light : Brightness.dark;
   }
 
   Future setBrightness(Brightness brightness) async {

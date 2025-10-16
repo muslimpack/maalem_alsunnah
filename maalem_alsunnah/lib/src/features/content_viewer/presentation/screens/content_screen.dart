@@ -20,7 +20,7 @@ class ContentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(state.title.name),
         centerTitle: true,
-        actions: [
+        actions: const [
           FontSettingsIconButton(),
         ],
       ),
