@@ -60,7 +60,7 @@ flutter:
     - family: kitab
       fonts:
         - asset: assets/fonts/Kitab-Regular.ttf
-        - asset: assets/fonts/Kitab-bold.ttf
+        - asset: assets/fonts/Kitab-Bold.ttf
           weight: 700
     - family: hafs
       fonts:
