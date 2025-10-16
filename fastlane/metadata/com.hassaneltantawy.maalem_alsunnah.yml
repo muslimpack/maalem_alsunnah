@@ -18,7 +18,7 @@ Builds:
     versionCode: 1
     commit: 4a1c0b2ba9f898f1245c3a11370d7d1d0d5a0198
     subdir: maalem_alsunnah
-    output: build/app/outputs/flutter-apk/app-release.apk
+    output: build/app/outputs/flutter-apk/app-prod-release.apk
     srclibs:
       - flutter@3.27.1
     rm:
@@ -35,7 +35,7 @@ Builds:
       - maalem_alsunnah/.pub-cache
     build:
       - export PUB_CACHE=$(pwd)/.pub-cache
-      - $$flutter$$/bin/flutter build apk --release
+      - $$flutter$$/bin/flutter build apk --release --flavor prod
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
