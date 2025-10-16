@@ -25,6 +25,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    flavorDimensions "default"
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.hassaneltantawy.maalem_alsunnah"
@@ -47,6 +49,17 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        prod {
+            dimension "default"
+        }
+        dev {
+            dimension "default"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
         }
     }
 }
