@@ -35,12 +35,12 @@ class TextFormatterColorSettings {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'deafaultColor': defaultColor?.toARGB32,
-      'hadithTextColor': hadithTextColor?.toARGB32,
-      'quranTextColor': quranTextColor?.toARGB32,
-      'squareBracketsColor': squareBracketsColor?.toARGB32,
-      'roundBracketsColor': roundBracketsColor?.toARGB32,
-      'startingNumberColor': startingNumberColor?.toARGB32,
+      'deafaultColor': defaultColor?.toARGB32(),
+      'hadithTextColor': hadithTextColor?.toARGB32(),
+      'quranTextColor': quranTextColor?.toARGB32(),
+      'squareBracketsColor': squareBracketsColor?.toARGB32(),
+      'roundBracketsColor': roundBracketsColor?.toARGB32(),
+      'startingNumberColor': startingNumberColor?.toARGB32(),
     };
   }
 

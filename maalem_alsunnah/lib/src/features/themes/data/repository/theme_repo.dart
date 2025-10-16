@@ -57,12 +57,13 @@ class ThemeRepo {
 
   Color get color {
     final int? data = box.get(_colorKey) as int?;
-    final defaultValue = Color(0xFF451b1b);
-    final result = Color(data ?? defaultValue.toARGB32);
+    const defaultValue = Color(0xFF451b1b);
+    final int colorValue = data ?? defaultValue.toARGB32();
+    final result = Color(colorValue);
     return result;
   }
 
   Future setColor(Color color) async {
-    await box.put(_colorKey, color.toARGB32);
+    await box.put(_colorKey, color.toARGB32());
   }
 }
