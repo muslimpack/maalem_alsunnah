@@ -83,9 +83,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
           ),
           bottomNavigationBar: (tabController.index != 1) && (state.lastReadTitle != null)
-              ? ContinueReadingCard(
-                  title: state.lastReadTitle!,
-                  progress: state.readProgress,
+              ? BottomAppBar(
+                  padding: EdgeInsets.zero,
+                  child: ContinueReadingCard(
+                    title: state.lastReadTitle!,
+                    progress: state.readProgress,
+                  ),
                 )
               : null,
         );

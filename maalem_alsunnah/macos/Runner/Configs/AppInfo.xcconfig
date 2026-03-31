@@ -8,7 +8,7 @@
 PRODUCT_NAME = maalem_alsunnah
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.hassaneltantawy.maalemAlsunnah
+PRODUCT_BUNDLE_IDENTIFIER = com.hassaneltantawy.maalem-alsunnah
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.hassaneltantawy. All rights reserved.
