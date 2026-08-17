@@ -2,10 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class FontSettingsIconButton extends StatelessWidget {
   const FontSettingsIconButton({super.key});
@@ -15,7 +15,7 @@ class FontSettingsIconButton extends StatelessWidget {
     return IconButton(
       tooltip: S.of(context).fontSettings,
       padding: EdgeInsets.zero,
-      icon: Icon(MdiIcons.formatQuoteOpen),
+      icon: const FaIcon(FontAwesomeIcons.quoteRight, size: 20),
       onPressed: () async {
         await showDialog(
           context: context,
@@ -67,21 +67,21 @@ class FontSettingsBar extends StatelessWidget {
         if (showFontResizeControllers) ...[
           IconButton(
             tooltip: S.of(context).fontResetSize,
-            icon: Icon(MdiIcons.restart),
+            icon: const FaIcon(FontAwesomeIcons.arrowRotateLeft, size: 18),
             onPressed: () {
               context.read<SettingsCubit>().resetFontSize();
             },
           ),
           IconButton(
             tooltip: S.of(context).fontIncreaseSize,
-            icon: Icon(MdiIcons.formatFontSizeIncrease),
+            icon: const FaIcon(FontAwesomeIcons.plus, size: 18),
             onPressed: () {
               context.read<SettingsCubit>().increaseFontSize();
             },
           ),
           IconButton(
             tooltip: S.of(context).fontDecreaseSize,
-            icon: Icon(MdiIcons.formatFontSizeDecrease),
+            icon: const FaIcon(FontAwesomeIcons.minus, size: 18),
             onPressed: () {
               context.read<SettingsCubit>().decreaseFontSize();
             },
@@ -92,8 +92,9 @@ class FontSettingsBar extends StatelessWidget {
             tooltip: S.of(context).showDiacritics,
             icon: Transform.rotate(
               angle: context.watch<SettingsCubit>().state.showDiacritics ? 0 : -math.pi / 8,
-              child: Icon(
-                MdiIcons.abjadArabic,
+              child: const FaIcon(
+                FontAwesomeIcons.language,
+                size: 20,
               ),
             ),
             onPressed: () {

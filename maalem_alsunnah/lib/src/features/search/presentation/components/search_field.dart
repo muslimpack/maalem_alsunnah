@@ -1,10 +1,10 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/shared/custom_field_decoration.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key});
@@ -23,7 +23,7 @@ class SearchField extends StatelessWidget {
                 onPressed: () {
                   context.read<SearchCubit>().clear();
                 },
-                icon: Icon(MdiIcons.eraser),
+                icon: const FaIcon(FontAwesomeIcons.eraser, size: 18),
               ),
             ),
             style: const TextStyle(

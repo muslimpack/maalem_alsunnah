@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/shared/custom_field_decoration.dart';
@@ -7,7 +8,6 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/data_source/bookmark
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_model.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 Future showNoteDialog(BuildContext context, {required String itemId, required BookmarkType type}) {
   return showDialog(
@@ -104,7 +104,7 @@ class _NoteDialogState extends State<NoteDialog> {
         actions: [
           IconButton(
             tooltip: S.of(context).clear,
-            icon: Icon(MdiIcons.eraser),
+            icon: const FaIcon(FontAwesomeIcons.eraser, size: 18),
             onPressed: onClear,
           ),
           IconButton(
