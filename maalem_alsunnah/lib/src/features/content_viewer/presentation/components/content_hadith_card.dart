@@ -29,21 +29,32 @@ class ContentHadithCard extends StatelessWidget {
     final String text =
         context.watch<SettingsCubit>().state.showDiacritics ? hadith.text : hadith.searchText;
     final String formattedText = text;
+    final theme = Theme.of(context);
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: theme.dividerColor.withValues(alpha: 0.12),
+        ),
+      ),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
+          // Accent on the reading-start side (right in Arabic, left in English).
           border: isTitle
               ? null
-              : Border(
-                  right: BorderSide(
-                    color: Colors.brown.withValues(alpha: .3),
-                    width: 7,
+              : BorderDirectional(
+                  start: BorderSide(
+                    color: theme.colorScheme.primary.withValues(alpha: 0.5),
+                    width: 4,
                   ),
                 ),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (showTitleChain)
               TitlesChainBreadCrumb(
@@ -56,7 +67,13 @@ class ContentHadithCard extends StatelessWidget {
               textLeadingWidget: isTitle ? null : HadithCardPopupMenu(hadith: hadith),
             ),
             if (!isTitle) ...[
-              const Divider(),
+              const SizedBox(height: 8),
+              Divider(
+                height: 1,
+                thickness: 0.5,
+                color: theme.dividerColor.withValues(alpha: 0.12),
+              ),
+              const SizedBox(height: 2),
               BookmarkActionBar(
                 itemId: hadith.id,
                 bookmarkType: BookmarkType.hadith,

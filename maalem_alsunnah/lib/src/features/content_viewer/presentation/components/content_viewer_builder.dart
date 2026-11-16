@@ -90,6 +90,8 @@ class _ContentViewerBuilderBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextFormatterSettings textFormatterSettings = hadithTextFormatterSettings(context);
+    final theme = Theme.of(context);
+    final mutedColor = theme.textTheme.bodySmall?.color;
 
     final Widget contentViewer;
     if (hadithList.isEmpty) {
@@ -117,27 +119,48 @@ class _ContentViewerBuilderBody extends StatelessWidget {
     }
     return CustomScrollView(
       slivers: [
-        SliverPadding(
-          padding: const EdgeInsets.all(15),
-          sliver: SliverFloatingHeader(
-              snapMode: FloatingHeaderSnapMode.overlay,
-              child: ColoredBox(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TitlesChainBreadCrumb(titleId: content.titleId),
-                    ListTile(
-                      leading: const Icon(Icons.timer_outlined),
-                      title: Text(content.text.getArabicTextReadingTimeAsString(context)),
-                    ),
-                  ],
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: theme.dividerColor.withValues(alpha: 0.1),
                 ),
-              )),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TitlesChainBreadCrumb(titleId: content.titleId),
+                  const SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.schedule_outlined,
+                        size: 14,
+                        color: mutedColor?.withValues(alpha: 0.6),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        content.text.getArabicTextReadingTimeAsString(context),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontSize: 12,
+                          color: mutedColor?.withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           sliver: contentViewer,
         )
       ],
