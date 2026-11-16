@@ -20,20 +20,46 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(number) => "باب ${number}";
+
+  static String m1(number, total) => "باب ${number} من ${total}";
+
+  static String m2(current, total) => "المحتوى ${current} من ${total}";
+
+  static String m3(count) =>
+      "${Intl.plural(count, zero: 'لا أحاديث', one: 'حديث واحد', two: 'حديثان', few: '${count} أحاديث', many: '${count} حديثًا', other: '${count} حديث')}";
+
+  static String m4(chars, words) => "${chars} حرف • ${words} كلمة";
+
+  static String m5(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
+
+  static String m6(minutes) =>
+      "${Intl.plural(minutes, zero: 'أقل من دقيقة', one: 'دقيقة', two: 'دقيقتان', few: '${minutes} دقائق', many: '${minutes} دقيقة', other: '${minutes} دقيقة')}";
+
+  static String m7(seconds) =>
+      "${Intl.plural(seconds, one: 'ثانية', two: 'ثانيتان', few: '${seconds} ثوانٍ', many: '${seconds} ثانية', other: '${seconds} ثانية')}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
     "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
     "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
     "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
+    "agreedUpon": MessageLookupByLibrary.simpleMessage("متفق عليه"),
     "all": MessageLookupByLibrary.simpleMessage("الجميع"),
     "appHashtag": MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
     "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
     "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+    "bold": MessageLookupByLibrary.simpleMessage("عريض"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
+    "bukhariMuallaq": MessageLookupByLibrary.simpleMessage("معلقات البخاري"),
+    "chapterNumber": m0,
+    "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
     "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
     "close": MessageLookupByLibrary.simpleMessage("أغلق"),
+    "contentNumber": MessageLookupByLibrary.simpleMessage("رقم المحتوى"),
+    "contentXofY": m2,
     "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "تم النسخ إلى الحافظة",
@@ -43,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "عدد النتائج المعروضة",
     ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
+    "first": MessageLookupByLibrary.simpleMessage("الأول"),
     "fontDecreaseSize": MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
     "fontIncreaseSize": MessageLookupByLibrary.simpleMessage("تكبير حجم الخط"),
     "fontResetSize": MessageLookupByLibrary.simpleMessage(
@@ -53,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر",
     ),
     "github": MessageLookupByLibrary.simpleMessage("الكود المصدري للمشروع"),
+    "goTo": MessageLookupByLibrary.simpleMessage("انتقال"),
     "hadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
     "hadithBookAuthor": MessageLookupByLibrary.simpleMessage(
       "الشيخ صالح أحمد الشامي",
@@ -63,8 +91,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
     ),
+    "hadithCount": m3,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
     "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
+    "italic": MessageLookupByLibrary.simpleMessage("مائل"),
+    "last": MessageLookupByLibrary.simpleMessage("الأخير"),
     "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
     "markAsUnread": MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
     "minutes": MessageLookupByLibrary.simpleMessage("د"),
@@ -75,7 +106,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "هذا كل شيء لا مزيد من النتائج.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
+    "noteStats": m4,
     "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+    "outOfRange": m5,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "نسألكم الدعاء لنا ولوالدينا",
     ),
@@ -83,7 +116,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
     "previous": MessageLookupByLibrary.simpleMessage("السابق"),
     "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
+    "read": MessageLookupByLibrary.simpleMessage("قرأته"),
     "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
+    "readingTimeMinutes": m6,
+    "readingTimeSeconds": m7,
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
@@ -91,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "roundBracketsColor": MessageLookupByLibrary.simpleMessage(
       "لون الأقواس المستديرة",
     ),
+    "sahihBukhari": MessageLookupByLibrary.simpleMessage("البخاري"),
+    "sahihMuslim": MessageLookupByLibrary.simpleMessage("مسلم"),
     "search": MessageLookupByLibrary.simpleMessage("بحث"),
     "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
     "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
@@ -115,12 +153,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingNumberColor": MessageLookupByLibrary.simpleMessage(
       "لون رقم البداية",
     ),
+    "strikethrough": MessageLookupByLibrary.simpleMessage("يتوسطه خط"),
     "textFormatterColorSettings": MessageLookupByLibrary.simpleMessage(
       "إعدادات ألوان تنسيق النص",
     ),
     "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
     "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
     "titles": MessageLookupByLibrary.simpleMessage("العناوين"),
+    "underline": MessageLookupByLibrary.simpleMessage("تسطير"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),
   };
 }

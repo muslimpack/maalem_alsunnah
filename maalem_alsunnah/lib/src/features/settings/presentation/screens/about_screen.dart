@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/constants/constant.dart';
+import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
 import 'package:maalem_alsunnah/src/core/functions/open_url.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class AboutScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15).withSafeArea(context),
         children: [
           const SizedBox(height: 15),
           ListTile(

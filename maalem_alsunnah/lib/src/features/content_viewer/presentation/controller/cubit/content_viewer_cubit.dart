@@ -130,9 +130,15 @@ class ContentViewerCubit extends Cubit<ContentViewerState> {
     final state = this.state;
     if (state is! ContentViewerLoadedState) return;
 
-    if (pageController.hasClients) {
-      pageController.animateToPage(
-        orderId - 1,
+    if (!pageController.hasClients) return;
+
+    final page = orderId - 1;
+    // Animating across many pages builds (and queries) every page in between.
+    if ((orderId - state.content.orderId).abs() > 1) {
+      pageController.jumpToPage(page);
+    } else {
+      await pageController.animateToPage(
+        page,
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );

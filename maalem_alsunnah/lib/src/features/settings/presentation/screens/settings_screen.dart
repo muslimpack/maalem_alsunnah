@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
+import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/formatter_text_settings_screen.dart';
@@ -30,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: ListView(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15).withSafeArea(context),
             children: [
               ListTile(
                 title: Text(S.of(context).theme),

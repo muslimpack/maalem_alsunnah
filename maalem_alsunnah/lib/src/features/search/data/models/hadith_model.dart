@@ -16,7 +16,7 @@ class HadithModel extends HadithEntity {
       id: (map['id'] as String?) ?? "",
       titleId: map['titleId'] as int,
       contentId: map['contentId'] as int,
-      orderId: map['contentId'] as int,
+      orderId: map['orderId'] as int,
       count: (map['count'] as int?) ?? 0,
       text: map['text'] as String,
       searchText: map['searchText'] as String,

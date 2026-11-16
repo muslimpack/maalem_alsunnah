@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
 import 'package:maalem_alsunnah/src/core/models/wrapped.dart';
 import 'package:maalem_alsunnah/src/core/shared/color_dialog.dart';
 import 'package:maalem_alsunnah/src/core/shared/yes_no_dialog.dart';
@@ -81,7 +82,7 @@ class FormatterColorSettingsToolbox extends StatelessWidget {
       builder: (context, state) {
         final currentSettings = state.formatterColorSettings;
         return ListView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0).withSafeArea(context),
           children: [
             ListTile(
               leading: const Icon(Icons.refresh),

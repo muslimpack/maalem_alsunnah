@@ -204,19 +204,33 @@ GROUP BY
     }).firstOrNull;
   }
 
+  /// The title and all its parents, root first, in a single query.
   Future<List<TitleModel>> getTitleChain(int titleId) async {
-    final List<TitleModel> titles = [];
+    final Database db = await database;
 
-    final title = await getTitleById(titleId);
-    if (title == null) return titles;
-    titles.add(title);
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+      '''
+WITH RECURSIVE chain(id, depth) AS (
+    SELECT id, 0 FROM titles WHERE id = ?
+    UNION ALL
+    SELECT t.parentId, c.depth + 1
+    FROM titles t JOIN chain c ON t.id = c.id
+    WHERE t.parentId IS NOT NULL AND t.parentId != -1 AND c.depth < 32
+)
+SELECT
+    t1.id,
+    t1.orderId,
+    t1.name,
+    t1.searchText,
+    t1.parentId,
+    (SELECT COUNT(*) FROM titles t2 WHERE t2.parentId = t1.id) AS subTitlesCount
+FROM chain c JOIN titles t1 ON t1.id = c.id
+ORDER BY c.depth DESC;
+''',
+      [titleId],
+    );
 
-    while (titles.last.parentId != -1) {
-      final title = await getTitleById(titles.last.parentId);
-      if (title == null) break;
-      titles.add(title);
-    }
-    return titles.reversed.toList();
+    return maps.map(TitleModel.fromMap).toList();
   }
 
   SqlQuery _searchTitlesSearchType(

@@ -36,8 +36,7 @@ class ShareAsImageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          sl<ShareImageCubit>()..start(itemId: itemId, shareType: shareType),
+      create: (context) => sl<ShareImageCubit>()..start(itemId: itemId, shareType: shareType),
       child: BlocBuilder<ShareImageCubit, ShareImageState>(
         builder: (context, state) {
           if (state is! ShareImageLoadedState) {
@@ -64,44 +63,46 @@ class ShareAsImageScreen extends StatelessWidget {
                     : const SizedBox.shrink(),
               ),
             ),
-            body: PageView.builder(
-              controller: context.read<ShareImageCubit>().pageController,
-              itemCount: state.splittedMatn.length,
-              onPageChanged: context.read<ShareImageCubit>().onPageChanged,
-              itemBuilder: (context, index) {
-                return Stack(
-                  fit: StackFit.expand,
-                  alignment: Alignment.center,
-                  children: [
-                    FittedBox(
-                      child: RepaintBoundary(
-                        key: context.read<ShareImageCubit>().imageKeys[index],
-                        child: switch (state.shareType) {
-                          ShareType.content => ContentImageCard(
-                              content: state.imageCardArgs[0] as ContentModel,
-                              title: state.imageCardArgs[1] as TitleModel,
-                              titleChain:
-                                  state.imageCardArgs[2] as List<TitleModel>,
-                              settings: state.settings,
-                              matnRange: state.splittedMatn[index],
-                              splittedLength: state.splittedMatn.length,
-                              splittedindex: index,
-                            ),
-                          ShareType.hadith => HadithAsImageCard(
-                              hadith: state.imageCardArgs[0] as HadithModel,
-                              titleChain:
-                                  state.imageCardArgs[2] as List<TitleModel>,
-                              settings: state.settings,
-                              matnRange: state.splittedMatn[index],
-                              splittedLength: state.splittedMatn.length,
-                              splittedindex: index,
-                            ),
-                        },
+            // The image preview must not sit under the system navigation bar.
+            body: SafeArea(
+              top: false,
+              child: PageView.builder(
+                controller: context.read<ShareImageCubit>().pageController,
+                itemCount: state.splittedMatn.length,
+                onPageChanged: context.read<ShareImageCubit>().onPageChanged,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    fit: StackFit.expand,
+                    alignment: Alignment.center,
+                    children: [
+                      FittedBox(
+                        child: RepaintBoundary(
+                          key: context.read<ShareImageCubit>().imageKeys[index],
+                          child: switch (state.shareType) {
+                            ShareType.content => ContentImageCard(
+                                content: state.imageCardArgs[0] as ContentModel,
+                                title: state.imageCardArgs[1] as TitleModel,
+                                titleChain: state.imageCardArgs[2] as List<TitleModel>,
+                                settings: state.settings,
+                                matnRange: state.splittedMatn[index],
+                                splittedLength: state.splittedMatn.length,
+                                splittedindex: index,
+                              ),
+                            ShareType.hadith => HadithAsImageCard(
+                                hadith: state.imageCardArgs[0] as HadithModel,
+                                titleChain: state.imageCardArgs[2] as List<TitleModel>,
+                                settings: state.settings,
+                                matnRange: state.splittedMatn[index],
+                                splittedLength: state.splittedMatn.length,
+                                splittedindex: index,
+                              ),
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
             bottomNavigationBar: state.splittedMatn.length < 2
                 ? null

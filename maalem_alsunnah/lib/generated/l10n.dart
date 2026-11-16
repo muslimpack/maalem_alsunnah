@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -74,6 +75,11 @@ class S {
     return Intl.message('Add notes', name: 'addNotes', desc: '', args: []);
   }
 
+  /// `Agreed upon`
+  String get agreedUpon {
+    return Intl.message('Agreed upon', name: 'agreedUpon', desc: '', args: []);
+  }
+
   /// `All`
   String get all {
     return Intl.message('All', name: 'all', desc: '', args: []);
@@ -104,9 +110,44 @@ class S {
     );
   }
 
+  /// `Bold`
+  String get bold {
+    return Intl.message('Bold', name: 'bold', desc: '', args: []);
+  }
+
   /// `Bookamarks`
   String get bookmarks {
     return Intl.message('Bookamarks', name: 'bookmarks', desc: '', args: []);
+  }
+
+  /// `al-Bukhari (mu'allaq)`
+  String get bukhariMuallaq {
+    return Intl.message(
+      'al-Bukhari (mu\'allaq)',
+      name: 'bukhariMuallaq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chapter {number}`
+  String chapterNumber(Object number) {
+    return Intl.message(
+      'Chapter $number',
+      name: 'chapterNumber',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Chapter {number} of {total}`
+  String chapterOfTotal(Object number, Object total) {
+    return Intl.message(
+      'Chapter $number of $total',
+      name: 'chapterOfTotal',
+      desc: '',
+      args: [number, total],
+    );
   }
 
   /// `Chat`
@@ -122,6 +163,26 @@ class S {
   /// `Close`
   String get close {
     return Intl.message('Close', name: 'close', desc: '', args: []);
+  }
+
+  /// `Content number`
+  String get contentNumber {
+    return Intl.message(
+      'Content number',
+      name: 'contentNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content {current} of {total}`
+  String contentXofY(Object current, Object total) {
+    return Intl.message(
+      'Content $current of $total',
+      name: 'contentXofY',
+      desc: '',
+      args: [current, total],
+    );
   }
 
   /// `Continue reading`
@@ -162,6 +223,11 @@ class S {
   /// `Done`
   String get done {
     return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `First`
+  String get first {
+    return Intl.message('First', name: 'first', desc: '', args: []);
   }
 
   /// `Decrease font size`
@@ -224,6 +290,11 @@ class S {
     );
   }
 
+  /// `Go`
+  String get goTo {
+    return Intl.message('Go', name: 'goTo', desc: '', args: []);
+  }
+
   /// `Hadith`
   String get hadith {
     return Intl.message('Hadith', name: 'hadith', desc: '', args: []);
@@ -259,6 +330,18 @@ class S {
     );
   }
 
+  /// `{count, plural, one{1 hadith} other{{count} hadith}}`
+  String hadithCount(num count) {
+    return Intl.plural(
+      count,
+      one: '1 hadith',
+      other: '$count hadith',
+      name: 'hadithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Hadith text color`
   String get hadithTextColor {
     return Intl.message(
@@ -272,6 +355,16 @@ class S {
   /// `Index`
   String get index {
     return Intl.message('Index', name: 'index', desc: '', args: []);
+  }
+
+  /// `Italic`
+  String get italic {
+    return Intl.message('Italic', name: 'italic', desc: '', args: []);
+  }
+
+  /// `Last`
+  String get last {
+    return Intl.message('Last', name: 'last', desc: '', args: []);
   }
 
   /// `Mark as read`
@@ -334,6 +427,26 @@ class S {
     return Intl.message('Notes', name: 'notes', desc: '', args: []);
   }
 
+  /// `{chars} chars • {words} words`
+  String noteStats(Object chars, Object words) {
+    return Intl.message(
+      '$chars chars • $words words',
+      name: 'noteStats',
+      desc: '',
+      args: [chars, words],
+    );
+  }
+
+  /// `Enter a number from {min} to {max}`
+  String outOfRange(Object min, Object max) {
+    return Intl.message(
+      'Enter a number from $min to $max',
+      name: 'outOfRange',
+      desc: '',
+      args: [min, max],
+    );
+  }
+
   /// `Pray for us and our parents.`
   String get prayForUsAndParents {
     return Intl.message(
@@ -379,6 +492,11 @@ class S {
     );
   }
 
+  /// `Read`
+  String get read {
+    return Intl.message('Read', name: 'read', desc: '', args: []);
+  }
+
   /// `Reading time`
   String get readingTime {
     return Intl.message(
@@ -386,6 +504,31 @@ class S {
       name: 'readingTime',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `{minutes, plural, zero{Under a minute} one{1 min} other{{minutes} min}}`
+  String readingTimeMinutes(num minutes) {
+    return Intl.plural(
+      minutes,
+      zero: 'Under a minute',
+      one: '1 min',
+      other: '$minutes min',
+      name: 'readingTimeMinutes',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `{seconds, plural, one{1 sec} other{{seconds} sec}}`
+  String readingTimeSeconds(num seconds) {
+    return Intl.plural(
+      seconds,
+      one: '1 sec',
+      other: '$seconds sec',
+      name: 'readingTimeSeconds',
+      desc: '',
+      args: [seconds],
     );
   }
 
@@ -427,6 +570,16 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `al-Bukhari`
+  String get sahihBukhari {
+    return Intl.message('al-Bukhari', name: 'sahihBukhari', desc: '', args: []);
+  }
+
+  /// `Muslim`
+  String get sahihMuslim {
+    return Intl.message('Muslim', name: 'sahihMuslim', desc: '', args: []);
   }
 
   /// `Search`
@@ -579,6 +732,16 @@ class S {
     );
   }
 
+  /// `Strikethrough`
+  String get strikethrough {
+    return Intl.message(
+      'Strikethrough',
+      name: 'strikethrough',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Text formatter color settings`
   String get textFormatterColorSettings {
     return Intl.message(
@@ -602,6 +765,11 @@ class S {
   /// `Titles`
   String get titles {
     return Intl.message('Titles', name: 'titles', desc: '', args: []);
+  }
+
+  /// `Underline`
+  String get underline {
+    return Intl.message('Underline', name: 'underline', desc: '', args: []);
   }
 
   /// `Yes`

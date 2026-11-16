@@ -24,47 +24,50 @@ class SearchScreen extends StatelessWidget {
           return const SizedBox();
         }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 15,
-          children: [
-            const SizedBox(height: 15),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SearchForBar(),
-                SearchFiltersButton(),
-              ],
-            ),
-            Expanded(
-              child: switch (state.searchFor) {
-                SearchFor.title => SearchResultViewer<TitleModel>(
-                    pagingController: sl<SearchCubit>().titlePagingController,
-                    itemBuilder: (context, item, index) {
-                      return TitleCard(title: item);
-                    },
-                  ),
-                SearchFor.content => SearchResultViewer<ContentModel>(
-                    pagingController: sl<SearchCubit>().contentPagingController,
-                    itemBuilder: (context, item, index) {
-                      return ContentSearchCard(
-                        content: item,
-                        searchedText: state.searchText,
-                      );
-                    },
-                  ),
-                SearchFor.hadith => SearchResultViewer<HadithModel>(
-                    pagingController: sl<SearchCubit>().hadithPagingController,
-                    itemBuilder: (context, item, index) {
-                      return HadithSearchCard(
-                        hadith: item,
-                        searchedText: state.searchText,
-                      );
-                    },
-                  ),
-              },
-            ),
-          ],
+        return SafeArea(
+          bottom: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 15,
+            children: [
+              const SizedBox(height: 15),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SearchForBar(),
+                  SearchFiltersButton(),
+                ],
+              ),
+              Expanded(
+                child: switch (state.searchFor) {
+                  SearchFor.title => SearchResultViewer<TitleModel>(
+                      pagingController: sl<SearchCubit>().titlePagingController,
+                      itemBuilder: (context, item, index) {
+                        return TitleCard(title: item);
+                      },
+                    ),
+                  SearchFor.content => SearchResultViewer<ContentModel>(
+                      pagingController: sl<SearchCubit>().contentPagingController,
+                      itemBuilder: (context, item, index) {
+                        return ContentSearchCard(
+                          content: item,
+                          searchedText: state.searchText,
+                        );
+                      },
+                    ),
+                  SearchFor.hadith => SearchResultViewer<HadithModel>(
+                      pagingController: sl<SearchCubit>().hadithPagingController,
+                      itemBuilder: (context, item, index) {
+                        return HadithSearchCard(
+                          hadith: item,
+                          searchedText: state.searchText,
+                        );
+                      },
+                    ),
+                },
+              ),
+            ],
+          ),
         );
       },
     );

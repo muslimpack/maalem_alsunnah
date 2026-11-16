@@ -12,17 +12,22 @@ class BookmarkActionBar extends StatelessWidget {
   final String itemId;
   final BookmarkType bookmarkType;
   final ShareType shareType;
+  final MainAxisSize mainAxisSize;
+  final MainAxisAlignment mainAxisAlignment;
   const BookmarkActionBar({
     super.key,
     required this.itemId,
     required this.bookmarkType,
     required this.shareType,
+    this.mainAxisSize = MainAxisSize.max,
+    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: mainAxisSize,
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         IconButton(
           tooltip: S.of(context).share,

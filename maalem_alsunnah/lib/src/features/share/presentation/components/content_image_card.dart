@@ -126,17 +126,19 @@ class ContentImageCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                ListTile(
-                  leading: const Icon(
-                    Icons.timer_outlined,
-                    size: 60,
-                    color: secondaryColor,
-                  ),
-                  title: Text(
-                    "${S.of(context).readingTime}: ${textSpan.toPlainText().getArabicTextReadingTimeAsString(context)}",
-                    style: secondaryTextStyle,
-                  ),
-                )
+                if (textSpan.toPlainText().getArabicTextReadingTimeAsString(context)
+                    case final readingTime?)
+                  ListTile(
+                    leading: const Icon(
+                      Icons.timer_outlined,
+                      size: 60,
+                      color: secondaryColor,
+                    ),
+                    title: Text(
+                      "${S.of(context).readingTime}: $readingTime",
+                      style: secondaryTextStyle,
+                    ),
+                  )
               ],
             ),
           ),
