@@ -19,31 +19,38 @@ class SubListScreen extends StatelessWidget {
         title: Text(state.title.name),
         centerTitle: true,
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.all(15),
-            sliver: SliverFloatingHeader(
-              snapMode: FloatingHeaderSnapMode.overlay,
-              child: ColoredBox(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: TitlesChainBreadCrumb(titleId: state.title.id),
+      body: SafeArea(
+        bottom: false,
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(15),
+              sliver: SliverFloatingHeader(
+                snapMode: FloatingHeaderSnapMode.overlay,
+                child: ColoredBox(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: TitlesChainBreadCrumb(titleId: state.title.id),
+                ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(15).copyWith(top: 0),
-            sliver: SliverList.builder(
-              itemCount: state.titles.length,
-              itemBuilder: (context, index) {
-                final title = state.titles[index];
-                return TitleCard(
-                  title: title,
-                );
-              },
+            // Bottom inset only on the list, so items scroll under the gesture bar.
+            SliverSafeArea(
+              top: false,
+              sliver: SliverPadding(
+                padding: const EdgeInsets.all(15).copyWith(top: 0),
+                sliver: SliverList.builder(
+                  itemCount: state.titles.length,
+                  itemBuilder: (context, index) {
+                    final title = state.titles[index];
+                    return TitleCard(
+                      title: title,
+                    );
+                  },
+                ),
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

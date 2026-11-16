@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
+import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_view_enum.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/bookmark_view_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
@@ -92,6 +93,8 @@ class BookmarkListView extends StatelessWidget {
             ),
           )
         ],
+        // Keep the last card clear of the system navigation bar.
+        SliverPadding(padding: EdgeInsets.zero.withSafeArea(context)),
       ],
     );
   }

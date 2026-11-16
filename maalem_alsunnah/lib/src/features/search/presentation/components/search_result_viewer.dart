@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/new_page_progress_indicator_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/no_items_found_indicator_builder.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/components/no_more_items_indicator_builder.dart';
@@ -23,7 +24,7 @@ class SearchResultViewer<T> extends StatelessWidget {
         if (state is! SearchLoadedState) return const SizedBox.shrink();
 
         return PagedListView<int, T>(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15).withSafeArea(context),
           pagingController: pagingController,
           builderDelegate: PagedChildBuilderDelegate<T>(
             animateTransitions: true,
