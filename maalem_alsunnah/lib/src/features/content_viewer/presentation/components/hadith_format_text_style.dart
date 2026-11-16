@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_color_settings.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
 
@@ -15,9 +16,18 @@ TextFormatterSettings hadithTextFormatterSettings(BuildContext context) {
 
 TextFormatterSettings hadithTextFormatterSettingsByDefault(
     BuildContext context, TextStyle defaultStyle) {
-  final formatterColorSettings =
-      context.watch<SettingsCubit>().state.formatterColorSettings;
+  return textFormatterSettingsFromColors(
+    defaultStyle,
+    context.watch<SettingsCubit>().state.formatterColorSettings,
+  );
+}
 
+/// Formatter styles built from [defaultStyle] and a fixed set of colours,
+/// without reading any app state. [defaultStyle] keeps its own colour.
+TextFormatterSettings textFormatterSettingsFromColors(
+  TextStyle defaultStyle,
+  TextFormatterColorSettings formatterColorSettings,
+) {
   final TextFormatterSettings textFormatterSettings = TextFormatterSettings(
     deafaultStyle: defaultStyle,
     hadithTextStyle: defaultStyle.copyWith(

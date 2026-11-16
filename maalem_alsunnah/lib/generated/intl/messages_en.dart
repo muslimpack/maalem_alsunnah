@@ -39,6 +39,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m7(seconds) =>
       "${Intl.plural(seconds, one: '1 sec', other: '${seconds} sec')}";
 
+  static String m8(current, total) => "Preparing ${current} of ${total}…";
+
+  static String m9(count) => "Save all (${count})";
+
+  static String m10(count) => "Share all (${count})";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("Typical"),
@@ -152,6 +158,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "share": MessageLookupByLibrary.simpleMessage("Share"),
     "shareAsImage": MessageLookupByLibrary.simpleMessage("Share as image"),
+    "shareImageAuto": MessageLookupByLibrary.simpleMessage("Auto"),
+    "shareImageColors": MessageLookupByLibrary.simpleMessage("Colors"),
+    "shareImageContinued": MessageLookupByLibrary.simpleMessage("Continued"),
+    "shareImageDark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "shareImageFailed": MessageLookupByLibrary.simpleMessage(
+      "Couldn\'t create the image",
+    ),
+    "shareImageLight": MessageLookupByLibrary.simpleMessage("Light"),
+    "shareImagePaletteEmerald": MessageLookupByLibrary.simpleMessage("Emerald"),
+    "shareImagePaletteIndigo": MessageLookupByLibrary.simpleMessage("Indigo"),
+    "shareImagePaletteMaroon": MessageLookupByLibrary.simpleMessage("Maroon"),
+    "shareImagePaletteSand": MessageLookupByLibrary.simpleMessage("Sand"),
+    "shareImagePreparing": m8,
+    "shareImageSaveAll": m9,
+    "shareImageSavePage": MessageLookupByLibrary.simpleMessage(
+      "Save this page",
+    ),
+    "shareImageSaved": MessageLookupByLibrary.simpleMessage("Saved"),
+    "shareImageShareAll": m10,
+    "shareImageSharePage": MessageLookupByLibrary.simpleMessage(
+      "Share this page",
+    ),
+    "shareImageShowTitles": MessageLookupByLibrary.simpleMessage("Titles"),
+    "shareImageSize": MessageLookupByLibrary.simpleMessage("Size"),
+    "shareImageTextSize": MessageLookupByLibrary.simpleMessage("Text size"),
     "showDiacritics": MessageLookupByLibrary.simpleMessage("Show diacritics"),
     "source": MessageLookupByLibrary.simpleMessage("Source"),
     "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("Book Author"),

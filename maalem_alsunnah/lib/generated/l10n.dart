@@ -687,6 +687,166 @@ class S {
     );
   }
 
+  /// `Auto`
+  String get shareImageAuto {
+    return Intl.message('Auto', name: 'shareImageAuto', desc: '', args: []);
+  }
+
+  /// `Colors`
+  String get shareImageColors {
+    return Intl.message('Colors', name: 'shareImageColors', desc: '', args: []);
+  }
+
+  /// `Continued`
+  String get shareImageContinued {
+    return Intl.message(
+      'Continued',
+      name: 'shareImageContinued',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get shareImageDark {
+    return Intl.message('Dark', name: 'shareImageDark', desc: '', args: []);
+  }
+
+  /// `Couldn't create the image`
+  String get shareImageFailed {
+    return Intl.message(
+      'Couldn\'t create the image',
+      name: 'shareImageFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get shareImageLight {
+    return Intl.message('Light', name: 'shareImageLight', desc: '', args: []);
+  }
+
+  /// `Emerald`
+  String get shareImagePaletteEmerald {
+    return Intl.message(
+      'Emerald',
+      name: 'shareImagePaletteEmerald',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Indigo`
+  String get shareImagePaletteIndigo {
+    return Intl.message(
+      'Indigo',
+      name: 'shareImagePaletteIndigo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maroon`
+  String get shareImagePaletteMaroon {
+    return Intl.message(
+      'Maroon',
+      name: 'shareImagePaletteMaroon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sand`
+  String get shareImagePaletteSand {
+    return Intl.message(
+      'Sand',
+      name: 'shareImagePaletteSand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preparing {current} of {total}…`
+  String shareImagePreparing(Object current, Object total) {
+    return Intl.message(
+      'Preparing $current of $total…',
+      name: 'shareImagePreparing',
+      desc: '',
+      args: [current, total],
+    );
+  }
+
+  /// `Save all ({count})`
+  String shareImageSaveAll(Object count) {
+    return Intl.message(
+      'Save all ($count)',
+      name: 'shareImageSaveAll',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Saved`
+  String get shareImageSaved {
+    return Intl.message('Saved', name: 'shareImageSaved', desc: '', args: []);
+  }
+
+  /// `Save this page`
+  String get shareImageSavePage {
+    return Intl.message(
+      'Save this page',
+      name: 'shareImageSavePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share all ({count})`
+  String shareImageShareAll(Object count) {
+    return Intl.message(
+      'Share all ($count)',
+      name: 'shareImageShareAll',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Share this page`
+  String get shareImageSharePage {
+    return Intl.message(
+      'Share this page',
+      name: 'shareImageSharePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Titles`
+  String get shareImageShowTitles {
+    return Intl.message(
+      'Titles',
+      name: 'shareImageShowTitles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Size`
+  String get shareImageSize {
+    return Intl.message('Size', name: 'shareImageSize', desc: '', args: []);
+  }
+
+  /// `Text size`
+  String get shareImageTextSize {
+    return Intl.message(
+      'Text size',
+      name: 'shareImageTextSize',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Show diacritics`
   String get showDiacritics {
     return Intl.message(
