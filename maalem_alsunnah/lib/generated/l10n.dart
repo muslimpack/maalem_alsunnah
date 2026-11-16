@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -104,6 +105,11 @@ class S {
     );
   }
 
+  /// `Bold`
+  String get bold {
+    return Intl.message('Bold', name: 'bold', desc: '', args: []);
+  }
+
   /// `Bookamarks`
   String get bookmarks {
     return Intl.message('Bookamarks', name: 'bookmarks', desc: '', args: []);
@@ -122,6 +128,26 @@ class S {
   /// `Close`
   String get close {
     return Intl.message('Close', name: 'close', desc: '', args: []);
+  }
+
+  /// `Content number`
+  String get contentNumber {
+    return Intl.message(
+      'Content number',
+      name: 'contentNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content {current} of {total}`
+  String contentXofY(Object current, Object total) {
+    return Intl.message(
+      'Content $current of $total',
+      name: 'contentXofY',
+      desc: '',
+      args: [current, total],
+    );
   }
 
   /// `Continue reading`
@@ -162,6 +188,11 @@ class S {
   /// `Done`
   String get done {
     return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `First`
+  String get first {
+    return Intl.message('First', name: 'first', desc: '', args: []);
   }
 
   /// `Decrease font size`
@@ -224,6 +255,11 @@ class S {
     );
   }
 
+  /// `Go`
+  String get goTo {
+    return Intl.message('Go', name: 'goTo', desc: '', args: []);
+  }
+
   /// `Hadith`
   String get hadith {
     return Intl.message('Hadith', name: 'hadith', desc: '', args: []);
@@ -272,6 +308,16 @@ class S {
   /// `Index`
   String get index {
     return Intl.message('Index', name: 'index', desc: '', args: []);
+  }
+
+  /// `Italic`
+  String get italic {
+    return Intl.message('Italic', name: 'italic', desc: '', args: []);
+  }
+
+  /// `Last`
+  String get last {
+    return Intl.message('Last', name: 'last', desc: '', args: []);
   }
 
   /// `Mark as read`
@@ -332,6 +378,26 @@ class S {
   /// `Notes`
   String get notes {
     return Intl.message('Notes', name: 'notes', desc: '', args: []);
+  }
+
+  /// `{chars} chars • {words} words`
+  String noteStats(Object chars, Object words) {
+    return Intl.message(
+      '$chars chars • $words words',
+      name: 'noteStats',
+      desc: '',
+      args: [chars, words],
+    );
+  }
+
+  /// `Enter a number from {min} to {max}`
+  String outOfRange(Object min, Object max) {
+    return Intl.message(
+      'Enter a number from $min to $max',
+      name: 'outOfRange',
+      desc: '',
+      args: [min, max],
+    );
   }
 
   /// `Pray for us and our parents.`
@@ -579,6 +645,16 @@ class S {
     );
   }
 
+  /// `Strikethrough`
+  String get strikethrough {
+    return Intl.message(
+      'Strikethrough',
+      name: 'strikethrough',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Text formatter color settings`
   String get textFormatterColorSettings {
     return Intl.message(
@@ -602,6 +678,11 @@ class S {
   /// `Titles`
   String get titles {
     return Intl.message('Titles', name: 'titles', desc: '', args: []);
+  }
+
+  /// `Underline`
+  String get underline {
+    return Intl.message('Underline', name: 'underline', desc: '', args: []);
   }
 
   /// `Yes`

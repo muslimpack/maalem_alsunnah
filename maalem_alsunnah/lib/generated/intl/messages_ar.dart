@@ -20,6 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(current, total) => "المحتوى ${current} من ${total}";
+
+  static String m1(chars, words) => "${chars} حرف • ${words} كلمة";
+
+  static String m2(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
@@ -30,10 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "appHashtag": MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
     "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
     "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+    "bold": MessageLookupByLibrary.simpleMessage("عريض"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
     "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
     "close": MessageLookupByLibrary.simpleMessage("أغلق"),
+    "contentNumber": MessageLookupByLibrary.simpleMessage("رقم المحتوى"),
+    "contentXofY": m0,
     "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "تم النسخ إلى الحافظة",
@@ -43,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "عدد النتائج المعروضة",
     ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
+    "first": MessageLookupByLibrary.simpleMessage("الأول"),
     "fontDecreaseSize": MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
     "fontIncreaseSize": MessageLookupByLibrary.simpleMessage("تكبير حجم الخط"),
     "fontResetSize": MessageLookupByLibrary.simpleMessage(
@@ -53,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تطبيق مجاني خالي من الإعلانات ومفتوح المصدر",
     ),
     "github": MessageLookupByLibrary.simpleMessage("الكود المصدري للمشروع"),
+    "goTo": MessageLookupByLibrary.simpleMessage("انتقال"),
     "hadith": MessageLookupByLibrary.simpleMessage("الأحاديث"),
     "hadithBookAuthor": MessageLookupByLibrary.simpleMessage(
       "الشيخ صالح أحمد الشامي",
@@ -65,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
     "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
+    "italic": MessageLookupByLibrary.simpleMessage("مائل"),
+    "last": MessageLookupByLibrary.simpleMessage("الأخير"),
     "markAsRead": MessageLookupByLibrary.simpleMessage("تعليم كمقروء"),
     "markAsUnread": MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
     "minutes": MessageLookupByLibrary.simpleMessage("د"),
@@ -75,7 +88,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "هذا كل شيء لا مزيد من النتائج.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
+    "noteStats": m1,
     "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+    "outOfRange": m2,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "نسألكم الدعاء لنا ولوالدينا",
     ),
@@ -115,12 +130,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingNumberColor": MessageLookupByLibrary.simpleMessage(
       "لون رقم البداية",
     ),
+    "strikethrough": MessageLookupByLibrary.simpleMessage("يتوسطه خط"),
     "textFormatterColorSettings": MessageLookupByLibrary.simpleMessage(
       "إعدادات ألوان تنسيق النص",
     ),
     "theme": MessageLookupByLibrary.simpleMessage("مظهر التطبيق"),
     "themeAppColor": MessageLookupByLibrary.simpleMessage("لون التطبيق"),
     "titles": MessageLookupByLibrary.simpleMessage("العناوين"),
+    "underline": MessageLookupByLibrary.simpleMessage("تسطير"),
     "yes": MessageLookupByLibrary.simpleMessage("نعم"),
   };
 }

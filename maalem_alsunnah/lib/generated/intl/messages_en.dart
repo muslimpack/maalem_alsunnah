@@ -20,6 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(current, total) => "Content ${current} of ${total}";
+
+  static String m1(chars, words) => "${chars} chars • ${words} words";
+
+  static String m2(min, max) => "Enter a number from ${min} to ${max}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("Typical"),
@@ -30,10 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "appHashtag": MessageLookupByLibrary.simpleMessage("#maalem_alsunnah"),
     "appTitle": MessageLookupByLibrary.simpleMessage("Maalem Al-Sunnah"),
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+    "bold": MessageLookupByLibrary.simpleMessage("Bold"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("Bookamarks"),
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
+    "contentNumber": MessageLookupByLibrary.simpleMessage("Content number"),
+    "contentXofY": m0,
     "continueReading": MessageLookupByLibrary.simpleMessage("Continue reading"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copied to clipboard",
@@ -43,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Displayed results count",
     ),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
+    "first": MessageLookupByLibrary.simpleMessage("First"),
     "fontDecreaseSize": MessageLookupByLibrary.simpleMessage(
       "Decrease font size",
     ),
@@ -55,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Free, ad-free and open source app",
     ),
     "github": MessageLookupByLibrary.simpleMessage("Github source code"),
+    "goTo": MessageLookupByLibrary.simpleMessage("Go"),
     "hadith": MessageLookupByLibrary.simpleMessage("Hadith"),
     "hadithBookAuthor": MessageLookupByLibrary.simpleMessage(
       "Sheikh Saleh Ahmed Al Shami",
@@ -69,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hadith text color",
     ),
     "index": MessageLookupByLibrary.simpleMessage("Index"),
+    "italic": MessageLookupByLibrary.simpleMessage("Italic"),
+    "last": MessageLookupByLibrary.simpleMessage("Last"),
     "markAsRead": MessageLookupByLibrary.simpleMessage("Mark as read"),
     "markAsUnread": MessageLookupByLibrary.simpleMessage("Mark as unread"),
     "minutes": MessageLookupByLibrary.simpleMessage("min"),
@@ -79,7 +92,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "That\'s it, there are no more results.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("No results found"),
+    "noteStats": m1,
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+    "outOfRange": m2,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "Pray for us and our parents.",
     ),
@@ -121,12 +136,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "startingNumberColor": MessageLookupByLibrary.simpleMessage(
       "Starting number color",
     ),
+    "strikethrough": MessageLookupByLibrary.simpleMessage("Strikethrough"),
     "textFormatterColorSettings": MessageLookupByLibrary.simpleMessage(
       "Text formatter color settings",
     ),
     "theme": MessageLookupByLibrary.simpleMessage("Theme"),
     "themeAppColor": MessageLookupByLibrary.simpleMessage("App color"),
     "titles": MessageLookupByLibrary.simpleMessage("Titles"),
+    "underline": MessageLookupByLibrary.simpleMessage("Underline"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
   };
 }
