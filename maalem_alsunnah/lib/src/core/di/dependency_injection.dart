@@ -13,6 +13,7 @@ import 'package:maalem_alsunnah/src/features/search/domain/repository/search_rep
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
 import 'package:maalem_alsunnah/src/features/settings/domain/repository/text_font_repo.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/controller/cubit/settings_cubit.dart';
+import 'package:maalem_alsunnah/src/features/share/data/repository/share_image_settings_repo.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/controller/cubit/share_image_cubit.dart';
 import 'package:maalem_alsunnah/src/features/themes/data/repository/theme_repo.dart';
 import 'package:maalem_alsunnah/src/features/themes/presentation/controller/cubit/theme_cubit.dart';
@@ -30,6 +31,7 @@ Future<void> initSL() async {
   sl.registerLazySingleton(() => HomeRepo(sl()));
   sl.registerLazySingleton(() => BookmarkRepo(sl()));
   sl.registerLazySingleton(() => FormatterColorSettingsRepo(sl()));
+  sl.registerLazySingleton(() => ShareImageSettingsRepo(sl()));
 
   ///MARK: Init Repo
   sl.registerLazySingleton(() => HadithDbHelper());
