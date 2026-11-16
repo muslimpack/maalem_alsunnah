@@ -65,7 +65,7 @@ class ContentHadithCard extends StatelessWidget {
             if (showTitleChain)
               Padding(
                 padding: const EdgeInsetsDirectional.only(top: 6, end: 10),
-                child: TitlesChainBreadCrumb(titleId: hadith.titleId, showLastOnly: true),
+                child: TitlesChainBreadCrumb(titleId: hadith.titleId, mode: BreadcrumbMode.current),
               ),
             _Header(hadith: hadith, parts: parts),
             Padding(

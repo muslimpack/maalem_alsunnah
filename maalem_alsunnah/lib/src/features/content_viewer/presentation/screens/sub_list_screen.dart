@@ -29,7 +29,10 @@ class SubListScreen extends StatelessWidget {
                 snapMode: FloatingHeaderSnapMode.overlay,
                 child: ColoredBox(
                   color: Theme.of(context).scaffoldBackgroundColor,
-                  child: TitlesChainBreadCrumb(titleId: state.title.id),
+                  child: TitlesChainBreadCrumb(
+                    titleId: state.title.id,
+                    mode: BreadcrumbMode.ancestors,
+                  ),
                 ),
               ),
             ),
