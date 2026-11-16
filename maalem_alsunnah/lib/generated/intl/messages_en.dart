@@ -31,6 +31,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(min, max) => "Enter a number from ${min} to ${max}";
 
+  static String m5(minutes) =>
+      "${Intl.plural(minutes, zero: 'Under a minute', one: '1 min', other: '${minutes} min')}";
+
+  static String m6(seconds) =>
+      "${Intl.plural(seconds, one: '1 sec', other: '${seconds} sec')}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("Typical"),
@@ -112,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("Quran text color"),
     "read": MessageLookupByLibrary.simpleMessage("Read"),
     "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
+    "readingTimeMinutes": m5,
+    "readingTimeSeconds": m6,
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("Remove bookmark"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage(

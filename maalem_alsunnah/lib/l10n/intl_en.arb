@@ -56,6 +56,8 @@
   "quranTextColor": "Quran text color",
   "read": "Read",
   "readingTime": "Reading time",
+  "readingTimeMinutes": "{minutes, plural, zero{Under a minute} one{1 min} other{{minutes} min}}",
+  "readingTimeSeconds": "{seconds, plural, one{1 sec} other{{seconds} sec}}",
   "refresh": "Refresh",
   "removeBookmark": "Remove bookmark",
   "reportMisspelled": "Report misspelled",

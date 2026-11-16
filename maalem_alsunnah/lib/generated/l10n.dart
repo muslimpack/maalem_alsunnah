@@ -487,6 +487,31 @@ class S {
     );
   }
 
+  /// `{minutes, plural, zero{Under a minute} one{1 min} other{{minutes} min}}`
+  String readingTimeMinutes(num minutes) {
+    return Intl.plural(
+      minutes,
+      zero: 'Under a minute',
+      one: '1 min',
+      other: '$minutes min',
+      name: 'readingTimeMinutes',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `{seconds, plural, one{1 sec} other{{seconds} sec}}`
+  String readingTimeSeconds(num seconds) {
+    return Intl.plural(
+      seconds,
+      one: '1 sec',
+      other: '$seconds sec',
+      name: 'readingTimeSeconds',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
   /// `Refresh`
   String get refresh {
     return Intl.message('Refresh', name: 'refresh', desc: '', args: []);

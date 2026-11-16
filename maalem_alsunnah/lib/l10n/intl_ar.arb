@@ -56,6 +56,8 @@
   "quranTextColor": "لون نص القرآن",
   "read": "قرأته",
   "readingTime": "وقت القراءة",
+  "readingTimeMinutes": "{minutes, plural, zero{أقل من دقيقة} one{دقيقة} two{دقيقتان} few{{minutes} دقائق} many{{minutes} دقيقة} other{{minutes} دقيقة}}",
+  "readingTimeSeconds": "{seconds, plural, one{ثانية} two{ثانيتان} few{{seconds} ثوانٍ} many{{seconds} ثانية} other{{seconds} ثانية}}",
   "refresh": "تحديث",
   "removeBookmark": "حذف من المفضلة",
   "reportMisspelled": "تبليغ عن خطأ",

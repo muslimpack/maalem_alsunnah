@@ -31,6 +31,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
 
+  static String m5(minutes) =>
+      "${Intl.plural(minutes, zero: 'أقل من دقيقة', one: 'دقيقة', two: 'دقيقتان', few: '${minutes} دقائق', many: '${minutes} دقيقة', other: '${minutes} دقيقة')}";
+
+  static String m6(seconds) =>
+      "${Intl.plural(seconds, one: 'ثانية', two: 'ثانيتان', few: '${seconds} ثوانٍ', many: '${seconds} ثانية', other: '${seconds} ثانية')}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
@@ -108,6 +114,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
     "read": MessageLookupByLibrary.simpleMessage("قرأته"),
     "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
+    "readingTimeMinutes": m5,
+    "readingTimeSeconds": m6,
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),

@@ -146,7 +146,7 @@ class _ContentViewerBuilderBody extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        content.text.getArabicTextReadingTimeAsString(context),
+                        content.text.getArabicTextReadingTimeAsString(context) ?? '',
                         style: theme.textTheme.bodySmall?.copyWith(
                           fontSize: 12,
                           color: mutedColor?.withValues(alpha: 0.7),
