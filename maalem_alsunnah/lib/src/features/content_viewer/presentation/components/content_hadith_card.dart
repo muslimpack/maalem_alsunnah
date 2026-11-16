@@ -192,17 +192,14 @@ class _Footer extends StatelessWidget {
         if (hasMeta)
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              spacing: 8,
+            // One flow: references, grade, read state. Items move to the next
+            // line instead of being squeezed, so the grade is never cut.
+            child: Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Expanded(
-                  child: Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
-                    children: [for (final ref in parts.references) _ReferenceChip(reference: ref)],
-                  ),
-                ),
+                for (final ref in parts.references) _ReferenceChip(reference: ref),
                 if (parts.grade != null) _GradeChip(grade: parts.grade!, level: parts.gradeLevel),
                 if (isRead)
                   Row(
@@ -318,18 +315,26 @@ class _GradeChip extends StatelessWidget {
       HadithGradeLevel.neutral => (colors.surfaceContainerHighest, colors.onSurfaceVariant),
     };
 
-    return Flexible(
-      child: _Pill(label: grade, background: background, foreground: foreground),
-    );
+    // A long grade ("إسناده صحيح على شرط الشيخين") wraps inside the chip
+    // rather than being cut.
+    return _Pill(label: grade, background: background, foreground: foreground, wrap: true);
   }
 }
 
 class _Pill extends StatelessWidget {
-  const _Pill({required this.label, required this.background, required this.foreground});
+  const _Pill({
+    required this.label,
+    required this.background,
+    required this.foreground,
+    this.wrap = false,
+  });
 
   final String label;
   final Color background;
   final Color foreground;
+
+  /// Let the text wrap onto more lines instead of being cut with "…".
+  final bool wrap;
 
   @override
   Widget build(BuildContext context) {
@@ -340,8 +345,8 @@ class _Pill extends StatelessWidget {
       child: Text(
         label,
         textAlign: TextAlign.center,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        maxLines: wrap ? null : 1,
+        overflow: wrap ? null : TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: foreground,
               fontWeight: FontWeight.w600,
