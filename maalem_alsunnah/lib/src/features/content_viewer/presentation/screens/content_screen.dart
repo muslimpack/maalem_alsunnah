@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_bottom_bar.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_viewer_builder.dart';
@@ -16,6 +15,9 @@ class ContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ContentViewerCubit>();
+    final isRtl = Directionality.of(context) == TextDirection.rtl;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(state.title.name),
@@ -24,12 +26,26 @@ class ContentScreen extends StatelessWidget {
           FontSettingsIconButton(),
         ],
       ),
-      body: PageView.builder(
-        controller: context.read<ContentViewerCubit>().pageController,
-        itemCount: state.contentCount,
-        itemBuilder: (context, index) {
-          return ContentViewerBuilder(contentOrderId: index + 1);
+      // Keyboard navigation (desktop): arrows follow reading direction.
+      body: CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.arrowLeft):
+              isRtl ? cubit.nextContent : cubit.previousContent,
+          const SingleActivator(LogicalKeyboardKey.arrowRight):
+              isRtl ? cubit.previousContent : cubit.nextContent,
+          const SingleActivator(LogicalKeyboardKey.pageUp): cubit.previousContent,
+          const SingleActivator(LogicalKeyboardKey.pageDown): cubit.nextContent,
         },
+        child: Focus(
+          autofocus: true,
+          child: PageView.builder(
+            controller: cubit.pageController,
+            itemCount: state.contentCount,
+            itemBuilder: (context, index) {
+              return ContentViewerBuilder(contentOrderId: index + 1);
+            },
+          ),
+        ),
       ),
       bottomNavigationBar: ContentViewerBottomBar(state: state),
     );

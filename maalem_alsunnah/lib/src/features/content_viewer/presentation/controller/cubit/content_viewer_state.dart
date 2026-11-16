@@ -19,9 +19,9 @@ class ContentViewerLoadedState extends ContentViewerState {
   final RangeValues contentRange;
 
   int get contentCount => (contentRange.end - contentRange.start + 1).toInt();
-  double get progress => content.id / contentCount;
-  bool get hasPrevious => content.id > 1;
-  bool get hasNext => content.id < contentCount - 1;
+  double get progress => contentCount > 0 ? (content.orderId - contentRange.start + 1) / contentCount : 0.0;
+  bool get hasPrevious => content.orderId > contentRange.start;
+  bool get hasNext => content.orderId < contentRange.end;
 
   const ContentViewerLoadedState({
     required this.title,
