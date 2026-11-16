@@ -50,5 +50,5 @@ Future<void> initSL() async {
 
   /// Factory BLoC
   sl.registerFactory(() => ContentViewerCubit(sl(), sl()));
-  sl.registerFactory(() => ShareImageCubit(sl()));
+  sl.registerFactory(() => ShareImageCubit(sl(), sl()));
 }

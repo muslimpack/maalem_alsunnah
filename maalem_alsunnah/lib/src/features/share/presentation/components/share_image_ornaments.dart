@@ -141,7 +141,7 @@ class OrnamentFramePainter extends CustomPainter {
     // Stars sit where the rounded corner meets the diagonal.
     const d = outerInset + 28 * (1 - 1 / math.sqrt2);
     for (final corner in [
-      Offset(d, d),
+      const Offset(d, d),
       Offset(size.width - d, d),
       Offset(d, size.height - d),
       Offset(size.width - d, size.height - d),

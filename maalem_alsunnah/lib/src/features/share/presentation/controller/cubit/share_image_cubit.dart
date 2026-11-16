@@ -1,270 +1,278 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:bloc/bloc.dart';
-import 'package:capture_widget/core/widget_capture_controller.dart';
+import 'package:capture_widget/capture_widget.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/core/models/wrapped.dart';
+import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
-import 'package:maalem_alsunnah/src/features/share/data/models/hadith_image_card_settings.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_image_aspect.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_image_settings.dart';
+import 'package:maalem_alsunnah/src/features/share/data/models/share_image_theme.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
+import 'package:maalem_alsunnah/src/features/share/data/repository/share_image_settings_repo.dart';
+import 'package:maalem_alsunnah/src/features/share/domain/share_image_layout.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 part 'share_image_state.dart';
 
+enum ShareImageExportResult { shared, saved, cancelled, failed }
+
 class ShareImageCubit extends Cubit<ShareImageState> {
+  /// Exported images are the 1080-wide canvas at twice its size.
+  static const double exportPixelRatio = 2;
+
+  final HadithDbHelper hadithDbHelper;
+  final ShareImageSettingsRepo settingsRepo;
   final PageController pageController = PageController();
 
-  late final List<GlobalKey> imageKeys;
-  final HadithDbHelper hadithDbHelper;
+  Brightness _appBrightness = Brightness.dark;
 
-  ShareImageCubit(
-    this.hadithDbHelper,
-  ) : super(ShareImageLoadingState());
+  ShareImageCubit(this.hadithDbHelper, this.settingsRepo) : super(ShareImageLoadingState());
 
-  Future onPageChanged(int index) async {
-    final state = this.state;
-    if (state is! ShareImageLoadedState) return;
+  Future<void> start({
+    required String itemId,
+    required ShareType shareType,
+    required Brightness appBrightness,
+  }) async {
+    _appBrightness = appBrightness;
 
-    emit(state.copyWith(activeIndex: index));
-  }
-
-  FutureOr start({required String itemId, required ShareType shareType}) async {
     final String text;
-    int wordsCountPerSize = 0;
-    Size imageSize;
-    final List imageCardArgs = [];
+    final List<TitleModel> titleChain;
     switch (shareType) {
       case ShareType.content:
-        final int contentId = int.parse(itemId);
-        final content = await hadithDbHelper.getContentById(contentId);
-        final title = await hadithDbHelper.getTitleById(content.titleId);
-        final titleChain = await hadithDbHelper.getTitleChain(content.titleId);
-        imageCardArgs.add(content);
-        imageCardArgs.add(title);
-        imageCardArgs.add(titleChain);
+        final content = await hadithDbHelper.getContentById(int.parse(itemId));
         text = content.text;
-        wordsCountPerSize = 200;
-        imageSize = const Size(1500, 1920);
+        // A content item is its title's text, so the last title is left out.
+        final chain = await hadithDbHelper.getTitleChain(content.titleId);
+        titleChain = chain.isEmpty ? chain : chain.sublist(0, chain.length - 1);
       case ShareType.hadith:
         final hadith = (await hadithDbHelper.getHadithById(itemId))!;
-        final title = await hadithDbHelper.getTitleById(hadith.titleId);
-        final titleChain = await hadithDbHelper.getTitleChain(hadith.titleId);
-        imageCardArgs.add(hadith);
-        imageCardArgs.add(title);
-        imageCardArgs.add(titleChain);
         text = hadith.text;
-        wordsCountPerSize = 120;
-        imageSize = const Size(1080, 1080);
+        titleChain = await hadithDbHelper.getTitleChain(hadith.titleId);
     }
 
-    final settings = const HadithImageCardSettings.defaultSettings().copyWith(
-      charLengthPerSize: wordsCountPerSize,
-      imageSize: imageSize,
-    );
+    final settings = settingsRepo.settings;
+    final theme = settings.theme(_appBrightness);
+    final showTitleChain = settings.showTitleChain && titleChain.isNotEmpty;
 
-    final charsPerChunk = charPer1080(settings.charLengthPerSize, text);
-
-    appPrint(charsPerChunk);
-
-    final List<TextRange> splittedMatnRanges = splitStringIntoChunksRange(
-      text,
-      charsPerChunk,
-    );
-
-    imageKeys = List.generate(splittedMatnRanges.length, (index) => GlobalKey());
-
+    if (isClosed) return;
     emit(
       ShareImageLoadedState(
         itemId: itemId,
         shareType: shareType,
-        showLoadingIndicator: false,
-        settings: settings.copyWith(charLengthPerSize: charsPerChunk),
-        splittedMatn: splittedMatnRanges,
+        text: text,
+        titleChain: titleChain,
+        settings: settings,
+        theme: theme,
+        pagination: _paginate(text, theme, settings, showTitleChain: showTitleChain),
         activeIndex: 0,
-        imageCardArgs: imageCardArgs,
+        progress: null,
       ),
     );
   }
 
-  ///MARK: Split
-  int charPer1080(int standardLength, String text) {
-    if (text.length < standardLength) {
-      return standardLength;
-    }
-
-    final chunkCount = (text.split(" ").length / standardLength).ceil();
-
-    final charLength = text.split(" ").length ~/ chunkCount;
-    final overflowChars = text.split(" ").length % chunkCount;
-    final result = charLength + overflowChars;
-
-    appPrint(overflowChars);
-
-    return result + 2;
+  ShareImagePagination _paginate(
+    String text,
+    ShareImageTheme theme,
+    ShareImageSettings settings, {
+    required bool showTitleChain,
+  }) {
+    return TextPaginator.layout(
+      text: text,
+      theme: theme,
+      fontSize: settings.fontSize,
+      aspect: settings.aspect,
+      showTitleChain: showTitleChain,
+    );
   }
 
-  List<TextRange> splitStringIntoChunksRange(String text, int wordsPerChunk) {
-    // Handle edge cases
-    if (text.isEmpty || wordsPerChunk <= 0) {
-      return [];
+  /// MARK: Settings
+
+  void setPalette(ShareImagePalette palette) => _update((s) => s.copyWith(palette: palette));
+
+  void setBrightness(Brightness brightness) => _update((s) => s.copyWith(brightness: brightness));
+
+  void setAspect(ShareImageAspect aspect) => _update((s) => s.copyWith(aspect: aspect));
+
+  void increaseFontSize() => _update(
+        (s) => s.copyWith(fontSize: s.fontSize + ShareImageSettings.fontSizeStep),
+      );
+
+  void decreaseFontSize() => _update(
+        (s) => s.copyWith(fontSize: s.fontSize - ShareImageSettings.fontSizeStep),
+      );
+
+  void toggleTitleChain() => _update((s) => s.copyWith(showTitleChain: !s.showTitleChain));
+
+  void _update(ShareImageSettings Function(ShareImageSettings) change) {
+    final state = this.state;
+    if (state is! ShareImageLoadedState || state.isExporting) return;
+
+    final settings = change(state.settings);
+    if (settings == state.settings) return;
+    unawaited(settingsRepo.setSettings(settings));
+
+    final theme = settings.theme(_appBrightness);
+
+    // Colours alone don't move any text.
+    final layoutChanged = settings.aspect != state.settings.aspect ||
+        settings.fontSize != state.settings.fontSize ||
+        settings.showTitleChain != state.settings.showTitleChain;
+
+    final pagination = layoutChanged
+        ? _paginate(
+            state.text,
+            theme,
+            settings,
+            showTitleChain: settings.showTitleChain && state.titleChain.isNotEmpty,
+          )
+        : _recolor(state, theme, settings);
+
+    final activeIndex = state.activeIndex.clamp(0, pagination.pages.length - 1);
+    emit(
+      state.copyWith(
+        settings: settings,
+        theme: theme,
+        pagination: pagination,
+        activeIndex: activeIndex,
+      ),
+    );
+
+    if (pageController.hasClients && pageController.page?.round() != activeIndex) {
+      pageController.jumpToPage(activeIndex);
     }
-
-    final List<String> words = text.split(' ');
-    final List<TextRange> chunkIndices = [];
-
-    int chunkStart = 0;
-    int wordCount = 0;
-    int currentPos = 0;
-
-    for (int i = 0; i < words.length; i++) {
-      // Get the word's start and end indices in the text
-      final String word = words[i];
-      final int wordStart = text.indexOf(word, currentPos);
-      final int wordEnd = wordStart + word.length;
-
-      if (wordCount < wordsPerChunk) {
-        // Add the word to the current chunk
-        wordCount++;
-        currentPos = wordEnd;
-      }
-
-      // If the chunk reaches the word limit, finalize it
-      if (wordCount == wordsPerChunk || i == words.length - 1) {
-        chunkIndices.add(TextRange(start: chunkStart, end: wordEnd));
-
-        // Start a new chunk
-        chunkStart = wordEnd + 1; // Skip the space
-        wordCount = 0;
-      }
-    }
-
-    return chunkIndices;
   }
 
-  /// MARK: share Image
+  /// The same pages in a new theme's colours.
+  ShareImagePagination _recolor(
+    ShareImageLoadedState state,
+    ShareImageTheme theme,
+    ShareImageSettings settings,
+  ) {
+    final old = state.pagination;
+    return ShareImagePagination(
+      aspect: old.aspect,
+      canvasSize: old.canvasSize,
+      pages: old.pages,
+      // Keep the font size the pages were measured at (a single page may
+      // have grown past the chosen size).
+      source: SharePageText.format(state.text, theme, old.source.style.fontSize!),
+    );
+  }
 
-  Future<void> shareImage(bool shareAll) async {
+  void onPageChanged(int index) {
     final state = this.state;
     if (state is! ShareImageLoadedState) return;
+    emit(state.copyWith(activeIndex: index));
+  }
 
-    emit(state.copyWith(showLoadingIndicator: true));
+  /// MARK: Export
+
+  /// Renders the current page, or every page when [all], and shares them
+  /// (phones) or saves them to a folder the user picks (desktop).
+  ///
+  /// [pageBuilder] builds the card of a page. Pages are rendered off screen,
+  /// so ones the user never scrolled to come out too. Images the card shows
+  /// must be precached first.
+  Future<ShareImageExportResult> export({
+    required bool all,
+    required Widget Function(int index) pageBuilder,
+    Rect? shareOrigin,
+  }) async {
+    final state = this.state;
+    if (state is! ShareImageLoadedState || state.isExporting) {
+      return ShareImageExportResult.cancelled;
+    }
+
+    final indexes = all ? List.generate(state.pageCount, (i) => i) : [state.activeIndex];
 
     try {
-      const double pixelRatio = 2;
+      final files = <(String, List<int>)>[];
+      for (var i = 0; i < indexes.length; i++) {
+        _emitProgress((current: i + 1, total: indexes.length));
 
-      final List<ByteData> filesData = [];
-      final List<String> filesName = [];
-
-      if (shareAll) {
-        for (var i = 0; i < state.splittedMatn.length; i++) {
-          final captureWidgetController = CaptureWidgetController(imageKey: imageKeys[i]);
-          final image = await captureWidgetController.getImage(pixelRatio);
-          final byteData = await image?.toByteData(format: ImageByteFormat.png);
-
-          if (byteData == null) continue;
-
-          final fileName = _getHadithOutputFileName(
-            state.itemId,
-            i,
-            state.splittedMatn.length,
-          );
-          filesData.add(byteData);
-          filesName.add(fileName);
-        }
-      } else {
-        final captureWidgetController =
-            CaptureWidgetController(imageKey: imageKeys[state.activeIndex]);
-        final image = await captureWidgetController.getImage(pixelRatio);
-
-        final byteData = await image?.toByteData(format: ImageByteFormat.png);
-
-        if (byteData == null) return;
-
-        final fileName = _getHadithOutputFileName(
-          state.itemId,
-          state.activeIndex,
-          state.splittedMatn.length,
+        final index = indexes[i];
+        final image = await captureOffscreen(
+          pageBuilder(index),
+          logicalSize: state.pagination.canvasSize,
+          pixelRatio: exportPixelRatio,
+          textDirection: TextDirection.rtl,
         );
+        final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+        image.dispose();
+        if (bytes == null) throw StateError("Page ${index + 1} has no image data");
 
-        filesData.add(byteData);
-        filesName.add(fileName);
+        files.add((
+          _fileName(state.itemId, index, state.pageCount),
+          bytes.buffer.asUint8List(),
+        ));
       }
 
-      appPrint(filesData.length);
-      appPrint(filesName);
-
-      if (PlatformExtension.isDesktop) {
-        await _saveDesktop(filesData, fileName: filesName);
-      } else {
-        await _savePhone(filesData);
-      }
+      return PlatformExtension.isDesktop
+          ? await _saveDesktop(files)
+          : await _sharePhone(files, shareOrigin);
     } catch (e) {
       appPrint(e.toString());
+      return ShareImageExportResult.failed;
+    } finally {
+      _emitProgress(null);
     }
-
-    emit(state.copyWith(showLoadingIndicator: false));
   }
 
-  ///MARK: save Image
+  void _emitProgress(ShareImageProgress? progress) {
+    final state = this.state;
+    if (isClosed || state is! ShareImageLoadedState) return;
+    emit(state.copyWith(progress: Wrapped.value(progress)));
+  }
 
-  String _getHadithOutputFileName(String itemId, int index, int length) {
-    return _getOutputFileName(
-      "maalem_alsunnah-${itemId}_${index + 1}_of_$length",
+  String _fileName(String itemId, int index, int count) {
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final page = count > 1 ? "_${index + 1}-of-$count" : "";
+    return "maalem_alsunnah_$itemId${page}_$timestamp.png";
+  }
+
+  Future<ShareImageExportResult> _saveDesktop(List<(String, List<int>)> files) async {
+    final String? dir = await FilePicker.platform.getDirectoryPath();
+    if (dir == null) return ShareImageExportResult.cancelled;
+
+    for (final (name, bytes) in files) {
+      await File(path.join(dir, name)).writeAsBytes(bytes);
+    }
+    return ShareImageExportResult.saved;
+  }
+
+  Future<ShareImageExportResult> _sharePhone(
+    List<(String, List<int>)> files,
+    Rect? shareOrigin,
+  ) async {
+    // Old images are cleared before a new share, not right after one: the
+    // app the user shares to may still be reading them.
+    final dir = Directory(path.join((await getTemporaryDirectory()).path, "share_images"));
+    if (dir.existsSync()) await dir.delete(recursive: true);
+    await dir.create(recursive: true);
+
+    final xFiles = <XFile>[];
+    for (final (name, bytes) in files) {
+      final file = await File(path.join(dir.path, name)).writeAsBytes(bytes);
+      xFiles.add(XFile(file.path, mimeType: "image/png"));
+    }
+
+    final result = await SharePlus.instance.share(
+      ShareParams(files: xFiles, sharePositionOrigin: shareOrigin),
     );
+    return result.status == ShareResultStatus.dismissed
+        ? ShareImageExportResult.cancelled
+        : ShareImageExportResult.shared;
   }
-
-  String _getOutputFileName(String outputFileName) {
-    final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-    final fileName = "$outputFileName-$timestamp.png";
-    return fileName;
-  }
-
-  Future _saveDesktop(
-    List<ByteData> filesData, {
-    required List<String> fileName,
-  }) async {
-    final String? dir = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: 'Please select an output file:',
-    );
-
-    if (dir == null) return;
-
-    appPrint(dir);
-
-    for (var i = 0; i < filesData.length; i++) {
-      final Uint8List uint8List = filesData[i].buffer.asUint8List();
-      final File file = File(path.join(dir, fileName[i]));
-      await file.writeAsBytes(uint8List);
-    }
-  }
-
-  Future _savePhone(List<ByteData> filesData) async {
-    final tempDir = await getTemporaryDirectory();
-
-    final List<XFile> xFiles = [];
-    for (int i = 0; i < filesData.length; i++) {
-      final File file = await File('${tempDir.path}/SharedImage$i.png').create();
-      await file.writeAsBytes(filesData[i].buffer.asUint8List());
-      xFiles.add(XFile(file.path));
-    }
-
-    await SharePlus.instance.share(ShareParams(files: xFiles));
-
-    for (final file in xFiles) {
-      await File(file.path).delete();
-    }
-  }
-
-  /// **************************
 
   @override
   Future<void> close() {

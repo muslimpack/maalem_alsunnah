@@ -39,6 +39,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m7(seconds) =>
       "${Intl.plural(seconds, one: 'ثانية', two: 'ثانيتان', few: '${seconds} ثوانٍ', many: '${seconds} ثانية', other: '${seconds} ثانية')}";
 
+  static String m8(current, total) => "جارٍ تجهيز ${current} من ${total}…";
+
+  static String m9(count) => "حفظ الكل (${count})";
+
+  static String m10(count) => "مشاركة الكل (${count})";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "SearchTypeTypical": MessageLookupByLibrary.simpleMessage("بحث مطابق"),
@@ -144,6 +150,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
     "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
     "shareAsImage": MessageLookupByLibrary.simpleMessage("مشاركة كصورة"),
+    "shareImageAuto": MessageLookupByLibrary.simpleMessage("تلقائي"),
+    "shareImageColors": MessageLookupByLibrary.simpleMessage("الألوان"),
+    "shareImageContinued": MessageLookupByLibrary.simpleMessage("يتبع"),
+    "shareImageDark": MessageLookupByLibrary.simpleMessage("داكن"),
+    "shareImageFailed": MessageLookupByLibrary.simpleMessage(
+      "تعذر إنشاء الصورة",
+    ),
+    "shareImageLight": MessageLookupByLibrary.simpleMessage("فاتح"),
+    "shareImagePaletteEmerald": MessageLookupByLibrary.simpleMessage("زمردي"),
+    "shareImagePaletteIndigo": MessageLookupByLibrary.simpleMessage("نيلي"),
+    "shareImagePaletteMaroon": MessageLookupByLibrary.simpleMessage("عنابي"),
+    "shareImagePaletteSand": MessageLookupByLibrary.simpleMessage("رملي"),
+    "shareImagePreparing": m8,
+    "shareImageSaveAll": m9,
+    "shareImageSavePage": MessageLookupByLibrary.simpleMessage(
+      "حفظ هذه الصفحة",
+    ),
+    "shareImageSaved": MessageLookupByLibrary.simpleMessage("تم الحفظ"),
+    "shareImageShareAll": m10,
+    "shareImageSharePage": MessageLookupByLibrary.simpleMessage(
+      "مشاركة هذه الصفحة",
+    ),
+    "shareImageShowTitles": MessageLookupByLibrary.simpleMessage("العناوين"),
+    "shareImageSize": MessageLookupByLibrary.simpleMessage("المقاس"),
+    "shareImageTextSize": MessageLookupByLibrary.simpleMessage("حجم الخط"),
     "showDiacritics": MessageLookupByLibrary.simpleMessage("عرض التشكيل"),
     "source": MessageLookupByLibrary.simpleMessage("المصدر"),
     "sourceBookAuthor": MessageLookupByLibrary.simpleMessage("مؤلف الكتاب"),
