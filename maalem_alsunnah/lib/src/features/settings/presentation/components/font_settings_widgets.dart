@@ -13,7 +13,7 @@ class FontSettingsIconButton extends StatelessWidget {
     return IconButton(
       tooltip: S.of(context).fontSettings,
       padding: EdgeInsets.zero,
-      icon: const FaIcon(FontAwesomeIcons.quoteRight, size: 20),
+      icon: const _TextSizeGlyph(),
       onPressed: () async {
         await showDialog(
           context: context,
@@ -28,6 +28,32 @@ class FontSettingsIconButton extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+/// "Aa" (a large and a small letter), the usual sign for text-size
+/// settings, drawn at icon size in the icon colour.
+class _TextSizeGlyph extends StatelessWidget {
+  const _TextSizeGlyph();
+
+  @override
+  Widget build(BuildContext context) {
+    final color = IconTheme.of(context).color;
+    return SizedBox.square(
+      dimension: 24,
+      child: Center(
+        child: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(text: 'A', style: TextStyle(fontSize: 20, color: color)),
+              TextSpan(text: 'a', style: TextStyle(fontSize: 14, color: color)),
+            ],
+          ),
+          textDirection: TextDirection.ltr,
+          style: const TextStyle(fontWeight: FontWeight.w600, height: 1),
+        ),
+      ),
     );
   }
 }
