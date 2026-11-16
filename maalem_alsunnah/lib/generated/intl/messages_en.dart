@@ -22,19 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(number) => "Chapter ${number}";
 
-  static String m1(current, total) => "Content ${current} of ${total}";
+  static String m1(number, total) => "Chapter ${number} of ${total}";
 
-  static String m2(count) =>
+  static String m2(current, total) => "Content ${current} of ${total}";
+
+  static String m3(count) =>
       "${Intl.plural(count, one: '1 hadith', other: '${count} hadith')}";
 
-  static String m3(chars, words) => "${chars} chars • ${words} words";
+  static String m4(chars, words) => "${chars} chars • ${words} words";
 
-  static String m4(min, max) => "Enter a number from ${min} to ${max}";
+  static String m5(min, max) => "Enter a number from ${min} to ${max}";
 
-  static String m5(minutes) =>
+  static String m6(minutes) =>
       "${Intl.plural(minutes, zero: 'Under a minute', one: '1 min', other: '${minutes} min')}";
 
-  static String m6(seconds) =>
+  static String m7(seconds) =>
       "${Intl.plural(seconds, one: '1 sec', other: '${seconds} sec')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -51,11 +53,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "bold": MessageLookupByLibrary.simpleMessage("Bold"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("Bookamarks"),
     "chapterNumber": m0,
+    "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
     "contentNumber": MessageLookupByLibrary.simpleMessage("Content number"),
-    "contentXofY": m1,
+    "contentXofY": m2,
     "continueReading": MessageLookupByLibrary.simpleMessage("Continue reading"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copied to clipboard",
@@ -89,7 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "The Prophetic Sunnah from the most authentic to the weakest",
     ),
-    "hadithCount": m2,
+    "hadithCount": m3,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage(
       "Hadith text color",
     ),
@@ -106,9 +109,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "That\'s it, there are no more results.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("No results found"),
-    "noteStats": m3,
+    "noteStats": m4,
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-    "outOfRange": m4,
+    "outOfRange": m5,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "Pray for us and our parents.",
     ),
@@ -118,8 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("Quran text color"),
     "read": MessageLookupByLibrary.simpleMessage("Read"),
     "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
-    "readingTimeMinutes": m5,
-    "readingTimeSeconds": m6,
+    "readingTimeMinutes": m6,
+    "readingTimeSeconds": m7,
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("Remove bookmark"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage(

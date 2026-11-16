@@ -11,6 +11,7 @@
   "bold": "عريض",
   "bookmarks": "المفضلة",
   "chapterNumber": "باب {number}",
+  "chapterOfTotal": "باب {number} من {total}",
   "chat": "تواصل",
   "clear": "امحُ",
   "close": "أغلق",

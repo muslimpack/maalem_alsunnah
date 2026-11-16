@@ -22,19 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(number) => "باب ${number}";
 
-  static String m1(current, total) => "المحتوى ${current} من ${total}";
+  static String m1(number, total) => "باب ${number} من ${total}";
 
-  static String m2(count) =>
+  static String m2(current, total) => "المحتوى ${current} من ${total}";
+
+  static String m3(count) =>
       "${Intl.plural(count, zero: 'لا أحاديث', one: 'حديث واحد', two: 'حديثان', few: '${count} أحاديث', many: '${count} حديثًا', other: '${count} حديث')}";
 
-  static String m3(chars, words) => "${chars} حرف • ${words} كلمة";
+  static String m4(chars, words) => "${chars} حرف • ${words} كلمة";
 
-  static String m4(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
+  static String m5(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
 
-  static String m5(minutes) =>
+  static String m6(minutes) =>
       "${Intl.plural(minutes, zero: 'أقل من دقيقة', one: 'دقيقة', two: 'دقيقتان', few: '${minutes} دقائق', many: '${minutes} دقيقة', other: '${minutes} دقيقة')}";
 
-  static String m6(seconds) =>
+  static String m7(seconds) =>
       "${Intl.plural(seconds, one: 'ثانية', two: 'ثانيتان', few: '${seconds} ثوانٍ', many: '${seconds} ثانية', other: '${seconds} ثانية')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -51,11 +53,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "bold": MessageLookupByLibrary.simpleMessage("عريض"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "chapterNumber": m0,
+    "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
     "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
     "close": MessageLookupByLibrary.simpleMessage("أغلق"),
     "contentNumber": MessageLookupByLibrary.simpleMessage("رقم المحتوى"),
-    "contentXofY": m1,
+    "contentXofY": m2,
     "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "تم النسخ إلى الحافظة",
@@ -87,7 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
     ),
-    "hadithCount": m2,
+    "hadithCount": m3,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
     "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
     "italic": MessageLookupByLibrary.simpleMessage("مائل"),
@@ -102,9 +105,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "هذا كل شيء لا مزيد من النتائج.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
-    "noteStats": m3,
+    "noteStats": m4,
     "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
-    "outOfRange": m4,
+    "outOfRange": m5,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "نسألكم الدعاء لنا ولوالدينا",
     ),
@@ -114,8 +117,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
     "read": MessageLookupByLibrary.simpleMessage("قرأته"),
     "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
-    "readingTimeMinutes": m5,
-    "readingTimeSeconds": m6,
+    "readingTimeMinutes": m6,
+    "readingTimeSeconds": m7,
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),

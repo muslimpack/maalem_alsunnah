@@ -34,12 +34,20 @@ class ContentHadithCard extends StatelessWidget {
   /// chapter row itself, so it is one too high (and 1 for empty sections).
   final int chapterHadithCount;
 
+  /// For the chapter row that opens a page: show the path above it.
+  final bool showChapterPath;
+
+  /// For the chapter row that opens a page: the page's reading time.
+  final Widget? chapterReadingTime;
+
   const ContentHadithCard({
     super.key,
     required this.hadith,
     required this.textFormatterSettings,
     this.showTitleChain = false,
     this.chapterHadithCount = 0,
+    this.showChapterPath = false,
+    this.chapterReadingTime,
   });
 
   static bool isChapter(HadithModel hadith) => hadith.id.isEmpty;
@@ -67,7 +75,10 @@ class ContentHadithCard extends StatelessWidget {
     if (isChapter(hadith)) {
       return ChapterHeader(
         text: text,
+        titleId: hadith.titleId,
         hadithCount: chapterHadithCount,
+        showPath: showChapterPath,
+        readingTime: chapterReadingTime,
         textFormatterSettings: textFormatterSettings,
       );
     }

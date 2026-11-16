@@ -6,10 +6,10 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/string_extension.dart';
 import 'package:maalem_alsunnah/src/core/utils/dummy_data.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/data/models/text_formatter_settings.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/chapter_header.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/content_hadith_card.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/format_text.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/hadith_format_text_style.dart';
-import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/titles_chain_bread_crumb.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -90,8 +90,15 @@ class _ContentViewerBuilderBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextFormatterSettings textFormatterSettings = hadithTextFormatterSettings(context);
-    final theme = Theme.of(context);
-    final mutedColor = theme.textTheme.bodySmall?.color;
+
+    final Widget? readingTime = content.text.readableWordCount == 0
+        ? null
+        : ReadingTimeLabel(total: content.text.readingTime);
+
+    // Path and reading time go in the first chapter's opening; a page that
+    // doesn't start with a chapter gets a small opening of its own.
+    final startsWithChapter =
+        hadithList.isNotEmpty && ContentHadithCard.isChapter(hadithList.first);
 
     final Widget contentViewer;
     if (hadithList.isEmpty) {
@@ -111,60 +118,31 @@ class _ContentViewerBuilderBody extends StatelessWidget {
         itemCount: hadithList.length,
         itemBuilder: (context, index) {
           final hadith = hadithList[index];
+          final isOpening = index == 0 && startsWithChapter;
           return ContentHadithCard(
             hadith: hadith,
             textFormatterSettings: textFormatterSettings,
             chapterHadithCount: chapterCounts[index],
+            showChapterPath: isOpening,
+            chapterReadingTime: isOpening ? readingTime : null,
           );
         },
       );
     }
+
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: theme.dividerColor.withValues(alpha: 0.1),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TitlesChainBreadCrumb(titleId: content.titleId),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Icon(
-                        Icons.schedule_outlined,
-                        size: 14,
-                        color: mutedColor?.withValues(alpha: 0.6),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        content.text.getArabicTextReadingTimeAsString(context) ?? '',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          fontSize: 12,
-                          color: mutedColor?.withValues(alpha: 0.7),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+        if (!startsWithChapter)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: PageOpening(titleId: content.titleId, readingTime: readingTime),
             ),
           ),
-        ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           sliver: contentViewer,
-        )
+        ),
       ],
     );
   }

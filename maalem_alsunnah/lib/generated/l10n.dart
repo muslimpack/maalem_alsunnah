@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Chapter {number} of {total}`
+  String chapterOfTotal(Object number, Object total) {
+    return Intl.message(
+      'Chapter $number of $total',
+      name: 'chapterOfTotal',
+      desc: '',
+      args: [number, total],
+    );
+  }
+
   /// `Chat`
   String get chat {
     return Intl.message('Chat', name: 'chat', desc: '', args: []);

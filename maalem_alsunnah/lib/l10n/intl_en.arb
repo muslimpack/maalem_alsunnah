@@ -11,6 +11,7 @@
   "bold": "Bold",
   "bookmarks": "Bookamarks",
   "chapterNumber": "Chapter {number}",
+  "chapterOfTotal": "Chapter {number} of {total}",
   "chat": "Chat",
   "clear": "Clear",
   "close": "Close",
