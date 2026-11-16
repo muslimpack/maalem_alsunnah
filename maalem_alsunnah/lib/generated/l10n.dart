@@ -75,6 +75,11 @@ class S {
     return Intl.message('Add notes', name: 'addNotes', desc: '', args: []);
   }
 
+  /// `Agreed upon`
+  String get agreedUpon {
+    return Intl.message('Agreed upon', name: 'agreedUpon', desc: '', args: []);
+  }
+
   /// `All`
   String get all {
     return Intl.message('All', name: 'all', desc: '', args: []);
@@ -113,6 +118,16 @@ class S {
   /// `Bookamarks`
   String get bookmarks {
     return Intl.message('Bookamarks', name: 'bookmarks', desc: '', args: []);
+  }
+
+  /// `Chapter {number}`
+  String chapterNumber(Object number) {
+    return Intl.message(
+      'Chapter $number',
+      name: 'chapterNumber',
+      desc: '',
+      args: [number],
+    );
   }
 
   /// `Chat`
@@ -295,6 +310,18 @@ class S {
     );
   }
 
+  /// `{count, plural, one{1 hadith} other{{count} hadith}}`
+  String hadithCount(num count) {
+    return Intl.plural(
+      count,
+      one: '1 hadith',
+      other: '$count hadith',
+      name: 'hadithCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Hadith text color`
   String get hadithTextColor {
     return Intl.message(
@@ -445,6 +472,11 @@ class S {
     );
   }
 
+  /// `Read`
+  String get read {
+    return Intl.message('Read', name: 'read', desc: '', args: []);
+  }
+
   /// `Reading time`
   String get readingTime {
     return Intl.message(
@@ -493,6 +525,16 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `al-Bukhari`
+  String get sahihBukhari {
+    return Intl.message('al-Bukhari', name: 'sahihBukhari', desc: '', args: []);
+  }
+
+  /// `Muslim`
+  String get sahihMuslim {
+    return Intl.message('Muslim', name: 'sahihMuslim', desc: '', args: []);
   }
 
   /// `Search`

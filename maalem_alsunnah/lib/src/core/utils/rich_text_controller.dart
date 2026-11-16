@@ -308,6 +308,18 @@ class RichTextController extends TextEditingController {
     _syncPending(value);
   }
 
+  /// The text of a stored note without its formatting, e.g. for previews.
+  static String plainTextOf(String html) {
+    final buffer = StringBuffer();
+    var last = 0;
+    for (final m in _tagRegex.allMatches(html)) {
+      buffer.write(html.substring(last, m.start));
+      last = m.end;
+    }
+    buffer.write(html.substring(last));
+    return _unescape(buffer.toString());
+  }
+
   static String _escape(String s) =>
       s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 

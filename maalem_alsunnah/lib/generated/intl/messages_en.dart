@@ -20,11 +20,16 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(current, total) => "Content ${current} of ${total}";
+  static String m0(number) => "Chapter ${number}";
 
-  static String m1(chars, words) => "${chars} chars • ${words} words";
+  static String m1(current, total) => "Content ${current} of ${total}";
 
-  static String m2(min, max) => "Enter a number from ${min} to ${max}";
+  static String m2(count) =>
+      "${Intl.plural(count, one: '1 hadith', other: '${count} hadith')}";
+
+  static String m3(chars, words) => "${chars} chars • ${words} words";
+
+  static String m4(min, max) => "Enter a number from ${min} to ${max}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -32,17 +37,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutApp": MessageLookupByLibrary.simpleMessage("About app"),
     "addBookmark": MessageLookupByLibrary.simpleMessage("Add bookmark"),
     "addNotes": MessageLookupByLibrary.simpleMessage("Add notes"),
+    "agreedUpon": MessageLookupByLibrary.simpleMessage("Agreed upon"),
     "all": MessageLookupByLibrary.simpleMessage("All"),
     "appHashtag": MessageLookupByLibrary.simpleMessage("#maalem_alsunnah"),
     "appTitle": MessageLookupByLibrary.simpleMessage("Maalem Al-Sunnah"),
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
     "bold": MessageLookupByLibrary.simpleMessage("Bold"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("Bookamarks"),
+    "chapterNumber": m0,
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
     "contentNumber": MessageLookupByLibrary.simpleMessage("Content number"),
-    "contentXofY": m0,
+    "contentXofY": m1,
     "continueReading": MessageLookupByLibrary.simpleMessage("Continue reading"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copied to clipboard",
@@ -76,6 +83,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "The Prophetic Sunnah from the most authentic to the weakest",
     ),
+    "hadithCount": m2,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage(
       "Hadith text color",
     ),
@@ -92,9 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "That\'s it, there are no more results.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("No results found"),
-    "noteStats": m1,
+    "noteStats": m3,
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-    "outOfRange": m2,
+    "outOfRange": m4,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "Pray for us and our parents.",
     ),
@@ -102,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "previous": MessageLookupByLibrary.simpleMessage("Previous"),
     "quranTextColor": MessageLookupByLibrary.simpleMessage("Quran text color"),
+    "read": MessageLookupByLibrary.simpleMessage("Read"),
     "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("Remove bookmark"),
@@ -112,6 +121,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "roundBracketsColor": MessageLookupByLibrary.simpleMessage(
       "Round brackets color",
     ),
+    "sahihBukhari": MessageLookupByLibrary.simpleMessage("al-Bukhari"),
+    "sahihMuslim": MessageLookupByLibrary.simpleMessage("Muslim"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "searchFilters": MessageLookupByLibrary.simpleMessage("Search filters"),
     "searchForContent": MessageLookupByLibrary.simpleMessage("Content"),

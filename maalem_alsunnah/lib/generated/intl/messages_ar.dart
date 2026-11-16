@@ -20,11 +20,16 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(current, total) => "المحتوى ${current} من ${total}";
+  static String m0(number) => "باب ${number}";
 
-  static String m1(chars, words) => "${chars} حرف • ${words} كلمة";
+  static String m1(current, total) => "المحتوى ${current} من ${total}";
 
-  static String m2(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
+  static String m2(count) =>
+      "${Intl.plural(count, zero: 'لا أحاديث', one: 'حديث واحد', two: 'حديثان', few: '${count} أحاديث', many: '${count} حديثًا', other: '${count} حديث')}";
+
+  static String m3(chars, words) => "${chars} حرف • ${words} كلمة";
+
+  static String m4(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -32,17 +37,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "aboutApp": MessageLookupByLibrary.simpleMessage("عن التطبيق"),
     "addBookmark": MessageLookupByLibrary.simpleMessage("أضف للمفضلة"),
     "addNotes": MessageLookupByLibrary.simpleMessage("كتابة ملاحظات"),
+    "agreedUpon": MessageLookupByLibrary.simpleMessage("متفق عليه"),
     "all": MessageLookupByLibrary.simpleMessage("الجميع"),
     "appHashtag": MessageLookupByLibrary.simpleMessage("#معالم_السنة_النبوية"),
     "appTitle": MessageLookupByLibrary.simpleMessage("معالم السنة النبوية"),
     "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
     "bold": MessageLookupByLibrary.simpleMessage("عريض"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
+    "chapterNumber": m0,
     "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
     "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
     "close": MessageLookupByLibrary.simpleMessage("أغلق"),
     "contentNumber": MessageLookupByLibrary.simpleMessage("رقم المحتوى"),
-    "contentXofY": m0,
+    "contentXofY": m1,
     "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "تم النسخ إلى الحافظة",
@@ -74,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
     ),
+    "hadithCount": m2,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
     "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
     "italic": MessageLookupByLibrary.simpleMessage("مائل"),
@@ -88,9 +96,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "هذا كل شيء لا مزيد من النتائج.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
-    "noteStats": m1,
+    "noteStats": m3,
     "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
-    "outOfRange": m2,
+    "outOfRange": m4,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "نسألكم الدعاء لنا ولوالدينا",
     ),
@@ -98,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prefThemeDarkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
     "previous": MessageLookupByLibrary.simpleMessage("السابق"),
     "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
+    "read": MessageLookupByLibrary.simpleMessage("قرأته"),
     "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
@@ -106,6 +115,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "roundBracketsColor": MessageLookupByLibrary.simpleMessage(
       "لون الأقواس المستديرة",
     ),
+    "sahihBukhari": MessageLookupByLibrary.simpleMessage("البخاري"),
+    "sahihMuslim": MessageLookupByLibrary.simpleMessage("مسلم"),
     "search": MessageLookupByLibrary.simpleMessage("بحث"),
     "searchFilters": MessageLookupByLibrary.simpleMessage("مرشحات البحث"),
     "searchForContent": MessageLookupByLibrary.simpleMessage("المحتوى"),
