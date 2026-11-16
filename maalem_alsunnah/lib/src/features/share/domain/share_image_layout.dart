@@ -60,7 +60,7 @@ abstract final class ShareImageLayout {
 /// A text formatted once (hadith, Quran, brackets, numbers) and cut into
 /// pages by character ranges of [text].
 class SharePageText {
-  static const String ellipsis = "…";
+  static const String ellipsis = "...";
 
   final List<TextSpan> _spans;
   final TextStyle style;
@@ -114,10 +114,14 @@ class ShareImagePagination {
   final Size canvasSize;
   final List<TextRange> pages;
 
+  /// The formatted text the [pages] index into, at its final font size.
+  final SharePageText source;
+
   const ShareImagePagination({
     required this.aspect,
     required this.canvasSize,
     required this.pages,
+    required this.source,
   });
 }
 
@@ -140,31 +144,56 @@ class TextPaginator {
 
   String get _text => source.text;
 
-  /// Lays [source] out on [aspect], resolving [ShareImageAspect.auto] to the
-  /// smallest size that holds the whole text on one page.
+  /// How much a text that fits on one page may grow to fill the card.
+  static const double maxSinglePageGrowth = 1.4;
+
+  /// Lays [text] out on [aspect] at [fontSize], resolving
+  /// [ShareImageAspect.auto] to the smallest size that holds the whole text
+  /// on one page.
+  ///
+  /// When the text fits on one page its font grows (up to
+  /// [maxSinglePageGrowth]) to fill the card; split pages keep [fontSize].
   static ShareImagePagination layout({
-    required SharePageText source,
+    required String text,
+    required ShareImageTheme theme,
+    required double fontSize,
     required ShareImageAspect aspect,
     required bool showTitleChain,
   }) {
+    final source = SharePageText.format(text, theme, fontSize);
+    Size boxFor(ShareImageAspect a) => ShareImageLayout.bodySize(a.size!, showTitleChain: showTitleChain);
+    bool onePage(SharePageText s, ShareImageAspect a) => TextPaginator(s, boxFor(a)).fits(0, s.text.length);
+
     ShareImageAspect resolved = aspect;
     if (aspect == ShareImageAspect.auto) {
-      resolved = ShareImageAspect.tall;
-      for (final candidate in ShareImageAspect.fixed) {
-        final box = ShareImageLayout.bodySize(candidate.size!, showTitleChain: showTitleChain);
-        if (TextPaginator(source, box).fits(0, source.text.length)) {
-          resolved = candidate;
-          break;
-        }
-      }
+      resolved = ShareImageAspect.fixed.firstWhere(
+        (candidate) => onePage(source, candidate),
+        orElse: () => ShareImageAspect.tall,
+      );
     }
 
-    final canvas = resolved.size!;
-    final box = ShareImageLayout.bodySize(canvas, showTitleChain: showTitleChain);
+    final pages = TextPaginator(source, boxFor(resolved)).paginate();
+    if (pages.length > 1) {
+      return ShareImagePagination(
+        aspect: resolved,
+        canvasSize: resolved.size!,
+        pages: pages,
+        source: source,
+      );
+    }
+
+    // One page: grow the font in 2px steps while it still fits.
+    SharePageText best = source;
+    for (var size = fontSize + 2; size <= fontSize * maxSinglePageGrowth; size += 2) {
+      final bigger = SharePageText.format(text, theme, size);
+      if (!onePage(bigger, resolved)) break;
+      best = bigger;
+    }
     return ShareImagePagination(
       aspect: resolved,
-      canvasSize: canvas,
-      pages: TextPaginator(source, box).paginate(),
+      canvasSize: resolved.size!,
+      pages: [TextRange(start: 0, end: best.text.length)],
+      source: best,
     );
   }
 
