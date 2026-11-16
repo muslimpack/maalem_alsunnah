@@ -28,22 +28,46 @@ class ContentHadithCard extends StatelessWidget {
   final bool showTitleChain;
   final HadithModel hadith;
   final TextFormatterSettings textFormatterSettings;
+
+  /// For chapter rows: how many hadith follow it on the page (see
+  /// [chapterHadithCounts]). The `count` column can't be used: it counts the
+  /// chapter row itself, so it is one too high (and 1 for empty sections).
+  final int chapterHadithCount;
+
   const ContentHadithCard({
     super.key,
     required this.hadith,
     required this.textFormatterSettings,
     this.showTitleChain = false,
+    this.chapterHadithCount = 0,
   });
+
+  static bool isChapter(HadithModel hadith) => hadith.id.isEmpty;
+
+  /// For each row of [rows]: if it is a chapter, the number of hadith after it
+  /// up to the next chapter; otherwise 0.
+  static List<int> chapterHadithCounts(List<HadithModel> rows) {
+    final counts = List.filled(rows.length, 0);
+    int? chapter;
+    for (var i = 0; i < rows.length; i++) {
+      if (isChapter(rows[i])) {
+        chapter = i;
+      } else if (chapter != null) {
+        counts[chapter]++;
+      }
+    }
+    return counts;
+  }
 
   @override
   Widget build(BuildContext context) {
     final showDiacritics = context.select((SettingsCubit c) => c.state.showDiacritics);
     final text = showDiacritics ? hadith.text : hadith.searchText;
 
-    if (hadith.id.isEmpty) {
+    if (isChapter(hadith)) {
       return ChapterHeader(
         text: text,
-        hadithCount: hadith.count,
+        hadithCount: chapterHadithCount,
         textFormatterSettings: textFormatterSettings,
       );
     }

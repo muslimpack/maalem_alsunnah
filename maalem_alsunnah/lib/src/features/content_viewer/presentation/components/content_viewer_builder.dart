@@ -106,6 +106,7 @@ class _ContentViewerBuilderBody extends StatelessWidget {
         ]),
       );
     } else {
+      final chapterCounts = ContentHadithCard.chapterHadithCounts(hadithList);
       contentViewer = SliverList.builder(
         itemCount: hadithList.length,
         itemBuilder: (context, index) {
@@ -113,6 +114,7 @@ class _ContentViewerBuilderBody extends StatelessWidget {
           return ContentHadithCard(
             hadith: hadith,
             textFormatterSettings: textFormatterSettings,
+            chapterHadithCount: chapterCounts[index],
           );
         },
       );
