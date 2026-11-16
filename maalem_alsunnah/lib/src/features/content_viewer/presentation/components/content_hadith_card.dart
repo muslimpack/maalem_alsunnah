@@ -133,6 +133,7 @@ class _Header extends StatelessWidget {
     final sourceLabel = switch (parts.source) {
       HadithSource.agreedUpon => s.agreedUpon,
       HadithSource.bukhari => s.sahihBukhari,
+      HadithSource.bukhariMuallaq => s.bukhariMuallaq,
       HadithSource.muslim => s.sahihMuslim,
       null => null,
     };

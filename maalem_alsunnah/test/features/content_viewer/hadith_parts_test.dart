@@ -15,12 +15,39 @@ void main() {
         HadithReference(code: 'خ', detail: '15'),
         HadithReference(code: 'م', detail: '44'),
       ]);
-      expect(p.references.first.bookName, 'صحيح البخاري');
+      expect(p.references.first.bookName, 'البخاري');
       expect(p.grade, isNull);
     });
 
-    test('source code with tatweel', () {
-      expect(HadithParts.parse('7 - (خــ) عن ...[خ1]').source, HadithSource.bukhari);
+    test("(خ) is al-Bukhari; (خــ) with tatweel is his mu'allaq reports", () {
+      expect(HadithParts.parse('7 - (خ) عن ...[خ1]').source, HadithSource.bukhari);
+      expect(HadithParts.parse('7 - (خــ) عن ...[خ1]').source, HadithSource.bukhariMuallaq);
+      expect(HadithParts.parse('7 - (خـ) عن ...[خ1]').source, HadithSource.bukhariMuallaq);
+    });
+
+    test("every code in the book's table has a meaning", () {
+      const table = {
+        'خ': 'البخاري',
+        'م': 'مسلم',
+        'خـ': 'معلقات البخاري',
+        'د': 'سنن أبي داود',
+        'ت': 'سنن الترمذي',
+        'ن': 'سنن النسائي',
+        'جه': 'سنن ابن ماجه',
+        'مي': 'سنن الدارمي',
+        'حم': 'المسند',
+        'ط': 'الموطأ',
+        'مه': 'ابن خزيمة',
+        'حب': 'ابن حبان',
+        'ك': 'المستدرك',
+        'هق': 'سنن البيهقي',
+        'مخ': 'الأحاديث المختارة',
+      };
+      table.forEach((code, name) {
+        expect(HadithReference.parse('${code}12').bookName, name, reason: code);
+      });
+      // Repeated tatweel is the same code.
+      expect(HadithReference.parse('خــ12').code, 'خـ');
     });
 
     test('no source code; reference followed by a grading line', () {
@@ -44,7 +71,8 @@ void main() {
     });
 
     test('a long paragraph after the last bracket means it is not a reference', () {
-      const text = '5 - عن ... [خ1]\n\nوفي رواية: «...» طويلة جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا';
+      const text =
+          '5 - عن ... [خ1]\n\nوفي رواية: «...» طويلة جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا جدا';
       final p = HadithParts.parse(text);
       expect(p.references, isEmpty);
       expect(p.body, text.substring('5 - '.length));
@@ -56,8 +84,17 @@ void main() {
       expect(p.body, 'عن ... [وانظر: 3560 في أركان الإيمان].');
     });
 
+    test('a part without its own code continues the previous reference', () {
+      final p = HadithParts.parse(
+        '11 - عن أنس ... «ذلك»[مخ5/1773/حب354/هق10/123]\n\nإسناده صحيح.',
+      );
+      expect(p.references.map((r) => r.label), ['مخ 5/1773', 'حب 354', 'هق 10/123']);
+      expect(p.references.first.bookName, 'الأحاديث المختارة');
+    });
+
     test('a word is not mistaken for a collection code', () {
-      expect(HadithReference.parse('العلم 11'), const HadithReference(code: null, detail: 'العلم 11'));
+      expect(
+          HadithReference.parse('العلم 11'), const HadithReference(code: null, detail: 'العلم 11'));
       expect(HadithReference.parse('جه3973'), const HadithReference(code: 'جه', detail: '3973'));
     });
 

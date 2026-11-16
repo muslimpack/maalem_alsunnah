@@ -120,6 +120,16 @@ class S {
     return Intl.message('Bookamarks', name: 'bookmarks', desc: '', args: []);
   }
 
+  /// `al-Bukhari (mu'allaq)`
+  String get bukhariMuallaq {
+    return Intl.message(
+      'al-Bukhari (mu\'allaq)',
+      name: 'bukhariMuallaq',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Chapter {number}`
   String chapterNumber(Object number) {
     return Intl.message(

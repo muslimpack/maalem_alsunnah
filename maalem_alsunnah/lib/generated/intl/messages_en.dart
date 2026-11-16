@@ -52,6 +52,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
     "bold": MessageLookupByLibrary.simpleMessage("Bold"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("Bookamarks"),
+    "bukhariMuallaq": MessageLookupByLibrary.simpleMessage(
+      "al-Bukhari (mu\'allaq)",
+    ),
     "chapterNumber": m0,
     "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),

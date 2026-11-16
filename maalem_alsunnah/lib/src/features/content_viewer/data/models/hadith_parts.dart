@@ -7,7 +7,9 @@
 /// [body] untouched, so parsing never loses text.
 library;
 
-enum HadithSource { agreedUpon, bukhari, muslim }
+/// The source code at the start of a hadith: (ق), (خ), (م), or (خـ) for the
+/// mu'allaq (unconnected) reports of al-Bukhari.
+enum HadithSource { agreedUpon, bukhari, bukhariMuallaq, muslim }
 
 enum HadithGradeLevel { accepted, weak, neutral }
 
@@ -23,27 +25,38 @@ class HadithReference {
   factory HadithReference.parse(String raw) {
     final m = RegExp(r'^([ء-ي]{1,3})(?![ء-ي])\.?\s*(.*)$').firstMatch(raw.trim());
     if (m == null) return HadithReference(code: null, detail: raw.trim());
-    return HadithReference(code: m.group(1), detail: m.group(2)!.trim());
+    // "خــ" and "خـ" are the same code (معلقات البخاري): keep one tatweel.
+    final code = m.group(1)!.replaceAll(RegExp('ـ+'), 'ـ');
+    return HadithReference(code: code, detail: m.group(2)!.trim());
   }
 
-  /// Full name of the collection for [code], for tooltips.
+  /// What [code] stands for, as given in the book's own table of codes
+  /// (المقدمة › المبحث الثالث › ثالثاً: المصطلحات).
   String? get bookName => _bookNames[code];
 
   String get label => code == null ? detail : '$code $detail'.trim();
 
+  /// The book's table of codes, in its order and wording. (In the table `ت`
+  /// also marks the author's footnotes, but inside a reference it is always
+  /// the Sunan of al-Tirmidhi.)
   static const _bookNames = {
-    'خ': 'صحيح البخاري',
-    'م': 'صحيح مسلم',
+    'خ': 'البخاري',
+    'م': 'مسلم',
+    'ق': 'متفق عليه',
+    'خـ': 'معلقات البخاري',
     'د': 'سنن أبي داود',
-    'ت': 'جامع الترمذي',
+    'ت': 'سنن الترمذي',
     'ن': 'سنن النسائي',
     'جه': 'سنن ابن ماجه',
     'مي': 'سنن الدارمي',
-    'حم': 'مسند أحمد',
-    'ط': 'موطأ مالك',
-    'هق': 'السنن الكبرى للبيهقي',
-    'ك': 'المستدرك للحاكم',
-    'حب': 'صحيح ابن حبان',
+    'حم': 'المسند',
+    'ط': 'الموطأ',
+    'مه': 'ابن خزيمة',
+    'حب': 'ابن حبان',
+    'ك': 'المستدرك',
+    'هق': 'سنن البيهقي',
+    'مخ': 'الأحاديث المختارة',
+    'ع': 'من رواية عبدالله بن الإمام أحمد أو وجاداته',
   };
 
   @override
@@ -80,7 +93,7 @@ class HadithParts {
     return HadithGradeLevel.neutral;
   }
 
-  static final _head = RegExp(r'^\s*(\d+)\s*-\s*(?:\(\s*(ق|خ|م)ـ*\s*\)\s*)?');
+  static final _head = RegExp(r'^\s*(\d+)\s*-\s*(?:\(\s*(ق|خ|م)(ـ*)\s*\)\s*)?');
   static final _lastBracket = RegExp(r'\[([^\[\]]*)\]');
   static final _refStart = RegExp(r'^\s*[ء-ي]{1,3}\.?\s*\d');
 
@@ -92,8 +105,10 @@ class HadithParts {
     final head = _head.firstMatch(rest);
     if (head != null) {
       number = head.group(1);
+      final muallaq = head.group(3)?.isNotEmpty ?? false;
       source = switch (head.group(2)) {
         'ق' => HadithSource.agreedUpon,
+        'خ' when muallaq => HadithSource.bukhariMuallaq,
         'خ' => HadithSource.bukhari,
         'م' => HadithSource.muslim,
         _ => null,
@@ -109,22 +124,41 @@ class HadithParts {
       final last = brackets.last;
       final inner = last.group(1)!;
       final tail = rest.substring(last.end).trim();
-      final tailIsGrade = tail.isEmpty || (tail.length <= 60 && !tail.contains('\n') && !tail.contains('«'));
+      final tailIsGrade =
+          tail.isEmpty || (tail.length <= 60 && !tail.contains('\n') && !tail.contains('«'));
       if (tailIsGrade && _refStart.hasMatch(inner)) {
         return HadithParts(
           number: number,
           source: source,
           body: rest.substring(0, last.start).trim(),
-          references: [
-            for (final part in inner.split('/'))
-              if (part.trim().isNotEmpty) HadithReference.parse(part),
-          ],
+          references: _parseReferences(inner),
           grade: _cleanGrade(tail),
         );
       }
     }
 
     return HadithParts(number: number, source: source, body: rest);
+  }
+
+  /// Splits `خ15/م44` into references. A part without its own code continues
+  /// the one before it: `مخ5/1773` is volume 5, number 1773 of the same book
+  /// (likewise `هق10/123`), so it stays one reference, `مخ 5/1773`.
+  static List<HadithReference> _parseReferences(String inner) {
+    final references = <HadithReference>[];
+    for (final part in inner.split('/')) {
+      if (part.trim().isEmpty) continue;
+      final reference = HadithReference.parse(part);
+      if (reference.code == null && references.isNotEmpty) {
+        final previous = references.removeLast();
+        references.add(HadithReference(
+          code: previous.code,
+          detail: '${previous.detail}/${reference.detail}',
+        ));
+      } else {
+        references.add(reference);
+      }
+    }
+    return references;
   }
 
   static String? _cleanGrade(String tail) {
