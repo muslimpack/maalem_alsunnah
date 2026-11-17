@@ -30,8 +30,8 @@ class StartupErrorApp extends StatelessWidget {
       navigatorObservers: [BotToastNavigatorObserver()],
       home: ErrorScreen(
         report: report,
-        onReport: () => reporter.sendReport(report),
-        onCopy: () => reporter.copyReport(report),
+        onReport: reporter.sendReport,
+        onCopy: reporter.copyReport,
         onHome: null,
         onContact: reporter.contactPlain,
       ),

@@ -385,6 +385,16 @@ class S {
     );
   }
 
+  /// `What were you doing when it happened? (optional)`
+  String get errorDescribe {
+    return Intl.message(
+      'What were you doing when it happened? (optional)',
+      name: 'errorDescribe',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Report copied`
   String get errorReportCopied {
     return Intl.message(
@@ -395,20 +405,10 @@ class S {
     );
   }
 
-  /// `Describe what you were doing when the error happened:`
-  String get errorReportDescribe {
-    return Intl.message(
-      'Describe what you were doing when the error happened:',
-      name: 'errorReportDescribe',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Send this report to {email}\nand describe what you were doing when the error happened:\n`
+  /// `Send this report to {email}`
   String errorReportShareText(Object email) {
     return Intl.message(
-      'Send this report to $email\nand describe what you were doing when the error happened:\n',
+      'Send this report to $email',
       name: 'errorReportShareText',
       desc: '',
       args: [email],

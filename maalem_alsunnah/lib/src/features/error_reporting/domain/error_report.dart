@@ -9,7 +9,20 @@ class ErrorReport {
     required this.device,
     required this.recentEvents,
     required this.createdAt,
+    this.userDescription = '',
   });
+
+  /// What the user says they were doing; optional, so it may be empty.
+  final String userDescription;
+
+  ErrorReport withDescription(String description) => ErrorReport(
+        error: error,
+        stackTrace: stackTrace,
+        device: device,
+        recentEvents: recentEvents,
+        createdAt: createdAt,
+        userDescription: description.trim(),
+      );
 
   final Object error;
   final StackTrace? stackTrace;
@@ -42,6 +55,12 @@ class ErrorReport {
       ..writeln('=== Error report ===')
       ..writeln('Time (UTC): ${createdAt.toUtc().toIso8601String()}')
       ..writeln();
+    final description = userDescription.trim();
+    _section(
+      sb,
+      'User description',
+      description.isEmpty ? const [] : [description],
+    );
     _section(sb, 'Device', device.lines);
     _section(sb, 'Error', [error.toString().trimRight()]);
     _section(sb, 'Stack trace', stack.isEmpty ? const [] : [stack]);

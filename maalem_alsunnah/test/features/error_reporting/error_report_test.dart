@@ -18,19 +18,25 @@ void main() {
   );
 
   group('ErrorReport', () {
-    test('text has device, error, stack and recent events, in that order', () {
+    test(
+        'text has the user description, device, error, stack and recent '
+        'events, in that order', () {
       final report = ErrorReport(
         error: 'Bad state: No element',
         stackTrace: StackTrace.fromString('#0 main (file.dart:1)'),
         device: device,
         recentEvents: const ['09:00:00 route: /home'],
         createdAt: DateTime.utc(2026, 11, 17, 10, 22, 5),
-      );
+      ).withDescription('  Opened a bookmark\nthen it closed  ');
 
       expect(
         report.toText(),
         '=== Error report ===\n'
         'Time (UTC): 2026-11-17T10:22:05.000Z\n'
+        '\n'
+        '=== User description ===\n'
+        'Opened a bookmark\n'
+        'then it closed\n'
         '\n'
         '=== Device ===\n'
         'App version: 0.2.01+3\n'
@@ -62,8 +68,21 @@ void main() {
         createdAt: DateTime.utc(2026),
       ).toText();
 
+      expect(text, contains('=== User description ===\n(none)\n'));
       expect(text, contains('=== Stack trace ===\n(none)\n'));
       expect(text, contains('=== Recent events ===\n(none)\n'));
+    });
+
+    test('a blank description counts as none', () {
+      final report = ErrorReport(
+        error: 'oops',
+        stackTrace: null,
+        device: device,
+        recentEvents: const [],
+        createdAt: DateTime.utc(2026),
+      ).withDescription('   \n ');
+
+      expect(report.toText(), contains('=== User description ===\n(none)\n'));
     });
 
     test('file name is a filesystem-safe timestamp', () {

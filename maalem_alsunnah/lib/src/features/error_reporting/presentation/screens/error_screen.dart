@@ -4,7 +4,8 @@ import 'package:maalem_alsunnah/src/features/error_reporting/domain/error_report
 
 /// Shown when an unexpected error happens. Purely presentational: the
 /// actions are passed in, so it also works before the app finished starting.
-class ErrorScreen extends StatelessWidget {
+/// Send and copy get the report with what the user typed, if anything.
+class ErrorScreen extends StatefulWidget {
   const ErrorScreen({
     super.key,
     required this.report,
@@ -19,17 +20,34 @@ class ErrorScreen extends StatelessWidget {
   static const homeKey = Key('error_screen_home');
   static const contactKey = Key('error_screen_contact');
   static const detailsKey = Key('error_screen_details');
+  static const descriptionKey = Key('error_screen_description');
 
   final ErrorReport report;
-  final VoidCallback onReport;
-  final VoidCallback onCopy;
+  final ValueChanged<ErrorReport> onReport;
+  final ValueChanged<ErrorReport> onCopy;
   final VoidCallback? onHome;
   final VoidCallback onContact;
+
+  @override
+  State<ErrorScreen> createState() => _ErrorScreenState();
+}
+
+class _ErrorScreenState extends State<ErrorScreen> {
+  final _description = TextEditingController();
+
+  @override
+  void dispose() {
+    _description.dispose();
+    super.dispose();
+  }
+
+  ErrorReport get _report => widget.report.withDescription(_description.text);
 
   @override
   Widget build(BuildContext context) {
     final strings = _ErrorStrings.of(context);
     final colors = Theme.of(context).colorScheme;
+    final onHome = widget.onHome;
 
     return Scaffold(
       body: SafeArea(
@@ -56,29 +74,43 @@ class ErrorScreen extends StatelessWidget {
               child: Directionality(
                 textDirection: TextDirection.ltr,
                 child: Text(
-                  report.summary,
+                  widget.report.summary,
                   style: TextStyle(color: colors.onErrorContainer),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+            TextField(
+              key: ErrorScreen.descriptionKey,
+              controller: _description,
+              minLines: 3,
+              maxLines: 8,
+              // Keeps the details section in step with what's typed.
+              onChanged: (_) => setState(() {}),
+              decoration: InputDecoration(
+                labelText: strings.describe,
+                alignLabelWithHint: true,
+                border: const OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
             FilledButton.icon(
-              key: reportKey,
-              onPressed: onReport,
+              key: ErrorScreen.reportKey,
+              onPressed: () => widget.onReport(_report),
               icon: const Icon(Icons.send),
               label: Text(strings.sendReport),
             ),
             const SizedBox(height: 8),
             OutlinedButton.icon(
-              key: copyKey,
-              onPressed: onCopy,
+              key: ErrorScreen.copyKey,
+              onPressed: () => widget.onCopy(_report),
               icon: const Icon(Icons.copy),
               label: Text(strings.copyDetails),
             ),
             if (onHome != null) ...[
               const SizedBox(height: 8),
               OutlinedButton.icon(
-                key: homeKey,
+                key: ErrorScreen.homeKey,
                 onPressed: onHome,
                 icon: const Icon(Icons.home_outlined),
                 label: Text(strings.backHome),
@@ -86,20 +118,20 @@ class ErrorScreen extends StatelessWidget {
             ],
             const SizedBox(height: 8),
             TextButton.icon(
-              key: contactKey,
-              onPressed: onContact,
+              key: ErrorScreen.contactKey,
+              onPressed: widget.onContact,
               icon: const Icon(Icons.mail_outline),
               label: Text(strings.contactDeveloper),
             ),
             const SizedBox(height: 16),
             ExpansionTile(
-              key: detailsKey,
+              key: ErrorScreen.detailsKey,
               title: Text(strings.showDetails),
               children: [
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: SelectableText(
-                    report.toText(),
+                    _report.toText(),
                     style:
                         const TextStyle(fontFamily: 'monospace', fontSize: 12),
                   ),
@@ -124,6 +156,7 @@ class _ErrorStrings {
     required this.backHome,
     required this.contactDeveloper,
     required this.showDetails,
+    required this.describe,
   });
 
   factory _ErrorStrings.of(BuildContext context) {
@@ -137,6 +170,7 @@ class _ErrorStrings {
       backHome: s.errorBackHome,
       contactDeveloper: s.contactDeveloper,
       showDetails: s.errorShowDetails,
+      describe: s.errorDescribe,
     );
   }
 
@@ -148,6 +182,7 @@ class _ErrorStrings {
     backHome: 'العودة للرئيسية',
     contactDeveloper: 'تواصل مع المطور',
     showDetails: 'عرض التفاصيل',
+    describe: 'ماذا كنت تفعل عند حدوث الخطأ؟ (اختياري)',
   );
 
   final String title;
@@ -157,4 +192,5 @@ class _ErrorStrings {
   final String backHome;
   final String contactDeveloper;
   final String showDetails;
+  final String describe;
 }

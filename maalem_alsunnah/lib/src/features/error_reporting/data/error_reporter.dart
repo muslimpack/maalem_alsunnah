@@ -83,8 +83,8 @@ class ErrorReporter {
           settings: const RouteSettings(name: '/error'),
           builder: (_) => ErrorScreen(
             report: report,
-            onReport: () => sendReport(report),
-            onCopy: () => copyReport(report),
+            onReport: sendReport,
+            onCopy: copyReport,
             onHome: () => navigator.pushNamedAndRemoveUntil(
               HomeScreen.routeName,
               (_) => false,
@@ -155,7 +155,7 @@ class ErrorReporter {
       mailtoUri(
         to: kOrgEmail,
         subject: _subject('Error report'),
-        body: '$shareText\n${report.summary}\n\n',
+        body: '$shareText\n\n${_mailBody(report)}',
       ),
       fallbackText: report.toText(),
     );
@@ -170,15 +170,11 @@ class ErrorReporter {
       if (!capabilities.canSend || !capabilities.supportsAttachments) {
         return false;
       }
-      final describe = _tryS(
-        (s) => s.errorReportDescribe,
-        'اشرح ما كنت تفعله عند حدوث الخطأ:',
-      );
       await FlutterEmailSender.send(
         mail.Email(
           recipients: const [kOrgEmail],
           subject: _subject('Error report'),
-          body: '$describe\n\n\n---\n${report.summary}\n',
+          body: _mailBody(report),
           attachments: [
             mail.EmailAttachment.data(
               Uint8List.fromList(utf8.encode(report.toText())),
@@ -238,8 +234,16 @@ class ErrorReporter {
 
   String _shareText() => _tryS(
         (s) => s.errorReportShareText(kOrgEmail),
-        'أرسل هذا التقرير إلى $kOrgEmail\nواشرح ما كنت تفعله عند حدوث الخطأ:\n',
+        'أرسل هذا التقرير إلى $kOrgEmail',
       );
+
+  /// The user's own words first (they're also in the file), then the error.
+  static String _mailBody(ErrorReport report) {
+    final description = report.userDescription;
+    return description.isEmpty
+        ? '${report.summary}\n'
+        : '$description\n\n---\n${report.summary}\n';
+  }
 
   String _subject(String what) {
     final title = _tryS((s) => s.appTitle, 'معالم السنة النبوية');

@@ -25,14 +25,23 @@ void main() {
     createdAt: DateTime.utc(2026, 11, 17),
   );
 
-  Future<List<String>> pumpScreen(WidgetTester tester) async {
+  Future<List<String>> pumpScreen(
+    WidgetTester tester, {
+    List<ErrorReport>? sent,
+  }) async {
     final calls = <String>[];
     await tester.pumpWidget(
       MaterialApp(
         home: ErrorScreen(
           report: report,
-          onReport: () => calls.add('report'),
-          onCopy: () => calls.add('copy'),
+          onReport: (r) {
+            calls.add('report');
+            sent?.add(r);
+          },
+          onCopy: (r) {
+            calls.add('copy');
+            sent?.add(r);
+          },
           onHome: () => calls.add('home'),
           onContact: () => calls.add('contact'),
         ),
@@ -58,13 +67,56 @@ void main() {
     expect(calls, ['report', 'copy', 'home', 'contact']);
   });
 
+  testWidgets('what the user typed goes with the report and the copy',
+      (tester) async {
+    final sent = <ErrorReport>[];
+    await pumpScreen(tester, sent: sent);
+
+    await tester.enterText(
+      find.byKey(ErrorScreen.descriptionKey),
+      'Opened a bookmark',
+    );
+    for (final key in [ErrorScreen.reportKey, ErrorScreen.copyKey]) {
+      await tester.ensureVisible(find.byKey(key));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(key));
+    }
+
+    expect(sent, hasLength(2));
+    for (final r in sent) {
+      expect(
+        r.toText(),
+        contains('=== User description ===\nOpened a bookmark\n'),
+      );
+    }
+  });
+
+  testWidgets('sending without typing anything is allowed', (tester) async {
+    final sent = <ErrorReport>[];
+    await pumpScreen(tester, sent: sent);
+
+    await tester.ensureVisible(find.byKey(ErrorScreen.reportKey));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(ErrorScreen.reportKey));
+
+    expect(
+      sent.single.toText(),
+      contains('=== User description ===\n(none)\n'),
+    );
+  });
+
   testWidgets('details stay hidden until asked for, then show the report',
       (tester) async {
     await pumpScreen(tester);
 
     expect(find.textContaining('#0 main (file.dart:1)'), findsNothing);
 
-    await tester.ensureVisible(find.byKey(ErrorScreen.detailsKey));
+    // Below the fold, so the lazy list hasn't built it yet.
+    await tester.scrollUntilVisible(
+      find.byKey(ErrorScreen.detailsKey),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(ErrorScreen.detailsKey));
     await tester.pumpAndSettle();

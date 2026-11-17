@@ -31,8 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(current, total) => "المحتوى ${current} من ${total}";
 
-  static String m5(email) =>
-      "أرسل هذا التقرير إلى ${email}\nواشرح ما كنت تفعله عند حدوث الخطأ:\n";
+  static String m5(email) => "أرسل هذا التقرير إلى ${email}";
 
   static String m6(count) =>
       "${Intl.plural(count, zero: 'لا أحاديث', one: 'حديث واحد', two: 'حديثان', few: '${count} أحاديث', many: '${count} حديثًا', other: '${count} حديث')}";
@@ -113,10 +112,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "نعتذر عن ذلك. إرسال تقرير الخطأ يساعدنا على إصلاحه.",
     ),
     "errorCopyDetails": MessageLookupByLibrary.simpleMessage("نسخ التفاصيل"),
-    "errorReportCopied": MessageLookupByLibrary.simpleMessage("تم نسخ التقرير"),
-    "errorReportDescribe": MessageLookupByLibrary.simpleMessage(
-      "اشرح ما كنت تفعله عند حدوث الخطأ:",
+    "errorDescribe": MessageLookupByLibrary.simpleMessage(
+      "ماذا كنت تفعل عند حدوث الخطأ؟ (اختياري)",
     ),
+    "errorReportCopied": MessageLookupByLibrary.simpleMessage("تم نسخ التقرير"),
     "errorReportShareText": m5,
     "errorSendReport": MessageLookupByLibrary.simpleMessage(
       "إرسال تقرير الخطأ",
