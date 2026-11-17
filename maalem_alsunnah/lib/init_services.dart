@@ -11,6 +11,7 @@ import 'package:maalem_alsunnah/src/core/di/dependency_injection.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_bloc_observer.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/app_info.dart';
 import 'package:maalem_alsunnah/src/features/themes/data/repository/theme_repo.dart';
 import 'package:maalem_alsunnah/src/features/ui/data/repository/ui_repo.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +20,8 @@ import 'package:window_manager/window_manager.dart';
 
 Future<void> initServices() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await AppInfo.load();
 
   Bloc.observer = AppBlocObserver();
 
