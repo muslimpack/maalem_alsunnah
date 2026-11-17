@@ -9,6 +9,7 @@ import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_mode
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_view_enum.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/domain/repository/bookmark_repo.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
@@ -113,7 +114,8 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
       await bookmarkRepository.addOrUpdateBookmark(
         bookmark: updatedBookmark,
       );
-    } catch (e) {
+    } catch (e, stack) {
+      ErrorReporter.instance.record(e, stack, where: 'BookmarksBloc');
       appPrint(e);
     }
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 
 class UIRepo {
   final Box box;
@@ -24,7 +25,8 @@ class UIRepo {
       final double height = (data['height'] as num).toDouble();
 
       return Size(width, height);
-    } catch (e) {
+    } catch (e, stack) {
+      ErrorReporter.instance.record(e, stack, where: 'UIRepo');
       appPrint(e);
     }
     return defaultSize;

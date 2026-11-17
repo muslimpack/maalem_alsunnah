@@ -130,6 +130,11 @@ class S {
     );
   }
 
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
   /// `Chapter {number}`
   String chapterNumber(Object number) {
     return Intl.message(
@@ -163,6 +168,131 @@ class S {
   /// `Close`
   String get close {
     return Intl.message('Close', name: 'close', desc: '', args: []);
+  }
+
+  /// `Contact the developer`
+  String get contactDeveloper {
+    return Intl.message(
+      'Contact the developer',
+      name: 'contactDeveloper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message`
+  String get contactMessage {
+    return Intl.message('Message', name: 'contactMessage', desc: '', args: []);
+  }
+
+  /// `Write at least {min} characters`
+  String contactMessageTooShort(Object min) {
+    return Intl.message(
+      'Write at least $min characters',
+      name: 'contactMessageTooShort',
+      desc: '',
+      args: [min],
+    );
+  }
+
+  /// `No email app found, the message was copied. Send it to {email}`
+  String contactNoEmailApp(Object email) {
+    return Intl.message(
+      'No email app found, the message was copied. Send it to $email',
+      name: 'contactNoEmailApp',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Send`
+  String get contactSend {
+    return Intl.message('Send', name: 'contactSend', desc: '', args: []);
+  }
+
+  /// `Include device info`
+  String get contactShareDeviceInfo {
+    return Intl.message(
+      'Include device info',
+      name: 'contactShareDeviceInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contains no personal data. The following will be included:`
+  String get contactShareDeviceInfoHint {
+    return Intl.message(
+      'Contains no personal data. The following will be included:',
+      name: 'contactShareDeviceInfoHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message type`
+  String get contactType {
+    return Intl.message(
+      'Message type',
+      name: 'contactType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bug report`
+  String get contactTypeBug {
+    return Intl.message(
+      'Bug report',
+      name: 'contactTypeBug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content error`
+  String get contactTypeContentError {
+    return Intl.message(
+      'Content error',
+      name: 'contactTypeContentError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feature request`
+  String get contactTypeFeatureRequest {
+    return Intl.message(
+      'Feature request',
+      name: 'contactTypeFeatureRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get contactTypeOther {
+    return Intl.message('Other', name: 'contactTypeOther', desc: '', args: []);
+  }
+
+  /// `Question`
+  String get contactTypeQuestion {
+    return Intl.message(
+      'Question',
+      name: 'contactTypeQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose a message type`
+  String get contactTypeRequired {
+    return Intl.message(
+      'Choose a message type',
+      name: 'contactTypeRequired',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Content number`
@@ -223,6 +353,96 @@ class S {
   /// `Done`
   String get done {
     return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `Back to home`
+  String get errorBackHome {
+    return Intl.message(
+      'Back to home',
+      name: 'errorBackHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry about that. Sending the error report helps us fix it.`
+  String get errorBody {
+    return Intl.message(
+      'Sorry about that. Sending the error report helps us fix it.',
+      name: 'errorBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy details`
+  String get errorCopyDetails {
+    return Intl.message(
+      'Copy details',
+      name: 'errorCopyDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report copied`
+  String get errorReportCopied {
+    return Intl.message(
+      'Report copied',
+      name: 'errorReportCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Describe what you were doing when the error happened:`
+  String get errorReportDescribe {
+    return Intl.message(
+      'Describe what you were doing when the error happened:',
+      name: 'errorReportDescribe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send this report to {email}\nand describe what you were doing when the error happened:\n`
+  String errorReportShareText(Object email) {
+    return Intl.message(
+      'Send this report to $email\nand describe what you were doing when the error happened:\n',
+      name: 'errorReportShareText',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Send error report`
+  String get errorSendReport {
+    return Intl.message(
+      'Send error report',
+      name: 'errorSendReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show details`
+  String get errorShowDetails {
+    return Intl.message(
+      'Show details',
+      name: 'errorShowDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get errorTitle {
+    return Intl.message(
+      'Something went wrong',
+      name: 'errorTitle',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `First`
@@ -390,6 +610,36 @@ class S {
   /// `Misspelled`
   String get misspelled {
     return Intl.message('Misspelled', name: 'misspelled', desc: '', args: []);
+  }
+
+  /// `Correction`
+  String get misspellingCorrection {
+    return Intl.message(
+      'Correction',
+      name: 'misspellingCorrection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write the word or sentence as it should be`
+  String get misspellingCorrectionHint {
+    return Intl.message(
+      'Write the word or sentence as it should be',
+      name: 'misspellingCorrectionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Original text`
+  String get misspellingOriginal {
+    return Intl.message(
+      'Original text',
+      name: 'misspellingOriginal',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Next`

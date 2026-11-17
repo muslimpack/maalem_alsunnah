@@ -9,6 +9,7 @@ import 'package:maalem_alsunnah/src/core/utils/app_nav_observer.dart';
 import 'package:maalem_alsunnah/src/core/utils/app_router.dart';
 import 'package:maalem_alsunnah/src/core/utils/scroll_behavior.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/controller/cubit/home_cubit.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_screen.dart';
 import 'package:maalem_alsunnah/src/features/search/presentation/controller/cubit/search_cubit.dart';
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
+            navigatorKey: ErrorReporter.instance.navigatorKey,
             onGenerateTitle: (context) => S.of(context).appTitle,
             theme: state.theme,
             locale: state.locale,

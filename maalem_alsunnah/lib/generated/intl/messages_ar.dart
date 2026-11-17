@@ -24,26 +24,34 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(number, total) => "باب ${number} من ${total}";
 
-  static String m2(current, total) => "المحتوى ${current} من ${total}";
+  static String m2(min) => "اكتب ${min} أحرف على الأقل";
 
-  static String m3(count) =>
+  static String m3(email) =>
+      "لم يُعثر على تطبيق بريد، تم نسخ الرسالة. أرسلها إلى ${email}";
+
+  static String m4(current, total) => "المحتوى ${current} من ${total}";
+
+  static String m5(email) =>
+      "أرسل هذا التقرير إلى ${email}\nواشرح ما كنت تفعله عند حدوث الخطأ:\n";
+
+  static String m6(count) =>
       "${Intl.plural(count, zero: 'لا أحاديث', one: 'حديث واحد', two: 'حديثان', few: '${count} أحاديث', many: '${count} حديثًا', other: '${count} حديث')}";
 
-  static String m4(chars, words) => "${chars} حرف • ${words} كلمة";
+  static String m7(chars, words) => "${chars} حرف • ${words} كلمة";
 
-  static String m5(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
+  static String m8(min, max) => "أدخل رقمًا من ${min} إلى ${max}";
 
-  static String m6(minutes) =>
+  static String m9(minutes) =>
       "${Intl.plural(minutes, zero: 'أقل من دقيقة', one: 'دقيقة', two: 'دقيقتان', few: '${minutes} دقائق', many: '${minutes} دقيقة', other: '${minutes} دقيقة')}";
 
-  static String m7(seconds) =>
+  static String m10(seconds) =>
       "${Intl.plural(seconds, one: 'ثانية', two: 'ثانيتان', few: '${seconds} ثوانٍ', many: '${seconds} ثانية', other: '${seconds} ثانية')}";
 
-  static String m8(current, total) => "جارٍ تجهيز ${current} من ${total}…";
+  static String m11(current, total) => "جارٍ تجهيز ${current} من ${total}…";
 
-  static String m9(count) => "حفظ الكل (${count})";
+  static String m12(count) => "حفظ الكل (${count})";
 
-  static String m10(count) => "مشاركة الكل (${count})";
+  static String m13(count) => "مشاركة الكل (${count})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -59,13 +67,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "bold": MessageLookupByLibrary.simpleMessage("عريض"),
     "bookmarks": MessageLookupByLibrary.simpleMessage("المفضلة"),
     "bukhariMuallaq": MessageLookupByLibrary.simpleMessage("معلقات البخاري"),
+    "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "chapterNumber": m0,
     "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("تواصل"),
     "clear": MessageLookupByLibrary.simpleMessage("امحُ"),
     "close": MessageLookupByLibrary.simpleMessage("أغلق"),
+    "contactDeveloper": MessageLookupByLibrary.simpleMessage("تواصل مع المطور"),
+    "contactMessage": MessageLookupByLibrary.simpleMessage("الرسالة"),
+    "contactMessageTooShort": m2,
+    "contactNoEmailApp": m3,
+    "contactSend": MessageLookupByLibrary.simpleMessage("إرسال"),
+    "contactShareDeviceInfo": MessageLookupByLibrary.simpleMessage(
+      "إرفاق معلومات الجهاز",
+    ),
+    "contactShareDeviceInfoHint": MessageLookupByLibrary.simpleMessage(
+      "لا تتضمن أي بيانات شخصية. سيُرفق ما يلي:",
+    ),
+    "contactType": MessageLookupByLibrary.simpleMessage("نوع الرسالة"),
+    "contactTypeBug": MessageLookupByLibrary.simpleMessage("الإبلاغ عن خطأ"),
+    "contactTypeContentError": MessageLookupByLibrary.simpleMessage(
+      "خطأ في المحتوى",
+    ),
+    "contactTypeFeatureRequest": MessageLookupByLibrary.simpleMessage(
+      "اقتراح ميزة",
+    ),
+    "contactTypeOther": MessageLookupByLibrary.simpleMessage("أخرى"),
+    "contactTypeQuestion": MessageLookupByLibrary.simpleMessage("سؤال"),
+    "contactTypeRequired": MessageLookupByLibrary.simpleMessage(
+      "اختر نوع الرسالة",
+    ),
     "contentNumber": MessageLookupByLibrary.simpleMessage("رقم المحتوى"),
-    "contentXofY": m2,
+    "contentXofY": m4,
     "continueReading": MessageLookupByLibrary.simpleMessage("استكمال القراءة"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "تم النسخ إلى الحافظة",
@@ -75,6 +108,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "عدد النتائج المعروضة",
     ),
     "done": MessageLookupByLibrary.simpleMessage("تم"),
+    "errorBackHome": MessageLookupByLibrary.simpleMessage("العودة للرئيسية"),
+    "errorBody": MessageLookupByLibrary.simpleMessage(
+      "نعتذر عن ذلك. إرسال تقرير الخطأ يساعدنا على إصلاحه.",
+    ),
+    "errorCopyDetails": MessageLookupByLibrary.simpleMessage("نسخ التفاصيل"),
+    "errorReportCopied": MessageLookupByLibrary.simpleMessage("تم نسخ التقرير"),
+    "errorReportDescribe": MessageLookupByLibrary.simpleMessage(
+      "اشرح ما كنت تفعله عند حدوث الخطأ:",
+    ),
+    "errorReportShareText": m5,
+    "errorSendReport": MessageLookupByLibrary.simpleMessage(
+      "إرسال تقرير الخطأ",
+    ),
+    "errorShowDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
+    "errorTitle": MessageLookupByLibrary.simpleMessage("حدث خطأ غير متوقع"),
     "first": MessageLookupByLibrary.simpleMessage("الأول"),
     "fontDecreaseSize": MessageLookupByLibrary.simpleMessage("تقليل حجم الخط"),
     "fontIncreaseSize": MessageLookupByLibrary.simpleMessage("تكبير حجم الخط"),
@@ -97,7 +145,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "معالم السنة النبوية وهو خلاصة 14 كتابا هي أصول كتب السنة",
     ),
-    "hadithCount": m3,
+    "hadithCount": m6,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage("لون نص الحديث"),
     "index": MessageLookupByLibrary.simpleMessage("الفهرس"),
     "italic": MessageLookupByLibrary.simpleMessage("مائل"),
@@ -106,15 +154,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "markAsUnread": MessageLookupByLibrary.simpleMessage("تعليم كغير مقروء"),
     "minutes": MessageLookupByLibrary.simpleMessage("د"),
     "misspelled": MessageLookupByLibrary.simpleMessage("خطأ إملائي"),
+    "misspellingCorrection": MessageLookupByLibrary.simpleMessage("التصحيح"),
+    "misspellingCorrectionHint": MessageLookupByLibrary.simpleMessage(
+      "اكتب الكلمة أو الجملة كما ينبغي أن تكون",
+    ),
+    "misspellingOriginal": MessageLookupByLibrary.simpleMessage("النص الأصلي"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
     "no": MessageLookupByLibrary.simpleMessage("لا"),
     "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
       "هذا كل شيء لا مزيد من النتائج.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("لا توجد نتائج"),
-    "noteStats": m4,
+    "noteStats": m7,
     "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
-    "outOfRange": m5,
+    "outOfRange": m8,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "نسألكم الدعاء لنا ولوالدينا",
     ),
@@ -124,8 +177,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("لون نص القرآن"),
     "read": MessageLookupByLibrary.simpleMessage("قرأته"),
     "readingTime": MessageLookupByLibrary.simpleMessage("وقت القراءة"),
-    "readingTimeMinutes": m6,
-    "readingTimeSeconds": m7,
+    "readingTimeMinutes": m9,
+    "readingTimeSeconds": m10,
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("حذف من المفضلة"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage("تبليغ عن خطأ"),
@@ -162,13 +215,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareImagePaletteIndigo": MessageLookupByLibrary.simpleMessage("نيلي"),
     "shareImagePaletteMaroon": MessageLookupByLibrary.simpleMessage("عنابي"),
     "shareImagePaletteSand": MessageLookupByLibrary.simpleMessage("رملي"),
-    "shareImagePreparing": m8,
-    "shareImageSaveAll": m9,
+    "shareImagePreparing": m11,
+    "shareImageSaveAll": m12,
     "shareImageSavePage": MessageLookupByLibrary.simpleMessage(
       "حفظ هذه الصفحة",
     ),
     "shareImageSaved": MessageLookupByLibrary.simpleMessage("تم الحفظ"),
-    "shareImageShareAll": m10,
+    "shareImageShareAll": m13,
     "shareImageSharePage": MessageLookupByLibrary.simpleMessage(
       "مشاركة هذه الصفحة",
     ),

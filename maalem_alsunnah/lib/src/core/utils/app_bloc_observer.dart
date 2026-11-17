@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/domain/app_log.dart';
 
 class AppBlocObserver extends BlocObserver {
   bool detailed = false;
@@ -7,6 +9,9 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
     if (bloc is Cubit) {
+      AppLog.instance.add(
+        '${bloc.runtimeType}: ${change.nextState.runtimeType}',
+      );
       if (detailed) {
         printColor(
           // ignore: avoid_dynamic_calls
@@ -26,6 +31,10 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
+    AppLog.instance.add(
+      '${bloc.runtimeType}: ${transition.event.runtimeType} -> '
+      '${transition.nextState.runtimeType}',
+    );
     if (detailed) {
       printColor(
         // ignore: avoid_dynamic_calls
@@ -39,5 +48,15 @@ class AppBlocObserver extends BlocObserver {
         color: PrintColors.magenta,
       );
     }
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    ErrorReporter.instance.record(
+      error,
+      stackTrace,
+      where: '${bloc.runtimeType}',
+    );
+    super.onError(bloc, error, stackTrace);
   }
 }
