@@ -8,6 +8,7 @@ import 'package:maalem_alsunnah/src/core/utils/email_manager.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/data/models/bookmark_type.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/components/note_dialog.dart';
 import 'package:maalem_alsunnah/src/features/bookmarks/presentation/controller/bloc/bookmarks_bloc.dart';
+import 'package:maalem_alsunnah/src/features/content_viewer/presentation/components/misspelling_dialog.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_type.dart';
 import 'package:maalem_alsunnah/src/features/share/presentation/components/share_dialog.dart';
@@ -46,7 +47,9 @@ class HadithCardPopupMenu extends StatelessWidget {
       case _HadithAction.share:
         await showShareDialog(context, shareType: ShareType.hadith, itemId: hadith.id);
       case _HadithAction.report:
-        await EmailManager.sendMisspelled(hadith: hadith);
+        final correction = await showMisspellingDialog(context);
+        if (correction == null) return;
+        await EmailManager.sendMisspelled(hadith: hadith, correction: correction);
     }
   }
 

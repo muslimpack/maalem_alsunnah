@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/content_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/hadith_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/search_for.dart';
@@ -143,7 +144,8 @@ class SearchCubit extends Cubit<SearchState> {
         final nextPageKey = pageKey + newItems.length;
         titlePagingController.appendPage(newItems, nextPageKey);
       }
-    } catch (error) {
+    } catch (error, stack) {
+      ErrorReporter.instance.record(error, stack, where: 'SearchCubit');
       titlePagingController.error = error;
     }
   }
@@ -167,7 +169,8 @@ class SearchCubit extends Cubit<SearchState> {
         final nextPageKey = pageKey + newItems.length;
         contentPagingController.appendPage(newItems, nextPageKey);
       }
-    } catch (error) {
+    } catch (error, stack) {
+      ErrorReporter.instance.record(error, stack, where: 'SearchCubit');
       contentPagingController.error = error;
     }
   }
@@ -191,7 +194,8 @@ class SearchCubit extends Cubit<SearchState> {
         final nextPageKey = pageKey + newItems.length;
         hadithPagingController.appendPage(newItems, nextPageKey);
       }
-    } catch (error) {
+    } catch (error, stack) {
+      ErrorReporter.instance.record(error, stack, where: 'SearchCubit');
       hadithPagingController.error = error;
     }
   }

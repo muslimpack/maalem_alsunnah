@@ -24,26 +24,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(number, total) => "Chapter ${number} of ${total}";
 
-  static String m2(current, total) => "Content ${current} of ${total}";
+  static String m2(min) => "Write at least ${min} characters";
 
-  static String m3(count) =>
+  static String m3(email) =>
+      "No email app found, the message was copied. Send it to ${email}";
+
+  static String m4(current, total) => "Content ${current} of ${total}";
+
+  static String m5(email) => "Send this report to ${email}";
+
+  static String m6(count) =>
       "${Intl.plural(count, one: '1 hadith', other: '${count} hadith')}";
 
-  static String m4(chars, words) => "${chars} chars • ${words} words";
+  static String m7(chars, words) => "${chars} chars • ${words} words";
 
-  static String m5(min, max) => "Enter a number from ${min} to ${max}";
+  static String m8(min, max) => "Enter a number from ${min} to ${max}";
 
-  static String m6(minutes) =>
+  static String m9(minutes) =>
       "${Intl.plural(minutes, zero: 'Under a minute', one: '1 min', other: '${minutes} min')}";
 
-  static String m7(seconds) =>
+  static String m10(seconds) =>
       "${Intl.plural(seconds, one: '1 sec', other: '${seconds} sec')}";
 
-  static String m8(current, total) => "Preparing ${current} of ${total}…";
+  static String m11(current, total) => "Preparing ${current} of ${total}…";
 
-  static String m9(count) => "Save all (${count})";
+  static String m12(count) => "Save all (${count})";
 
-  static String m10(count) => "Share all (${count})";
+  static String m13(count) => "Share all (${count})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -61,13 +68,40 @@ class MessageLookup extends MessageLookupByLibrary {
     "bukhariMuallaq": MessageLookupByLibrary.simpleMessage(
       "al-Bukhari (mu\'allaq)",
     ),
+    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "chapterNumber": m0,
     "chapterOfTotal": m1,
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "clear": MessageLookupByLibrary.simpleMessage("Clear"),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
+    "contactDeveloper": MessageLookupByLibrary.simpleMessage(
+      "Contact the developer",
+    ),
+    "contactMessage": MessageLookupByLibrary.simpleMessage("Message"),
+    "contactMessageTooShort": m2,
+    "contactNoEmailApp": m3,
+    "contactSend": MessageLookupByLibrary.simpleMessage("Send"),
+    "contactShareDeviceInfo": MessageLookupByLibrary.simpleMessage(
+      "Include device info",
+    ),
+    "contactShareDeviceInfoHint": MessageLookupByLibrary.simpleMessage(
+      "Contains no personal data. The following will be included:",
+    ),
+    "contactType": MessageLookupByLibrary.simpleMessage("Message type"),
+    "contactTypeBug": MessageLookupByLibrary.simpleMessage("Bug report"),
+    "contactTypeContentError": MessageLookupByLibrary.simpleMessage(
+      "Content error",
+    ),
+    "contactTypeFeatureRequest": MessageLookupByLibrary.simpleMessage(
+      "Feature request",
+    ),
+    "contactTypeOther": MessageLookupByLibrary.simpleMessage("Other"),
+    "contactTypeQuestion": MessageLookupByLibrary.simpleMessage("Question"),
+    "contactTypeRequired": MessageLookupByLibrary.simpleMessage(
+      "Choose a message type",
+    ),
     "contentNumber": MessageLookupByLibrary.simpleMessage("Content number"),
-    "contentXofY": m2,
+    "contentXofY": m4,
     "continueReading": MessageLookupByLibrary.simpleMessage("Continue reading"),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copied to clipboard",
@@ -77,6 +111,29 @@ class MessageLookup extends MessageLookupByLibrary {
       "Displayed results count",
     ),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
+    "errorBackHome": MessageLookupByLibrary.simpleMessage("Back to home"),
+    "errorBody": MessageLookupByLibrary.simpleMessage(
+      "Sorry about that. Sending the error report helps us fix it.",
+    ),
+    "errorCopyDetails": MessageLookupByLibrary.simpleMessage("Copy details"),
+    "errorDescribe": MessageLookupByLibrary.simpleMessage(
+      "What were you doing when it happened? (optional)",
+    ),
+    "errorPendingBody": MessageLookupByLibrary.simpleMessage(
+      "The app hit an error last time and the report wasn\'t sent. Would you like to send it?",
+    ),
+    "errorPendingDismiss": MessageLookupByLibrary.simpleMessage("Not now"),
+    "errorPendingSend": MessageLookupByLibrary.simpleMessage("Send report"),
+    "errorPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Unsent error report",
+    ),
+    "errorReportCopied": MessageLookupByLibrary.simpleMessage("Report copied"),
+    "errorReportShareText": m5,
+    "errorSendReport": MessageLookupByLibrary.simpleMessage(
+      "Send error report",
+    ),
+    "errorShowDetails": MessageLookupByLibrary.simpleMessage("Show details"),
+    "errorTitle": MessageLookupByLibrary.simpleMessage("Something went wrong"),
     "first": MessageLookupByLibrary.simpleMessage("First"),
     "fontDecreaseSize": MessageLookupByLibrary.simpleMessage(
       "Decrease font size",
@@ -101,7 +158,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hadithBookSourceDesc": MessageLookupByLibrary.simpleMessage(
       "The Prophetic Sunnah from the most authentic to the weakest",
     ),
-    "hadithCount": m3,
+    "hadithCount": m6,
     "hadithTextColor": MessageLookupByLibrary.simpleMessage(
       "Hadith text color",
     ),
@@ -112,15 +169,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "markAsUnread": MessageLookupByLibrary.simpleMessage("Mark as unread"),
     "minutes": MessageLookupByLibrary.simpleMessage("min"),
     "misspelled": MessageLookupByLibrary.simpleMessage("Misspelled"),
+    "misspellingCorrection": MessageLookupByLibrary.simpleMessage("Correction"),
+    "misspellingCorrectionHint": MessageLookupByLibrary.simpleMessage(
+      "Write the word or sentence as it should be",
+    ),
+    "misspellingOriginal": MessageLookupByLibrary.simpleMessage(
+      "Original text",
+    ),
     "next": MessageLookupByLibrary.simpleMessage("Next"),
     "no": MessageLookupByLibrary.simpleMessage("No"),
     "noMoreResultsMsg": MessageLookupByLibrary.simpleMessage(
       "That\'s it, there are no more results.",
     ),
     "noResultsFound": MessageLookupByLibrary.simpleMessage("No results found"),
-    "noteStats": m4,
+    "noteStats": m7,
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
-    "outOfRange": m5,
+    "outOfRange": m8,
     "prayForUsAndParents": MessageLookupByLibrary.simpleMessage(
       "Pray for us and our parents.",
     ),
@@ -130,8 +194,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "quranTextColor": MessageLookupByLibrary.simpleMessage("Quran text color"),
     "read": MessageLookupByLibrary.simpleMessage("Read"),
     "readingTime": MessageLookupByLibrary.simpleMessage("Reading time"),
-    "readingTimeMinutes": m6,
-    "readingTimeSeconds": m7,
+    "readingTimeMinutes": m9,
+    "readingTimeSeconds": m10,
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "removeBookmark": MessageLookupByLibrary.simpleMessage("Remove bookmark"),
     "reportMisspelled": MessageLookupByLibrary.simpleMessage(
@@ -170,13 +234,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareImagePaletteIndigo": MessageLookupByLibrary.simpleMessage("Indigo"),
     "shareImagePaletteMaroon": MessageLookupByLibrary.simpleMessage("Maroon"),
     "shareImagePaletteSand": MessageLookupByLibrary.simpleMessage("Sand"),
-    "shareImagePreparing": m8,
-    "shareImageSaveAll": m9,
+    "shareImagePreparing": m11,
+    "shareImageSaveAll": m12,
     "shareImageSavePage": MessageLookupByLibrary.simpleMessage(
       "Save this page",
     ),
     "shareImageSaved": MessageLookupByLibrary.simpleMessage("Saved"),
-    "shareImageShareAll": m10,
+    "shareImageShareAll": m13,
     "shareImageSharePage": MessageLookupByLibrary.simpleMessage(
       "Share this page",
     ),

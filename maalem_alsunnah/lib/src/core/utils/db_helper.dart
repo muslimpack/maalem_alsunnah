@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -50,7 +51,8 @@ class DBHelper {
       appPrint("Written file size: $writtenFileSize");
 
       appPrint("$dbName copy done");
-    } catch (e) {
+    } catch (e, stack) {
+      ErrorReporter.instance.record(e, stack, where: 'DBHelper');
       appPrint("$dbName copy failed: $e");
     }
   }

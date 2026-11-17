@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension.dart';
 import 'package:maalem_alsunnah/src/core/extensions/safe_padding_extension.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/presentation/screens/contact_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/components/font_settings_widgets.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/formatter_text_settings_screen.dart';
@@ -75,12 +77,26 @@ class SettingsScreen extends StatelessWidget {
               const FontSettingsToolbox(),
               const Divider(),
               ListTile(
+                leading: const Icon(Icons.mail_outline),
+                title: Text(S.of(context).contactDeveloper),
+                onTap: () => context.pushNamed(ContactScreen.routeName),
+              ),
+              ListTile(
                 leading: const Icon(Icons.info_outline),
                 title: Text(S.of(context).aboutApp),
                 onTap: () {
                   context.pushNamed(AboutScreen.routeName);
                 },
               ),
+              // Debug builds only: runs the whole error-reporting flow.
+              if (kDebugMode)
+                ListTile(
+                  leading: const Icon(Icons.bug_report_outlined),
+                  title: const Text('Trigger test error (debug)'),
+                  onTap: () => throw StateError(
+                    'Test error triggered from Settings',
+                  ),
+                ),
             ],
           ),
         );

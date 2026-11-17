@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/core/extensions/extension_platform.dart';
 import 'package:maalem_alsunnah/src/core/functions/print.dart';
 import 'package:maalem_alsunnah/src/core/models/wrapped.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:maalem_alsunnah/src/features/search/data/models/title_model.dart';
 import 'package:maalem_alsunnah/src/features/search/data/repository/hadith_db_helper.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_image_aspect.dart';
@@ -220,7 +221,8 @@ class ShareImageCubit extends Cubit<ShareImageState> {
       return PlatformExtension.isDesktop
           ? await _saveDesktop(files)
           : await _sharePhone(files, shareOrigin);
-    } catch (e) {
+    } catch (e, stack) {
+      ErrorReporter.instance.record(e, stack, where: 'ShareImageCubit');
       appPrint(e.toString());
       return ShareImageExportResult.failed;
     } finally {

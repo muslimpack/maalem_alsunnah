@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
 import 'package:maalem_alsunnah/src/features/share/data/models/share_image_settings.dart';
 
 class ShareImageSettingsRepo {
@@ -12,7 +13,8 @@ class ShareImageSettingsRepo {
     if (data == null) return const ShareImageSettings.defaults();
     try {
       return ShareImageSettings.fromJson(data);
-    } catch (_) {
+    } catch (error, stack) {
+      ErrorReporter.instance.record(error, stack, where: 'ShareImageSettingsRepo');
       return const ShareImageSettings.defaults();
     }
   }

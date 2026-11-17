@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/domain/app_log.dart';
 
 final List<Route> routeStack = [];
 
@@ -29,6 +30,7 @@ class AppNavigatorObserver extends NavigatorObserver {
   void _logNav(Route? route, String action) {
     if (route != null) {
       log('Screen: ${route.settings.name} * $action');
+      AppLog.instance.add('route $action: ${route.settings.name}');
     }
   }
 }

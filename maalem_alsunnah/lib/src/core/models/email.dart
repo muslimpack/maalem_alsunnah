@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:maalem_alsunnah/src/core/constants/constant.dart';
+import 'package:maalem_alsunnah/src/core/functions/mailto_uri.dart';
 
 class Email extends Equatable {
   final String mailTo;
@@ -29,5 +30,5 @@ class Email extends Equatable {
 }
 
 extension EmailExt on Email {
-  String get getURI => 'mailto:$mailTo?subject=$subject&body=$body';
+  Uri get uri => mailtoUri(to: mailTo, subject: subject, body: body);
 }
