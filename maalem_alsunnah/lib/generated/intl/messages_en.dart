@@ -119,6 +119,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorDescribe": MessageLookupByLibrary.simpleMessage(
       "What were you doing when it happened? (optional)",
     ),
+    "errorPendingBody": MessageLookupByLibrary.simpleMessage(
+      "The app hit an error last time and the report wasn\'t sent. Would you like to send it?",
+    ),
+    "errorPendingDismiss": MessageLookupByLibrary.simpleMessage("Not now"),
+    "errorPendingSend": MessageLookupByLibrary.simpleMessage("Send report"),
+    "errorPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "Unsent error report",
+    ),
     "errorReportCopied": MessageLookupByLibrary.simpleMessage("Report copied"),
     "errorReportShareText": m5,
     "errorSendReport": MessageLookupByLibrary.simpleMessage(

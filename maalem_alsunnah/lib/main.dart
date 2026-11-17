@@ -11,8 +11,12 @@ void main() async {
   } catch (error, stack) {
     WidgetsFlutterBinding.ensureInitialized();
     final report = await reporter.buildReport(error, stack);
+    await reporter.keepUntilHandled(report);
     runApp(StartupErrorApp(report: report));
     return;
   }
+  // Read before the app runs, so a new error can't be mistaken for it.
+  final pending = await reporter.takePendingReport();
   runApp(const App());
+  if (pending != null) reporter.offerAfterFirstFrame(pending);
 }

@@ -395,6 +395,46 @@ class S {
     );
   }
 
+  /// `The app hit an error last time and the report wasn't sent. Would you like to send it?`
+  String get errorPendingBody {
+    return Intl.message(
+      'The app hit an error last time and the report wasn\'t sent. Would you like to send it?',
+      name: 'errorPendingBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not now`
+  String get errorPendingDismiss {
+    return Intl.message(
+      'Not now',
+      name: 'errorPendingDismiss',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send report`
+  String get errorPendingSend {
+    return Intl.message(
+      'Send report',
+      name: 'errorPendingSend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsent error report`
+  String get errorPendingTitle {
+    return Intl.message(
+      'Unsent error report',
+      name: 'errorPendingTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Report copied`
   String get errorReportCopied {
     return Intl.message(

@@ -15,10 +15,12 @@ import 'package:maalem_alsunnah/src/core/functions/send_email.dart';
 import 'package:maalem_alsunnah/src/core/functions/show_toast.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/data/app_info.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/data/device_snapshot_loader.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/pending_report_store.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/domain/app_log.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/domain/contact_message.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/domain/error_gate.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/domain/error_report.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/presentation/components/pending_report_dialog.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/presentation/screens/contact_screen.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/presentation/screens/error_screen.dart';
 import 'package:maalem_alsunnah/src/features/error_reporting/presentation/screens/startup_error_app.dart';
@@ -39,6 +41,8 @@ class ErrorReporter {
 
   final ErrorGate _gate = ErrorGate();
   final AppLog _log = AppLog.instance;
+  final PendingReportStore _pending =
+      PendingReportStore(getApplicationSupportDirectory);
 
   /// Hooks framework and uncaught async errors. Call first thing in `main`.
   void install() {
@@ -72,6 +76,7 @@ class ErrorReporter {
     if (!_gate.shouldShow(error, DateTime.now(), silent: silent)) return;
     try {
       final report = await buildReport(error, stack);
+      await keepUntilHandled(report);
       final navigator = navigatorKey.currentState;
       if (navigator == null) {
         // The replacement app stays up, so the gate is left closed.
@@ -95,6 +100,8 @@ class ErrorReporter {
           ),
         ),
       );
+      // The user saw it and moved on; don't offer it again next launch.
+      await _forgetPending();
       _gate.screenClosed(DateTime.now());
     } catch (e) {
       if (kDebugMode) debugPrint('Error screen failed: $e');
@@ -110,6 +117,46 @@ class ErrorReporter {
       recentEvents: _log.lines,
       createdAt: DateTime.now(),
     );
+  }
+
+  /// Saves [report] so it can be offered on the next launch if the app is
+  /// closed or killed before the user sends, copies or leaves it.
+  Future<void> keepUntilHandled(ErrorReport report) async {
+    try {
+      await _pending.save(report);
+    } catch (e) {
+      if (kDebugMode) debugPrint('Saving pending report failed: $e');
+    }
+  }
+
+  Future<void> _forgetPending() async {
+    try {
+      await _pending.clear();
+    } catch (e) {
+      if (kDebugMode) debugPrint('Clearing pending report failed: $e');
+    }
+  }
+
+  /// The report left over from the last launch, if any. Removed as it's
+  /// read, so it's offered once. Call before anything can save a new one.
+  Future<ErrorReport?> takePendingReport() async {
+    try {
+      return await _pending.take();
+    } catch (e) {
+      if (kDebugMode) debugPrint('Reading pending report failed: $e');
+      return null;
+    }
+  }
+
+  /// Once the app is on screen, asks whether to send [report].
+  void offerAfterFirstFrame(ErrorReport report) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final context = navigatorKey.currentContext;
+      if (context == null) return;
+      final send =
+          await showPendingReportDialog(context, summary: report.summary);
+      if (send ?? false) await sendReport(report);
+    });
   }
 
   Route<void> contactRoute({ContactType? initialType}) {
@@ -131,6 +178,7 @@ class ErrorReporter {
   /// 2. the share sheet with the file (user picks the app, types the address);
   /// 3. a plain `mailto:` with the full report copied to the clipboard.
   Future<void> sendReport(ErrorReport report) async {
+    await _forgetPending();
     if (await _composeReportEmail(report)) return;
 
     final shareText = _shareText();
@@ -204,6 +252,7 @@ class ErrorReporter {
   }
 
   Future<void> copyReport(ErrorReport report) async {
+    await _forgetPending();
     await Clipboard.setData(ClipboardData(text: report.toText()));
     try {
       await showToast(

@@ -24,6 +24,29 @@ class ErrorReport {
         userDescription: description.trim(),
       );
 
+  /// For keeping a report across launches. The error and stack come back
+  /// as text, which is all the report ever uses of them.
+  Map<String, Object?> toJson() => {
+        'error': error.toString(),
+        'stackTrace': stackTrace?.toString(),
+        'device': device.toJson(),
+        'recentEvents': recentEvents,
+        'createdAt': createdAt.toUtc().toIso8601String(),
+        'userDescription': userDescription,
+      };
+
+  factory ErrorReport.fromJson(Map<String, dynamic> json) {
+    final stack = json['stackTrace'] as String?;
+    return ErrorReport(
+      error: json['error'] as String,
+      stackTrace: stack == null ? null : StackTrace.fromString(stack),
+      device: DeviceSnapshot.fromJson(json['device'] as Map<String, dynamic>),
+      recentEvents: (json['recentEvents'] as List).cast<String>(),
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      userDescription: json['userDescription'] as String? ?? '',
+    );
+  }
+
   final Object error;
   final StackTrace? stackTrace;
   final DeviceSnapshot device;

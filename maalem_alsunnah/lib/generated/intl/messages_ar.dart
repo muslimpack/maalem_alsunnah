@@ -115,6 +115,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorDescribe": MessageLookupByLibrary.simpleMessage(
       "ماذا كنت تفعل عند حدوث الخطأ؟ (اختياري)",
     ),
+    "errorPendingBody": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ في التطبيق في المرة السابقة ولم يُرسل تقريره. هل تريد إرساله؟",
+    ),
+    "errorPendingDismiss": MessageLookupByLibrary.simpleMessage("ليس الآن"),
+    "errorPendingSend": MessageLookupByLibrary.simpleMessage("إرسال التقرير"),
+    "errorPendingTitle": MessageLookupByLibrary.simpleMessage(
+      "تقرير خطأ لم يُرسل",
+    ),
     "errorReportCopied": MessageLookupByLibrary.simpleMessage("تم نسخ التقرير"),
     "errorReportShareText": m5,
     "errorSendReport": MessageLookupByLibrary.simpleMessage(

@@ -29,6 +29,34 @@ class DeviceSnapshot {
   final double pixelRatio;
   final String theme;
 
+  Map<String, Object?> toJson() => {
+        'appVersion': appVersion,
+        'buildNumber': buildNumber,
+        'platform': platform,
+        'osVersion': osVersion,
+        'manufacturer': manufacturer,
+        'model': model,
+        'appLocale': appLocale,
+        'systemLocale': systemLocale,
+        'screenSize': screenSize,
+        'pixelRatio': pixelRatio,
+        'theme': theme,
+      };
+
+  factory DeviceSnapshot.fromJson(Map<String, dynamic> json) => DeviceSnapshot(
+        appVersion: json['appVersion'] as String,
+        buildNumber: json['buildNumber'] as String,
+        platform: json['platform'] as String,
+        osVersion: json['osVersion'] as String?,
+        manufacturer: json['manufacturer'] as String?,
+        model: json['model'] as String?,
+        appLocale: json['appLocale'] as String,
+        systemLocale: json['systemLocale'] as String,
+        screenSize: json['screenSize'] as String,
+        pixelRatio: (json['pixelRatio'] as num).toDouble(),
+        theme: json['theme'] as String,
+      );
+
   static const _unknown = 'unknown';
 
   List<String> get lines {
