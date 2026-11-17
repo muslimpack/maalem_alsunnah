@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maalem_alsunnah/generated/l10n.dart';
@@ -87,6 +88,15 @@ class SettingsScreen extends StatelessWidget {
                   context.pushNamed(AboutScreen.routeName);
                 },
               ),
+              // Debug builds only: runs the whole error-reporting flow.
+              if (kDebugMode)
+                ListTile(
+                  leading: const Icon(Icons.bug_report_outlined),
+                  title: const Text('Trigger test error (debug)'),
+                  onTap: () => throw StateError(
+                    'Test error triggered from Settings',
+                  ),
+                ),
             ],
           ),
         );
