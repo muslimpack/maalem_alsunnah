@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maalem_alsunnah/src/features/content_viewer/presentation/screens/content_viewer_screen.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/data/error_reporter.dart';
+import 'package:maalem_alsunnah/src/features/error_reporting/presentation/screens/contact_screen.dart';
 import 'package:maalem_alsunnah/src/features/home/presentation/screens/home_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/about_screen.dart';
 import 'package:maalem_alsunnah/src/features/settings/presentation/screens/formatter_text_settings_screen.dart';
@@ -30,6 +32,8 @@ class AppRouter {
       return ThemeManagerScreen.route();
     } else if (settings.name == FormatterColorSettingsScreen.routeName) {
       return FormatterColorSettingsScreen.route();
+    } else if (settings.name == ContactScreen.routeName) {
+      return ErrorReporter.instance.contactRoute();
     }
     return HomeScreen.route();
   }
